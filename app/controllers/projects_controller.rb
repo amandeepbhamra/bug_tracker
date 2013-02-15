@@ -1,8 +1,11 @@
 class ProjectsController < ApplicationController
+  
+  before_filter :validate_user_exits
+
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all
+    @projects = @user.projects
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +16,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
-    @project = Project.find(params[:id])
+    @project = @user.projects.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,7 +27,7 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   # GET /projects/new.json
   def new
-    @project = Project.new
+    @project = @user.projects.build
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,21 +37,19 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
-    @project = Project.find(params[:id])
+    @project = @user.projects.find(params[:id])
   end
 
   # POST /projects
   # POST /projects.json
   def create
-    @project = Project.new(params[:project])
+    @project = @user.projects.build(params[:project])
 
     respond_to do |format|
       if @project.save
-        format.html { redirect_to @project, notice: 'Project was successfully created.' }
-        format.json { render json: @project, status: :created, location: @project }
+        format.html { redirect_to @user, notice: 'Project was successfully created.' }
       else
         format.html { render action: "new" }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -56,15 +57,13 @@ class ProjectsController < ApplicationController
   # PUT /projects/1
   # PUT /projects/1.json
   def update
-    @project = Project.find(params[:id])
+    @project = @user.projects.find(params[:id])
 
     respond_to do |format|
       if @project.update_attributes(params[:project])
-        format.html { redirect_to @project, notice: 'Project was successfully updated.' }
-        format.json { head :no_content }
+        format.html { redirect_to @user, notice: 'Project was successfully updated.' }
       else
         format.html { render action: "edit" }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -72,12 +71,17 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   # DELETE /projects/1.json
   def destroy
-    @project = Project.find(params[:id])
+    @project = @user.projects.find(params[:id])
     @project.destroy
 
     respond_to do |format|
-      format.html { redirect_to projects_url }
+      format.html { redirect_to @user }
       format.json { head :no_content }
     end
+  end
+
+  def validate_user_exits # To check whether user exits or not #
+    @user = User.find_by_id(params[:user_id])
+    redirect_to root_path if @user.nil?
   end
 end
