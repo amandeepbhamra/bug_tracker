@@ -1,10 +1,13 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Username:</b>
-  <%= @user.username %>
+  <b>User:</b>
+  <% if @user.username.nil? %>
+  	<%= @user.email %>
+  <% else %>
+  	<%= @user.username %>
+  <% end %>
 </p>
+<br />
+<%= link_to 'Edit Profile', edit_user_path(@user) %> |
 
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>

@@ -1,9 +1,12 @@
 Lighthouseapp::Application.routes.draw do
+  resources :projects
+
+
   devise_for :users
 
   resources :users
 
-  root :to => 'users#index'
+  root :to => 'users#show'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
