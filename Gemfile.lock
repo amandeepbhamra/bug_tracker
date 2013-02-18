@@ -35,6 +35,7 @@ GEM
       erubis (>= 2.7.0)
     binding_of_caller (0.6.8)
     builder (3.0.4)
+    cocaine (0.4.2)
     coderay (1.0.8)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -68,6 +69,12 @@ GEM
     multi_json (1.6.0)
     mysql2 (0.3.11)
     orm_adapter (0.4.0)
+    paperclip (3.4.0)
+      activemodel (>= 3.0.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      cocaine (~> 0.4.0)
+      mime-types
     polyglot (0.3.3)
     quiet_assets (1.0.1)
       railties (~> 3.1)
@@ -132,6 +139,7 @@ DEPENDENCIES
   devise
   jquery-rails
   mysql2
+  paperclip (~> 3.0)
   quiet_assets
   rails (= 3.2.9)
   sass-rails (~> 3.2.3)

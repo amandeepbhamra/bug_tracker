@@ -1,6 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+	<%= image_tag @user.photo.url(:thumb) %>
 	<b>User:</b>
   	<% if @user.username.nil? %>
   		<%= @user.email %>
