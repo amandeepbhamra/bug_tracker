@@ -1,4 +1,9 @@
 class TicketsController < ApplicationController
+  
+  before_filter :validate_user
+  before_filter :validate_project  
+
+
   # GET /tickets
   # GET /tickets.json
   def index
@@ -41,10 +46,10 @@ class TicketsController < ApplicationController
   # POST /tickets.json
   def create
     @ticket = @project.tickets.build(params[:ticket])
-
+    
     respond_to do |format|
       if @ticket.save
-        format.html { redirect_to @ticket, notice: 'Ticket was successfully created.' }
+        format.html { redirect_to user_project_tickets_path(@user, @project), notice: 'Ticket was successfully created.' }
         format.json { render json: @ticket, status: :created, location: @ticket }
       else
         format.html { render action: "new" }
@@ -60,7 +65,7 @@ class TicketsController < ApplicationController
 
     respond_to do |format|
       if @ticket.update_attributes(params[:ticket])
-        format.html { redirect_to @ticket, notice: 'Ticket was successfully updated.' }
+        format.html { redirect_to user_project_tickets_path(@user, @project), notice: 'Ticket was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -76,14 +81,21 @@ class TicketsController < ApplicationController
     @ticket.destroy
 
     respond_to do |format|
-      format.html { redirect_to tickets_url }
+      format.html { redirect_to user_project_tickets_path(@user, @project) }
       format.json { head :no_content }
     end
   end
 
+  def validate_user
+    @user = User.find_by_id(params[:user_id])
+    @user =current_user if @user.nil?
+  end
+
   def validate_project
-    @project = Project.find_by_id(params[project_id])
+    @project = Project.find_by_id(params[:project_id])
     if @project.nil?
       redirect_to @user, notice: "Invalid Project"
     end
+  end
+
 end
