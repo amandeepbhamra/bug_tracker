@@ -4,15 +4,24 @@
   <tr>
     <th>Title</th>
     <th>Description</th>
+    <th>Document</th>
+    <th>Download</th>
     <th>Age</th>
-    <th></th>
-    <th></th>
   </tr>
 
 <% @tickets.each do |ticket| %>
   <tr>
     <td><%= ticket.title %></td>
     <td><%= ticket.description %></td>
+    
+    <% if ticket.document.blank? %>
+      <td> No Attachment </td>
+      <td></td>
+    <% else %>
+      <td>Attached</td>
+      <td><%= link_to 'Download', ticket.document.url(:original, false) %></td>
+    <% end %>
+    
     <td><%= event_time_format(ticket.created_at) %></td>
     <td><%= link_to 'Show', user_project_ticket_path(@user, @project, ticket) %></td>
     <td><%= link_to 'Edit', edit_user_project_ticket_path(@user, @project, ticket) %></td>

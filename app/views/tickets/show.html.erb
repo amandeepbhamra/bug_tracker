@@ -10,6 +10,12 @@
   <%= @ticket.description %>
 </p>
 
+<% if @ticket.document.blank? %>
+	<b>No Attachment</b><br />
+<% else %>
+    <b>Document Attached</b>
+	<%= link_to 'Download', @ticket.document.url(:original, false) %><br />
+<% end %>
 
 <%= link_to 'Edit', edit_user_project_ticket_path(@user, @project, @ticket) %> |
 <%= link_to 'Back', user_project_tickets_path(@user, @project) %>
