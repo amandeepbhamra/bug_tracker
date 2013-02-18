@@ -6,7 +6,9 @@ Lighthouseapp::Application.routes.draw do
   devise_for :users
 
   resources :users do 
-    resources :projects
+    resources :projects do 
+      resources :tickets
+    end
   end
 
   root :to => 'users#show'
