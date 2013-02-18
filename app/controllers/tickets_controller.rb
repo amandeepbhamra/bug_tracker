@@ -80,4 +80,10 @@ class TicketsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def validate_project
+    @project = Project.find_by_id(params[project_id])
+    if @project.nil?
+      redirect_to @user, notice: "Invalid Project"
+    end
 end
