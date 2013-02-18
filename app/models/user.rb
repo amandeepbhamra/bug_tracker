@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   :remember_me, :photo
   
   has_many :projects
-  
+  has_many :tickets, :through => :projects
 
   has_attached_file :photo, :styles => { :medium => "300x300>", :thumb => "100x100>" }
 end
