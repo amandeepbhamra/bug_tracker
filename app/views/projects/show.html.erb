@@ -15,3 +15,4 @@
 <%= link_to 'Back to Projects', user_projects_path(@user) %>
 <%= link_to 'Create a Ticket', new_user_project_ticket_path(@user, @project) %>
 <%= link_to 'View Tickets', user_project_tickets_path(@user, @project) %>
+<%= link_to 'Invite Members', invite_members_user_project_path(@user, @project) %>
