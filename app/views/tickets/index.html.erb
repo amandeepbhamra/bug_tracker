@@ -4,6 +4,7 @@
   <tr>
     <th>Title</th>
     <th>Description</th>
+    <th>Status</th>
     <th>Document</th>
     <th>Download</th>
     <th>Age</th>
@@ -13,7 +14,7 @@
   <tr>
     <td><%= ticket.title %></td>
     <td><%= ticket.description %></td>
-    
+    <td><%= ticket.ticket_status %></td>
     <% if ticket.document.blank? %>
       <td> No Attachment </td>
       <td></td>

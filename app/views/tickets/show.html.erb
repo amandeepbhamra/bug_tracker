@@ -10,6 +10,11 @@
   <%= @ticket.description %>
 </p>
 
+<p>
+  <b>Status:</b>
+  <%= @ticket.ticket_status %>
+</p>
+
 <% if @ticket.document.blank? %>
 	<b>No Attachment</b><br />
 <% else %>
