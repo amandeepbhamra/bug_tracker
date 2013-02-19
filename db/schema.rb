@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130218120323) do
+ActiveRecord::Schema.define(:version => 20130219085946) do
 
   create_table "projects", :force => true do |t|
     t.string   "name",        :null => false
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20130218120323) do
     t.string   "document_content_type"
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
+    t.integer  "status"
   end
 
   create_table "users", :force => true do |t|
