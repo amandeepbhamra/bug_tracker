@@ -79,5 +79,8 @@ class UsersController < ApplicationController
       @user = current_user
     end
   end
+  
+  def invite_member
 
+  end
 end

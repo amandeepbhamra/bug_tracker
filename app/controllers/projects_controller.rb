@@ -85,8 +85,4 @@ class ProjectsController < ApplicationController
     redirect_to root_path if @user.nil?
   end
 
-  def invite_members
-    
-  end
-
 end

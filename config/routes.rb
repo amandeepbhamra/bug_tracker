@@ -6,10 +6,10 @@ Lighthouseapp::Application.routes.draw do
   devise_for :users
 
   resources :users do 
+    member do 
+      get 'invite_member'
+    end
     resources :projects do 
-      member do 
-        get 'invite_members'
-      end
       resources :tickets
     end
   end
