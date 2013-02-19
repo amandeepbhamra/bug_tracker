@@ -19,6 +19,7 @@ group :assets do
     gem "binding_of_caller"
     gem 'quiet_assets', :group => :development
     gem "paperclip", "~> 3.0"
+    gem "mailcatcher"
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
 
