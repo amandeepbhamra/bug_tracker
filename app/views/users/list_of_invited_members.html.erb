@@ -1,0 +1,14 @@
+<% if !(@user_invitation_accepted.nil?) %>
+	<%= 'Users who accepted your invitation:'  %><br />
+	<% @user_invitation_accepted.each do |user| %>
+		<%= user.email %>
+		
+	<% end %>
+<% end %>
+<% if !(@user_invitation_not_accepted.nil?) %>
+	<br />
+	<%= "Users who haven't accepted your invitation till now:" %><br />
+	<% @user_invitation_not_accepted.each do |user| %>
+		<%= user.email %><br />
+	<% end %>
+<% end %>

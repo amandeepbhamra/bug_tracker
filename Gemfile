@@ -14,11 +14,13 @@ group :assets do
 	  gem 'sass-rails',   '~> 3.2.3'
   	gem 'coffee-rails', '~> 3.2.1'
   	gem 'devise'
+    gem 'devise_invitable'
   	gem 'thin'
     gem "better_errors"
     gem "binding_of_caller"
     gem 'quiet_assets', :group => :development
     gem "paperclip", "~> 3.0"
+    gem "mailcatcher"
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
 

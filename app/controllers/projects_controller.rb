@@ -84,4 +84,5 @@ class ProjectsController < ApplicationController
     @user = User.find_by_id(params[:user_id])
     redirect_to root_path if @user.nil?
   end
+
 end
