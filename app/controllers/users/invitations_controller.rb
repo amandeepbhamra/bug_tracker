@@ -3,7 +3,7 @@ class Users::InvitationsController < Devise::InvitationsController
   before_filter :authenticate_inviter!, :only => [:new, :create]
   before_filter :has_invitations_left?, :only => [:create]
   before_filter :require_no_authentication, :only => [:edit, :update]
- 
+  helper_method :after_sign_in_path_for
 
   # GET /resource/invitation/new
   def new

@@ -7,9 +7,12 @@ Lighthouseapp::Application.routes.draw do
 
   resources :users do 
     member do 
-      get 'invite_member'
+      get 'list_of_invited_members'
     end
     resources :projects do 
+      member do 
+        get 'add_member_to_project'
+      end
       resources :tickets
     end
   end

@@ -16,3 +16,4 @@
 <%= link_to 'Create a New Project', new_user_project_path(@user) %>
 <%= link_to 'View Projects', user_projects_path(@user) %>
 <%= link_to 'Invite Member', new_user_invitation_path %>
+<%= link_to 'View Invited Member', list_of_invited_members_user_path(current_user) %>

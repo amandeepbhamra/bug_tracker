@@ -80,7 +80,8 @@ class UsersController < ApplicationController
     end
   end
   
-  def invite_member
-  
+  def list_of_invited_members
+    @user_invitation_accepted = User.invitation_accepted.find_all_by_invited_by_id(current_user)
+    @user_invitation_not_accepted = User.invitation_not_accepted.find_all_by_invited_by_id(current_user)
   end
 end
