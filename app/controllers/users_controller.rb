@@ -81,6 +81,6 @@ class UsersController < ApplicationController
   end
   
   def invite_member
-
+  
   end
 end

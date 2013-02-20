@@ -3,7 +3,7 @@ Lighthouseapp::Application.routes.draw do
   resources :tickets
 
 
-  devise_for :users
+  devise_for :users, :controllers => { :invitations => 'users/invitations' }
 
   resources :users do 
     member do 

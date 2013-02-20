@@ -1,10 +1,3 @@
- Invite Members to Project:
- <%= form_tag invite_members_user_project_path, method: :get do %>
- 	<%#= 'Enter Email ID:' %>
-    <%= text_field_tag :email %>
-    <%= hidden_field_tag :email, params[:email] %><br />
-    <%= submit_tag 'Invite' %>
- <% end %>
 
  
   def invite_members
