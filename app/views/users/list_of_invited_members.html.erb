@@ -2,7 +2,6 @@
 	<%= 'Users who accepted your invitation:'  %><br />
 	<% @user_invitation_accepted.each do |user| %>
 		<%= user.email %>
-		
 	<% end %>
 <% end %>
 <% if !(@user_invitation_not_accepted.nil?) %>

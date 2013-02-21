@@ -4,3 +4,28 @@
     p params[:email]
     User.invite!({:email => params[:email]}, current_user)
   end
+<%= form_for @user_assigned_projects do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <% Project.all.each do |project| %>
+      <%= check_box_tag "project[assigned_project_ids][]", project.id %>
+      <%= project.name %><br />
+    <% end %>
+  </div>
+  <div class="actions">
+    <%= f.submit 'Assign project'%>
+  </div>
+<% end %>
+ @p = params[:project][:user_ids]
+    debugger
