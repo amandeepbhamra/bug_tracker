@@ -1,0 +1,9 @@
+<% if !(project_members.nil?) %>
+	<ul>
+	<% project_members.each do |member| %>
+		<li><%= member.email %></li>
+	<% end %>
+	</ul>
+<% else %>
+	<%= "This Project has no Member." %>
+<% end %>

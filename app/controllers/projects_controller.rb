@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   
   before_filter :validate_user_exits
   before_filter :vaildate_project_id
-
+ 
   # GET /projects
   # GET /projects.json
   def index
@@ -18,7 +18,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1.json
   def show
     @project = @user.projects.find(params[:id])
-
+    @project_members = @project_id.members
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @project }
@@ -58,11 +58,9 @@ class ProjectsController < ApplicationController
   # PUT /projects/1
   # PUT /projects/1.json
   def update
-    
     @project = @user.projects.find(params[:id])
-    @project_members = @project_id.members.find(params[:id])
-    respond_to do |format|
-      if @project.update_attributes(params[:project]) && @project_members.update_attributes(params[:project])
+      respond_to do |format|
+      if @project.update_attributes(params[:project]) 
         format.html { redirect_to @user, notice: 'Project was successfully updated.' }
       else
         format.html { render action: "edit" }
@@ -90,13 +88,18 @@ class ProjectsController < ApplicationController
   def vaildate_project_id
     @project_id = Project.find_by_id(params[:id])
   end
+
+  def validate_allowed_users #For adding in member in Project#
+    @project_members = @project_id.members
+    @user_invitation_accepted = User.invitation_accepted.find_all_by_invited_by_id(current_user)
+  end
   
-  def add_member_to_project
-    # @project_members = @project_id.members
-     @user_invitation_accepted = User.invitation_accepted.find_all_by_invited_by_id(current_user)
-    
-     @p = params[:project][:user_ids]
-     @u = User.find_all_by_id(@p)
-     @project_id.members = @u
+  def add_member_project
+    @project_id.members.clear
+    for user in params[:project][:user_ids]
+      @project_id.members << (User.find_by_id(user))
+    end
+    @project_id.update_attributes(params[:members])
+    redirect_to @user, notice: "Members Added"
   end
 end

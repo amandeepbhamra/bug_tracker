@@ -1,7 +1,7 @@
-<%= form_for (@project_id), :url => add_member_to_project_user_project_path do |f| %>
+<%= form_for (@project_id), :url => add_member_project_user_project_path do |f| %>
   <div class="field">
     <% @user_invitation_accepted.each do |user| %>
-      <%= check_box_tag "project[user_ids][]", user.id %>
+      <%= check_box_tag "project[user_ids][]", user.id, @project_id.members.include?(user) %>
       <%= user.email %>
     <% end %>
   </div>

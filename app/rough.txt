@@ -29,3 +29,25 @@
 <% end %>
  @p = params[:project][:user_ids]
     debugger
+
+    def add_member_to_project
+    @project_members = @project_id.members
+    @user_invitation_accepted = User.invitation_accepted.find_all_by_invited_by_id(current_user)
+    @p = params[:member][:user_ids] 
+    @p = [] if @p.nil
+    @u = User.find_all_by_id(@p)
+    @project_id.members = @u
+  end
+
+  , :url => add_member_to_project_user_project_path
+  project:
+  has_many :members :through=> user
+  user:
+  has_many :assigned_projects :through=> projects
+  members:
+  belongs_to: user
+  belongs_to: project
+
+  debugger
+    @u = User.find_all_by_id(params[:project][:user_ids])
+    @project_members << @u
