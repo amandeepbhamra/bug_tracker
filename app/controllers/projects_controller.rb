@@ -85,16 +85,16 @@ class ProjectsController < ApplicationController
     redirect_to root_path if @user.nil?
   end
   
-  def vaildate_project_id
+  def vaildate_project_id # For Finding project id #
     @project_id = Project.find_by_id(params[:id])
   end
 
-  def validate_allowed_users #For adding in member in Project#
+  def validate_allowed_users #For validating users to be addable as member in Project#
     @project_members = @project_id.members
     @user_invitation_accepted = User.invitation_accepted.find_all_by_invited_by_id(current_user)
   end
   
-  def add_member_project
+  def add_member_project # For Adding user as member in project #
     @project_id.members.clear
     for user in params[:project][:user_ids]
       @project_id.members << (User.find_by_id(user))
