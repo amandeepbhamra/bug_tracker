@@ -86,9 +86,9 @@ class TicketsController < ApplicationController
     end
   end
 
-  def validate_user
+  def validate_user 
     @user = User.find_by_id(params[:user_id])
-    @user =current_user if @user.nil?
+    @user = current_user if @user.nil?
   end
 
   def validate_project

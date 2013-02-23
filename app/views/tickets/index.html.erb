@@ -5,6 +5,7 @@
     <th>Title</th>
     <th>Description</th>
     <th>Status</th>
+    <th>Who's Responsible</th>
     <th>Document</th>
     <th>Download</th>
     <th>Age</th>
@@ -15,6 +16,11 @@
     <td><%= ticket.title %></td>
     <td><%= ticket.description %></td>
     <td><%= ticket.ticket_status %></td>
+    <% if !(User.find_by_id(ticket.assigned_to).nil?) %>
+      <td><%= User.find_by_id(ticket.assigned_to).email %></td>
+    <% else %>
+      <td><%= "No one" %></td>
+    <% end %>
     <% if ticket.document.blank? %>
       <td> No Attachment </td>
       <td></td>

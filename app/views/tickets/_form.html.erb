@@ -20,8 +20,12 @@
     <%= f.text_area :description %>
   </div>
   <div class="field">
-    <%= f.label :Status %><br />
+    <%= f.label :status %><br />
     <%= f.collection_select :status, Ticket.ticket_status_array, :first, :last %>
+  </div>
+  <div class="field">
+    <%= f.label :assigned_to %><br />
+    <%= f.collection_select :assigned_to, @project.members, :id, :email %>
   </div>
   <div class="field">
     <%= f.label :Attachment %><br />

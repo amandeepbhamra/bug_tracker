@@ -5,7 +5,7 @@ Lighthouseapp::Application.routes.draw do
 
   devise_for :users, :controllers => { :invitations => 'users/invitations' }
 
-  resources :users do 
+  resources :users, :except => [:index] do
     member do 
       get 'list_of_invited_members'
       
