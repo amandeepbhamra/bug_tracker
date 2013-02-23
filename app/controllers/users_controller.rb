@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   
-  before_filter :validate_user, :only => [:show, :edit, :update, :destroy, :assign_project_to_user]
+  before_filter :validate_user, :only => [:show, :edit, :update, :assign_project_to_user]
   
   # GET /users/1
   # GET /users/1.json
@@ -52,16 +52,6 @@ class UsersController < ApplicationController
         format.html { render action: "edit" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /users/1
-  # DELETE /users/1.json
-  def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url }
-      format.json { head :no_content }
     end
   end
 

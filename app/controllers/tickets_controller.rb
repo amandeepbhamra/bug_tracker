@@ -1,17 +1,15 @@
 class TicketsController < ApplicationController
   
-  before_filter :validate_user
-  before_filter :validate_project  
-
+  before_filter :validate_project 
+  before_filter :validate_user, :only => [:index, :show]
+   
 
   # GET /tickets
   # GET /tickets.json
   def index
     @tickets = @project.tickets
-
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @tickets }
     end
   end
 
@@ -19,10 +17,10 @@ class TicketsController < ApplicationController
   # GET /tickets/1.json
   def show
     @ticket = @project.tickets.find(params[:id])
-
+    @ticket_id = Ticket.find_by_id(params[:id])
+    @comments = @ticket_id.comments
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @ticket }
     end
   end
 
@@ -30,10 +28,8 @@ class TicketsController < ApplicationController
   # GET /tickets/new.json
   def new
     @ticket = @project.tickets.build
-
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @ticket }
     end
   end
 
@@ -46,14 +42,11 @@ class TicketsController < ApplicationController
   # POST /tickets.json
   def create
     @ticket = @project.tickets.build(params[:ticket])
-    
     respond_to do |format|
       if @ticket.save
         format.html { redirect_to user_project_tickets_path(@user, @project), notice: 'Ticket was successfully created.' }
-        format.json { render json: @ticket, status: :created, location: @ticket }
       else
         format.html { render action: "new" }
-        format.json { render json: @ticket.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -62,14 +55,11 @@ class TicketsController < ApplicationController
   # PUT /tickets/1.json
   def update
     @ticket = @project.tickets.find(params[:id])
-
     respond_to do |format|
       if @ticket.update_attributes(params[:ticket])
         format.html { redirect_to user_project_tickets_path(@user, @project), notice: 'Ticket was successfully updated.' }
-        format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @ticket.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -79,10 +69,8 @@ class TicketsController < ApplicationController
   def destroy
     @ticket = @project.tickets.find(params[:id])
     @ticket.destroy
-
     respond_to do |format|
-      format.html { redirect_to user_project_tickets_path(@user, @project) }
-      format.json { head :no_content }
+      format.html { redirect_to user_project_tickets_path(@user, @project), notice: "Ticket destroyed" }
     end
   end
 
@@ -93,9 +81,6 @@ class TicketsController < ApplicationController
 
   def validate_project
     @project = Project.find_by_id(params[:project_id])
-    if @project.nil?
-      redirect_to @user, notice: "Invalid Project"
-    end
+    redirect_to @user, notice: "Invalid Project" if @project.nil?
   end
-
 end

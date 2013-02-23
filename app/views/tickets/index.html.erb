@@ -30,6 +30,7 @@
     <% end %>
     
     <td><%= event_time_format(ticket.created_at) %></td>
+    <td><%= link_to 'View Comments', user_project_ticket_path(@user, @project, ticket) %></td>
     <td><%= link_to 'Show', user_project_ticket_path(@user, @project, ticket) %></td>
     <td><%= link_to 'Edit', edit_user_project_ticket_path(@user, @project, ticket) %></td>
     <td><%= link_to 'Destroy', user_project_ticket_path(@user, @project, ticket), method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -7,7 +7,6 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     @projects = @user.projects
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @projects }
@@ -29,7 +28,6 @@ class ProjectsController < ApplicationController
   # GET /projects/new.json
   def new
     @project = @user.projects.build
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @project }
@@ -45,7 +43,6 @@ class ProjectsController < ApplicationController
   # POST /projects.json
   def create
     @project = @user.projects.build(params[:project])
-
     respond_to do |format|
       if @project.save
         format.html { redirect_to @user, notice: 'Project was successfully created.' }
@@ -73,23 +70,22 @@ class ProjectsController < ApplicationController
   def destroy
     @project = @user.projects.find(params[:id])
     @project.destroy
-
     respond_to do |format|
       format.html { redirect_to @user }
       format.json { head :no_content }
     end
   end
 
-  def validate_user_exits # To check whether user exits or not #
+  def validate_user_exits # Filter To check whether user exits or not #
     @user = User.find_by_id(params[:user_id])
     redirect_to root_path if @user.nil?
   end
   
-  def vaildate_project_id # For Finding project id #
+  def vaildate_project_id # Filter For Finding project id #
     @project_id = Project.find_by_id(params[:id])
   end
 
-  def validate_allowed_users #For validating users to be addable as member in Project#
+  def validate_allowed_users # For validating users to be addable as member in Project#
     @project_members = @project_id.members
     @user_invitation_accepted = User.invitation_accepted.find_all_by_invited_by_id(current_user)
   end
