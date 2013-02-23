@@ -1,26 +1,25 @@
 Lighthouseapp::Application.routes.draw do
-  
-  resources :comments
-
-
-  #resources :tickets
-#resources :projects
 
   devise_for :users, :controllers => { :invitations => 'users/invitations' }
 
-  resources :users, :except => [:index] do
+  resources :users, :except => [:index, :destroy] do
     member do 
       get 'list_of_invited_members'
-      
     end
+
     resources :projects do 
       member do
         get 'validate_allowed_users'
         post 'add_member_project'
         put 'add_member_project'
       end
+
       resources :tickets
     end
+  end
+
+  resources :tickets, :only => [] do
+    resources :comments, :only => [:new, :create]
   end
 
   root :to => 'users#show'
