@@ -13,5 +13,7 @@ class User < ActiveRecord::Base
   has_many :tickets, :through => :projects
   has_and_belongs_to_many :assigned_projects , :class_name => "Project", :uniq => true
 
+  validates :username, :presence => true , :if => lambda{|a| !a.new_record?}
+  
   has_attached_file :photo, :styles => { :medium => "300x300>", :thumb => "100x100>" }
 end

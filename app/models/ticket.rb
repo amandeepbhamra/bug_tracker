@@ -5,6 +5,8 @@ class Ticket < ActiveRecord::Base
   belongs_to :user
   has_many :comments
 
+  validates :title, :description, :status, :presence => true 
+
   has_attached_file :document, :styles => { :medium => "300x300>", :thumb => "100x100>" }
 
   TICKET_STATES = {1=> "New", 2 => "Open", 3 => "Hold", 4 => "Resolved", 5 => "Closed"}
