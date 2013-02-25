@@ -21,6 +21,7 @@ group :assets do
     gem 'quiet_assets', :group => :development
     gem "paperclip", "~> 3.0"
     gem "mailcatcher"
+    gem 'thinking-sphinx', '2.0.10'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
 

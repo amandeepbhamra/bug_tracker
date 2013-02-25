@@ -19,6 +19,9 @@ Lighthouseapp::Application.routes.draw do
   end
 
   resources :tickets, :only => [] do
+    collection do
+      get 'search'
+    end
     resources :comments, :only => [:new, :create]
   end
 

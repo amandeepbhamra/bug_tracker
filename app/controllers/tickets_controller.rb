@@ -1,6 +1,6 @@
 class TicketsController < ApplicationController
   
-  before_filter :validate_project 
+  before_filter :validate_project, :except => [:search]
   before_filter :validate_user, :only => [:index, :show]
    
 
@@ -82,5 +82,10 @@ class TicketsController < ApplicationController
   def validate_project
     @project = Project.find_by_id(params[:project_id])
     redirect_to @user, notice: "Invalid Project" if @project.nil?
+  end
+
+  def search
+    @tickets_searched = Ticket.search(params[:search],:page => params[:page], :per_page => 10)
+    @tickets_count = Ticket.search(params[:search]).count
   end
 end

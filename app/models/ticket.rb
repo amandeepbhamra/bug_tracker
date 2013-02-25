@@ -9,6 +9,11 @@ class Ticket < ActiveRecord::Base
 
   has_attached_file :document, :styles => { :medium => "300x300>", :thumb => "100x100>" }
 
+  define_index do
+    indexes :title
+    indexes :description
+  end
+
   TICKET_STATES = {1=> "New", 2 => "Open", 3 => "Hold", 4 => "Resolved", 5 => "Closed"}
 
   def ticket_status
