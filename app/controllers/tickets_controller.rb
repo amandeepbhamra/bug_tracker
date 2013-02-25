@@ -1,7 +1,7 @@
 class TicketsController < ApplicationController
   
   before_filter :validate_project, :except => [:search]
-  before_filter :validate_user, :only => [:index, :show, :view_new_tickets, :view_open_tickets, :view_hold_tickets, :view_resolved_tickets, :view_closed_tickets, :tickets_count_by_status]
+  before_filter :validate_user, :only => [:index, :show, :view_new_tickets, :view_open_tickets, :view_hold_tickets, :view_resolved_tickets, :view_closed_tickets, :tickets_count_by_status, :new, :create, :update, :destroy]
   before_filter :tickets_count_by_status, :only => [:index, :view_new_tickets, :view_open_tickets, :view_hold_tickets, :view_resolved_tickets, :view_closed_tickets]
 
   # GET /tickets
@@ -44,6 +44,7 @@ class TicketsController < ApplicationController
     @ticket = @project.tickets.build(params[:ticket])
     respond_to do |format|
       if @ticket.save
+        Notify.ticket_creation_notification(@user, @project, @ticket).deliver
         format.html { redirect_to user_project_tickets_path(@user, @project), notice: 'Ticket was successfully created.' }
       else
         format.html { render action: "new" }

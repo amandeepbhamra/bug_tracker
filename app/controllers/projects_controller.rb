@@ -94,6 +94,7 @@ class ProjectsController < ApplicationController
     @project_id.members.clear
     for user in params[:project][:user_ids]
       @project_id.members << (User.find_by_id(user))
+      
     end
     @project_id.update_attributes(params[:members])
     redirect_to @user, notice: "Members Added"
