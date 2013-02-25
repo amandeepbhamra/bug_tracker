@@ -7,8 +7,17 @@ Lighthouseapp::Application.configure do
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-
+  config.action_mailer.default_url_options = { :host => 'lighthouseapp.herokuapp.com' }
   # Disable Rails's static asset server (Apache or nginx will already do this)
+  config.action_mailer.smtp_settings = {
+  address: "smtp.gmail.com",
+  port: 587,
+  domain: "lighthouseapp.herokuapp.com",
+  authentication: "plain",
+  enable_starttls_auto: true,
+  user_name: ENV["amandeep.rails"],
+  password: ENV["asdf@1234"]
+}
   config.serve_static_assets = false
 
   # Compress JavaScripts and CSS

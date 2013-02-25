@@ -8,7 +8,7 @@ gem 'rails', '3.2.9'
 gem 'mysql2'
 gem 'pg'
 gem "heroku"
-gem "taps"
+
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -22,7 +22,7 @@ group :assets do
     #gem "binding_of_caller"
     #gem 'quiet_assets', :group => :development
     gem "paperclip", "~> 3.0"
-    gem "mailcatcher"
+    gem "mailcatcher", :group => :development
     gem 'thinking-sphinx', '2.0.10'
     gem 'delayed_job_active_record'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
