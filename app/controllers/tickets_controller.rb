@@ -44,8 +44,8 @@ class TicketsController < ApplicationController
     @ticket = @project.tickets.build(params[:ticket])
     respond_to do |format|
       if @ticket.save
-        Notify.ticket_creation_notification(@user, @project, @ticket).deliver
-        Notify.notify_to_whom_ticket_is_assigned(@user, @project, @ticket).deliver
+        Notify.delay(queue: "ticket_creation_notification", priority: 3, run_at: 2.minutes.from_now ).ticket_creation_notification(@user, @project, @ticket)
+        Notify.delay(queue: "notify_to_whom_ticket_is_assigned", priority: 2, run_at: 2.minutes.from_now ).notify_to_whom_ticket_is_assigned(@user, @project, @ticket)
         format.html { redirect_to user_project_tickets_path(@user, @project), notice: 'Ticket was successfully created.' }
       else
         format.html { render action: "new" }

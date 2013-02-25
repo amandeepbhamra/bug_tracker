@@ -95,8 +95,8 @@ class ProjectsController < ApplicationController
     for user in params[:project][:user_ids]
       @member = User.find_by_id(user)
       @project_id.members << (@member)
-      Notify.member_added_notification_to_admin(@user, @project_id, @member).deliver
-      Notify.notification_to_member_that_added(@user, @project_id, @member).deliver
+      Notify.delay(queue: "member_added_notification_to_admin", priority: 3).member_added_notification_to_admin(@user, @project_id, @member)
+      Notify.delay(queue: "notification_to_member_that_added", priority: 3).notification_to_member_that_added(@user, @project_id, @member)
     end
     @project_id.update_attributes(params[:members])
     redirect_to @user, notice: "Members Added"
