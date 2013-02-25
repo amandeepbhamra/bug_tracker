@@ -22,6 +22,7 @@ group :assets do
     gem "paperclip", "~> 3.0"
     gem "mailcatcher"
     gem 'thinking-sphinx', '2.0.10'
+    gem 'delayed_job_active_record'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
 

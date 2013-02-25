@@ -93,8 +93,10 @@ class ProjectsController < ApplicationController
   def add_member_project # For Adding user as member in project #
     @project_id.members.clear
     for user in params[:project][:user_ids]
-      @project_id.members << (User.find_by_id(user))
-      
+      @member = User.find_by_id(user)
+      @project_id.members << (@member)
+      Notify.member_added_notification_to_admin(@user, @project_id, @member).deliver
+      Notify.notification_to_member_that_added(@user, @project_id, @member).deliver
     end
     @project_id.update_attributes(params[:members])
     redirect_to @user, notice: "Members Added"
