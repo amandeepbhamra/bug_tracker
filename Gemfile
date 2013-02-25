@@ -6,7 +6,9 @@ gem 'rails', '3.2.9'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
-
+gem 'pg'
+gem "heroku"
+gem "taps"
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -16,9 +18,9 @@ group :assets do
   	gem 'devise'
     gem 'devise_invitable'
   	gem 'thin'
-    gem "better_errors"
-    gem "binding_of_caller"
-    gem 'quiet_assets', :group => :development
+    #gem "better_errors"
+    #gem "binding_of_caller"
+    #gem 'quiet_assets', :group => :development
     gem "paperclip", "~> 3.0"
     gem "mailcatcher"
     gem 'thinking-sphinx', '2.0.10'
