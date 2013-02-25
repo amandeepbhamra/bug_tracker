@@ -1,8 +1,8 @@
 class TicketsController < ApplicationController
   
   before_filter :validate_project, :except => [:search]
-  before_filter :validate_user, :only => [:index, :show]
-   
+  before_filter :validate_user, :only => [:index, :show, :view_new_tickets, :view_open_tickets, :view_hold_tickets, :view_resolved_tickets, :view_closed_tickets, :tickets_count_by_status]
+  before_filter :tickets_count_by_status, :only => [:index, :view_new_tickets, :view_open_tickets, :view_hold_tickets, :view_resolved_tickets, :view_closed_tickets]
 
   # GET /tickets
   # GET /tickets.json
@@ -87,5 +87,34 @@ class TicketsController < ApplicationController
   def search
     @tickets_searched = Ticket.search(params[:search],:page => params[:page], :per_page => 10)
     @tickets_count = Ticket.search(params[:search]).count
+  end
+
+  def tickets_count_by_status
+    @all_tickets_count = @project.tickets.count
+    @new_tickets_count = @project.tickets.find_all_by_status(1).count
+    @open_tickets_count = @project.tickets.find_all_by_status(2).count
+    @hold_tickets_count = @project.tickets.find_all_by_status(3).count
+    @resolved_tickets_count = @project.tickets.find_all_by_status(4).count
+    @closed_tickets_count = @project.tickets.find_all_by_status(5).count
+  end
+
+  def view_new_tickets
+    @new_tickets = @project.tickets.find_all_by_status(1)
+  end
+
+  def view_open_tickets
+    @open_tickets = @project.tickets.find_all_by_status(2)
+  end
+  
+  def view_hold_tickets
+    @hold_tickets = @project.tickets.find_all_by_status(3)
+  end
+  
+  def view_resolved_tickets
+    @resolved_tickets = @project.tickets.find_all_by_status(4)
+  end
+
+  def view_closed_tickets
+    @closed_tickets = @project.tickets.find_all_by_status(5)
   end
 end

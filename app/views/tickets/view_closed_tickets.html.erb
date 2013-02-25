@@ -12,7 +12,7 @@ Search:
 <%= link_to "Closed Tickets  (#{@closed_tickets_count})", view_closed_tickets_user_project_tickets_path(@user, @project) %>
 <br />
 
-<h1>Listing tickets</h1>
+<h1>Listing Closed tickets</h1>
 
 <table>
   <tr>
@@ -25,7 +25,7 @@ Search:
     <th>Age</th>
   </tr>
 
-<% @tickets.each do |ticket| %>
+<% @closed_tickets.each do |ticket| %>
   <tr>
     <td><%= ticket.title %></td>
     <td><%= ticket.description %></td>

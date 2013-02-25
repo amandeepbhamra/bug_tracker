@@ -14,7 +14,15 @@ Lighthouseapp::Application.routes.draw do
         put 'add_member_project'
       end
 
-      resources :tickets
+      resources :tickets do
+        collection do
+          get 'view_new_tickets'
+          get 'view_open_tickets'
+          get 'view_hold_tickets'
+          get 'view_resolved_tickets'
+          get 'view_closed_tickets'
+        end
+      end
     end
   end
 
