@@ -8,6 +8,7 @@ class TicketsController < ApplicationController
   # GET /tickets.json
   def index
     @tickets = @project.tickets
+    @user_assigned_tickets = @user.tickets
     respond_to do |format|
       format.html # index.html.erb
     end
@@ -18,7 +19,7 @@ class TicketsController < ApplicationController
   def show
     @ticket = @project.tickets.find(params[:id])
     @ticket_by_params = Ticket.find_by_id(params[:id])
-    @comments = @ticket_id.comments
+    @comments = @ticket_by_params.comments
     respond_to do |format|
       format.html # show.html.erb
     end

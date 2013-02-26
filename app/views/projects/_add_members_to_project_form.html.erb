@@ -3,7 +3,7 @@
     <%# Project.allowed_users(current_user).each do |user| %>
     <% @allowed_users.each do |user| %>
       <%= check_box_tag "project[user_ids][]", user.id, @project.members.include?(user) %>
-      <%= user.email %>
+      <%= user.email %><br />
     <% end %>
   </div>
   <div class="actions">

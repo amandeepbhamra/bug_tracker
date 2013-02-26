@@ -1,26 +1,38 @@
+<h3>All Projects owned by you.</h3>
 
-<h1>Projects Owned by You.</h1>
-
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @projects.each do |project| %>
-  <tr>
-    <td><%= project.name %></td>
-    <td><%= project.description %></td>
-    <td><%= link_to 'Show', user_project_path(@user, project) %></td>
-    <td><%= link_to 'Edit', edit_user_project_path(@user, project) %></td>
-    <td><%= link_to 'Destroy', user_project_path(@user, project), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
+<% if !@projects.blank? %>
+  <table border = 1>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+    <% @projects.each do |project| %>
+      <%= render 'projects', :project => project %>
+    <% end %>
+  </table>
+  <br />
+  <%= link_to 'Create a New Project', new_user_project_path(@user) %>
+<% else %>
+  No Projects has been created yet.
 <br />
+  <%= link_to 'Make a New Project', new_user_project_path(@user) %>
+<% end %>
+<br />
+<%= link_to 'Back to your profile', root_path %>
+<br />
+<h3>All Projects in which you are a member.</h3>
 
-<%= link_to 'Create a New Project', new_user_project_path(@user) %>
+<% if !@assigned_projects.blank? %>
+  <table border = 1>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+    <% @assigned_projects.each do |project| %>
+      <%= render 'projects', :project => project %>
+    <% end %>
+  </table>
+  <br />
+<% else %>
+  You are not member on any project.
+<% end %>

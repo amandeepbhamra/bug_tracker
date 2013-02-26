@@ -7,6 +7,7 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     @projects = @user.projects
+    @assigned_projects = @user.assigned_projects
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @projects }
@@ -45,6 +46,7 @@ class ProjectsController < ApplicationController
     @project = @user.projects.build(params[:project])
     respond_to do |format|
       if @project.save
+        @project.members = [@user]
         format.html { redirect_to @user, notice: 'Project was successfully created.' }
       else
         format.html { render action: "new" }

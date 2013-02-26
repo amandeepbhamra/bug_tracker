@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Name:</b>
+  <b>Project Name:</b>
   <%= @project.name %>
 </p>
 
@@ -17,8 +17,16 @@
 <%= render 'project_members', :project_members => @project_members %>
 
 <br />
-<%= link_to 'Edit', edit_user_project_path(@user, @project) %> |
-<%= link_to 'Back to Projects', user_projects_path(@user) %>
-<%= link_to 'Create a Ticket', new_user_project_ticket_path(@user, @project) %>
-<%= link_to 'View Tickets', user_project_tickets_path(@user, @project) %>
-<%= link_to 'Add Members', validate_allowed_users_user_project_path(@user, @project) %>
+<% if @project.user_id == current_user.id %>
+	<%= link_to 'Edit', edit_user_project_path(@user, @project) %> |
+	<%= link_to 'Destroy', user_project_path(@user, @project), method: :delete, data: { confirm: 'Are you sure?' } %>
+	<br />
+	<%= link_to 'Back to Projects', user_projects_path(@user) %>
+	<br />
+	<%= link_to 'Create a Ticket', new_user_project_ticket_path(@user, @project) %>
+	<%= link_to 'View Tickets', user_project_tickets_path(@user, @project) %>
+	<br />
+	<%= link_to 'Add Members', validate_allowed_users_user_project_path(@user, @project) %>
+<% else %>
+	<%= link_to 'View Tickets', user_project_tickets_path(@user, @project) %>
+<% end %>
