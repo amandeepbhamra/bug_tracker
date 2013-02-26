@@ -21,15 +21,13 @@ Lighthouseapp::Application.routes.draw do
           get 'view_hold_tickets'
           get 'view_resolved_tickets'
           get 'view_closed_tickets'
+          get 'search'
         end
       end
     end
   end
 
-  resources :tickets, :only => [] do
-    collection do
-      get 'search'
-    end
+  resources :tickets, :only => [:show] do
     resources :comments, :only => [:new, :create]
   end
 

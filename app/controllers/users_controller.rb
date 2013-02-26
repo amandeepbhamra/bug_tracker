@@ -55,15 +55,19 @@ class UsersController < ApplicationController
     end
   end
 
-  def validate_user # to check whether user is present or not #
+  # Action to show the list of members invited #
+  def list_of_invited_members
+    @user_invitation_accepted = User.allowed_users(current_user)
+    @user_invitation_not_accepted = User.not_allowed_users(current_user)
+  end
+
+  private
+
+  # To check whether user is present or not #
+  def validate_user 
     @user = User.find_by_id(params[:id])
     if @user.nil?
       @user = current_user
     end
-  end
-  
-  def list_of_invited_members
-    @user_invitation_accepted = User.invitation_accepted.find_all_by_invited_by_id(current_user)
-    @user_invitation_not_accepted = User.invitation_not_accepted.find_all_by_invited_by_id(current_user)
   end
 end

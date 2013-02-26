@@ -1,5 +1,5 @@
 <% if @tickets_count > 0 %>
-	<%= link_to "Tickets (#{@tickets_count})", search_tickets_path(:search => params[:search]) %>
+	<%= link_to "Tickets (#{@tickets_count})", search_user_project_tickets_path(:search => params[:search]) %>
 <% else %>
 	Tickets (0)
 <% end %>

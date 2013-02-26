@@ -13,7 +13,14 @@ class User < ActiveRecord::Base
   has_many :tickets, :through => :projects
   has_and_belongs_to_many :assigned_projects , :class_name => "Project", :uniq => true
 
-  validates :username, :presence => true , :if => lambda{|a| !a.new_record?}
+  #validates :username, :presence => true , :if => lambda{|a| !a.new_record?}
   
   has_attached_file :photo, :styles => { :medium => "300x300>", :thumb => "100x100>" }
+
+  def self.allowed_users(current_user)
+    invitation_accepted.find_all_by_invited_by_id(current_user)
+  end
+  def self.not_allowed_users(current_user)
+    invitation_not_accepted.find_all_by_invited_by_id(current_user)
+  end
 end

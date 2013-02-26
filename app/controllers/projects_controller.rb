@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   
   before_filter :validate_user_exits
-  before_filter :vaildate_project_id
+  before_filter :validate_project, :only => [:show, :validate_allowed_users, :add_member_project]
  
   # GET /projects
   # GET /projects.json
@@ -17,7 +17,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1.json
   def show
     @project = @user.projects.find(params[:id])
-    @project_members = @project_id.members
+    @project_members = @project.members
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @project }
@@ -76,29 +76,31 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def validate_user_exits # Filter To check whether user exits or not #
+  # For validating users to be addable as member in Project #
+  def validate_allowed_users 
+    @allowed_users = User.allowed_users(current_user)
+  end
+
+  # For Adding user as member in project #
+  def add_member_project 
+    @project.members.clear
+    for user in params[:project][:user_ids]
+      Project.add_members_to_project(current_user,user,@project)
+    end
+    @project.update_attributes(params[:members])
+    redirect_to user_project_path(@user,@project), notice: "Members Added"
+  end
+
+  private
+
+  # Filter To check whether user exits or not #
+  def validate_user_exits 
     @user = User.find_by_id(params[:user_id])
     redirect_to root_path if @user.nil?
   end
   
-  def vaildate_project_id # Filter For Finding project id #
-    @project_id = Project.find_by_id(params[:id])
-  end
-
-  def validate_allowed_users # For validating users to be addable as member in Project#
-    @project_members = @project_id.members
-    @user_invitation_accepted = User.invitation_accepted.find_all_by_invited_by_id(current_user)
-  end
-  
-  def add_member_project # For Adding user as member in project #
-    @project_id.members.clear
-    for user in params[:project][:user_ids]
-      @member = User.find_by_id(user)
-      @project_id.members << (@member)
-      Notify.delay(queue: "member_added_notification_to_admin", priority: 3).member_added_notification_to_admin(@user, @project_id, @member)
-      Notify.delay(queue: "notification_to_member_that_added", priority: 3).notification_to_member_that_added(@user, @project_id, @member)
-    end
-    @project_id.update_attributes(params[:members])
-    redirect_to @user, notice: "Members Added"
+  # Filter For Finding project id #
+  def validate_project 
+    @project = Project.find_by_id(params[:id])
   end
 end
