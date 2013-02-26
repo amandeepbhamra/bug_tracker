@@ -11,6 +11,9 @@ gem "heroku"
 gem "taps"
 gem 'devise'
 gem 'devise_invitable'
+gem "paperclip", "~> 3.0"
+gem 'thinking-sphinx', '2.0.10'
+gem 'delayed_job_active_record'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -20,16 +23,11 @@ group :assets do
     #gem "better_errors"
     #gem "binding_of_caller"
     #gem 'quiet_assets', :group => :development
-    gem "paperclip", "~> 3.0"
     #gem "mailcatcher", :group => :development
-    gem 'thinking-sphinx', '2.0.10'
-    gem 'delayed_job_active_record'
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
-
+    # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+    # gem 'therubyracer', :platforms => :ruby
   	gem 'uglifier', '>= 1.0.3'
 end
-
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
