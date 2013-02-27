@@ -15,7 +15,7 @@ Lighthouseapp::Application.configure do
   domain: "gmail.com",
   authentication: "plain",
   enable_starttls_auto: true,
-  user_name: "amandeep.rails@gmail.com",
+  user_name: "rails.amandeep",
   password: "asdf@1234"
 }
   config.serve_static_assets = false
