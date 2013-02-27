@@ -16,4 +16,11 @@ class User < ActiveRecord::Base
   validates :username, :presence => true , :if => lambda{|a| !a.new_record?}
   
   has_attached_file :photo, :styles => { :medium => "300x300>", :thumb => "100x100>" }
+
+  def self.allowed_users(current_user)
+    invitation_accepted.find_all_by_invited_by_id(current_user)
+  end
+  def self.not_allowed_users(current_user)
+    invitation_not_accepted.find_all_by_invited_by_id(current_user)
+  end
 end

@@ -1,13 +1,14 @@
 class TicketsController < ApplicationController
   
-  before_filter :validate_project, :except => [:search]
-  before_filter :validate_user, :only => [:index, :show, :view_new_tickets, :view_open_tickets, :view_hold_tickets, :view_resolved_tickets, :view_closed_tickets, :tickets_count_by_status, :new, :create, :update, :destroy]
+  before_filter :validate_project
+  before_filter :validate_user
   before_filter :tickets_count_by_status, :only => [:index, :view_new_tickets, :view_open_tickets, :view_hold_tickets, :view_resolved_tickets, :view_closed_tickets]
 
   # GET /tickets
   # GET /tickets.json
   def index
     @tickets = @project.tickets
+    @user_assigned_tickets = @user.tickets
     respond_to do |format|
       format.html # index.html.erb
     end
@@ -17,8 +18,8 @@ class TicketsController < ApplicationController
   # GET /tickets/1.json
   def show
     @ticket = @project.tickets.find(params[:id])
-    @ticket_id = Ticket.find_by_id(params[:id])
-    @comments = @ticket_id.comments
+    @ticket_by_params = Ticket.find_by_id(params[:id])
+    @comments = @ticket_by_params.comments
     respond_to do |format|
       format.html # show.html.erb
     end
@@ -76,30 +77,11 @@ class TicketsController < ApplicationController
     end
   end
 
-  def validate_user 
-    @user = User.find_by_id(params[:user_id])
-    @user = current_user if @user.nil?
-  end
-
-  def validate_project
-    @project = Project.find_by_id(params[:project_id])
-    redirect_to @user, notice: "Invalid Project" if @project.nil?
-  end
-
   def search
     @tickets_searched = Ticket.search(params[:search],:page => params[:page], :per_page => 10)
     @tickets_count = Ticket.search(params[:search]).count
   end
-
-  def tickets_count_by_status
-    @all_tickets_count = @project.tickets.count
-    @new_tickets_count = @project.tickets.find_all_by_status(1).count
-    @open_tickets_count = @project.tickets.find_all_by_status(2).count
-    @hold_tickets_count = @project.tickets.find_all_by_status(3).count
-    @resolved_tickets_count = @project.tickets.find_all_by_status(4).count
-    @closed_tickets_count = @project.tickets.find_all_by_status(5).count
-  end
-
+  
   def view_new_tickets
     @new_tickets = @project.tickets.find_all_by_status(1)
   end
@@ -118,5 +100,26 @@ class TicketsController < ApplicationController
 
   def view_closed_tickets
     @closed_tickets = @project.tickets.find_all_by_status(5)
+  end
+
+  private
+
+  def validate_user 
+    @user = User.find_by_id(params[:user_id])
+    @user = current_user if @user.nil?
+  end
+
+  def validate_project
+    @project = Project.find_by_id(params[:project_id])
+    redirect_to @user, notice: "Invalid Project" if @project.nil?
+  end
+
+  def tickets_count_by_status
+    @all_tickets_count = @project.tickets.count
+    @new_tickets_count = @project.tickets.find_all_by_status(1).count
+    @open_tickets_count = @project.tickets.find_all_by_status(2).count
+    @hold_tickets_count = @project.tickets.find_all_by_status(3).count
+    @resolved_tickets_count = @project.tickets.find_all_by_status(4).count
+    @closed_tickets_count = @project.tickets.find_all_by_status(5).count
   end
 end

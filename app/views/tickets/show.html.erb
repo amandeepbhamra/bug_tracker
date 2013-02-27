@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
-
+Ticket under project <%= @project.name %>
 <p>
-  <b>Title:</b>
+  <b>Ticket Title:</b>
   <%= @ticket.title %>
 </p>
 
@@ -29,17 +29,23 @@
 	<b>No Attachment</b><br />
 <% else %>
     <b>Document Attached</b>
-	<%= link_to 'Download', @ticket.document.url(:original, false) %><br />
+	<%= link_to 'Download', @ticket.document.url(:original, false),
+      :target => "_blank" %><br />
 <% end %>
 
 <p>
-  <b>Comments:</b>
+  <b>Comments:</b><br />
   <% @comments.each do |comment| %>
     <%= comment.content %> <b>by:</b>
-    <%= comment.commentor %>
+    <%= comment.commentor %><br />
   <% end %>
 </p>
 
-<%= link_to 'New Comment', new_ticket_comment_path(@ticket_id) %><br />
-<%= link_to 'Edit Ticket', edit_user_project_ticket_path(@user, @project, @ticket) %> |
+<%= link_to 'New Comment', new_ticket_comment_path(@ticket_by_params) %><br />
+
+<% if @project.user_id == current_user.id %>
+  <%= link_to 'Edit Ticket', edit_user_project_ticket_path(@user, @project, @ticket) %> |
+  <%= link_to 'Destroy', user_project_ticket_path(@user, @project, @ticket), method: :delete, data: { confirm: 'Are you sure?' } %>
+<% end %>
+<br />
 <%= link_to 'Back To Tickets', user_project_tickets_path(@user, @project) %>

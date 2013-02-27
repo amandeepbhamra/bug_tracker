@@ -1,9 +1,9 @@
 <% if @tickets_count > 0 %>
-	<%= link_to "Tickets (#{@tickets_count})", search_tickets_path(:search => params[:search]) %>
+	<%= link_to "Tickets (#{@tickets_count})", search_user_project_tickets_path(:search => params[:search]) %>
 <% else %>
 	Tickets (0)
 <% end %>
 <br />
 <% @tickets_searched.each do |ticket| %>
-	<%= ticket.title %><br />
+	<%= link_to ticket.title, user_project_ticket_path(@user, @project, ticket) %><br />
 <% end %>
