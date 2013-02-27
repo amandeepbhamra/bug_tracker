@@ -1,3 +1,4 @@
+require 'tls_smtp'
 Lighthouseapp::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -9,15 +10,15 @@ Lighthouseapp::Application.configure do
   config.action_controller.perform_caching = true
   config.action_mailer.default_url_options = { :host => 'lighthouseapp.herokuapp.com' }
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.action_mailer.smtp_settings = {
-  address: "smtp.gmail.com",
-  port: 587,
-  domain: "gmail.com",
-  authentication: "plain",
-  enable_starttls_auto: true,
-  user_name: "rails.amandeep",
-  password: "asdf@1234"
-}
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
+    :address => "smtp.gmail.com",
+    :port => 25,
+    :domain => "gmail.com",
+    :user_name => "rails.amandeep@gmail.com",
+    :password => "asdf@1234",
+    :authentication => :plain,
+  }
   config.serve_static_assets = false
 
   # Compress JavaScripts and CSS
