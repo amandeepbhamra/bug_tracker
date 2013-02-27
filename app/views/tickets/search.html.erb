@@ -5,5 +5,5 @@
 <% end %>
 <br />
 <% @tickets_searched.each do |ticket| %>
-	<%= ticket.title %><br />
+	<%= link_to ticket.title, user_project_ticket_path(@user, @project, ticket) %><br />
 <% end %>

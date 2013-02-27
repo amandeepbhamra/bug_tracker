@@ -1,6 +1,6 @@
 class TicketsController < ApplicationController
   
-  before_filter :validate_project, :except => [:search]
+  before_filter :validate_project
   before_filter :validate_user
   before_filter :tickets_count_by_status, :only => [:index, :view_new_tickets, :view_open_tickets, :view_hold_tickets, :view_resolved_tickets, :view_closed_tickets]
 

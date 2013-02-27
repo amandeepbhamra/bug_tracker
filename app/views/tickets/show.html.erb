@@ -29,7 +29,7 @@ Ticket under project <%= @project.name %>
 	<b>No Attachment</b><br />
 <% else %>
     <b>Document Attached</b>
-	<%= link_to 'Download', ticket.document.url(:original, false),
+	<%= link_to 'Download', @ticket.document.url(:original, false),
       :target => "_blank" %><br />
 <% end %>
 
