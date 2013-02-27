@@ -12,11 +12,11 @@ Lighthouseapp::Application.configure do
   config.action_mailer.smtp_settings = {
   address: "smtp.gmail.com",
   port: 587,
-  domain: "lighthouseapp.herokuapp.com",
+  domain: "gmail.com",
   authentication: "plain",
   enable_starttls_auto: true,
-  user_name: ENV["amandeep.rails"],
-  password: ENV["asdf@1234"]
+  user_name: "amandeep.rails@gmail.com",
+  password: "asdf@1234"
 }
   config.serve_static_assets = false
 
