@@ -1,51 +1,55 @@
-<p id="notice"><%= notice %></p>
-Ticket under project <%= @project.name %>
-<p>
-  <b>Ticket Title:</b>
-  <%= @ticket.title %>
-</p>
+<%- model_class = Ticket -%>
+<div class="page-header">
+  <h1><%= @ticket.title %></h1>
+</div>
 
-<p>
-  <b>Description:</b>
-  <%= @ticket.description %>
-</p>
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
+  <dd><%= @ticket.description %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:document) %>:</strong></dt>
+  <dd>
+      <% if @ticket.document.blank? %>
+        <b>No Attachment</b><br />
+      <% else %>
+        <b>Document Attached</b>
+        <%= link_to 'Download', @ticket.document.url(:original, false),
+        :target => "_blank" %><br />
+      <% end %>
+  </dd>
+  <dt><strong><%= model_class.human_attribute_name(:status) %>:</strong></dt>
+  <dd><%= @ticket.ticket_status %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:assigned_to) %>:</strong></dt>
+  <dd>
+      <% if !(User.find_by_id(@ticket.assigned_to).nil?) %>
+        <%= User.find_by_id(@ticket.assigned_to).email %>
+      <% else %>
+        No one.
+      <% end %>
+  </dd>
+</dl>
 
-<p>
-  <b>Status:</b>
-  <%= @ticket.ticket_status %>
-</p>
+<div class="page-header">
+  <h4>Comments:</h4>
+</div>
 
-<p>
-  <b>who's Responsible:</b>
-  <% if !(User.find_by_id(@ticket.assigned_to).nil?) %>
-    <td><%= User.find_by_id(@ticket.assigned_to).email %></td>
-  <% else %>
-    <td><%= "No one" %></td>
-  <% end %>
-</p>
-
-
-<% if @ticket.document.blank? %>
-	<b>No Attachment</b><br />
-<% else %>
-    <b>Document Attached</b>
-	<%= link_to 'Download', @ticket.document.url(:original, false),
-      :target => "_blank" %><br />
-<% end %>
-
-<p>
-  <b>Comments:</b><br />
+<% if !@comments.blank? %>
   <% @comments.each do |comment| %>
-    <%= comment.content %> <b>by:</b>
-    <%= comment.commentor %><br />
+      <%= comment.content %> <b>by:</b>
+      <%= comment.commentor %><br />
   <% end %>
-</p>
-
-<%= link_to 'New Comment', new_ticket_comment_path(@ticket_by_params) %><br />
-
-<% if @project.user_id == current_user.id %>
-  <%= link_to 'Edit Ticket', edit_user_project_ticket_path(@user, @project, @ticket) %> |
-  <%= link_to 'Destroy', user_project_ticket_path(@user, @project, @ticket), method: :delete, data: { confirm: 'Are you sure?' } %>
+<% else %>
+  <h5>No comments</h5>
 <% end %>
-<br />
-<%= link_to 'Back To Tickets', user_project_tickets_path(@user, @project) %>
+
+<div class="form-actions">
+  <%= link_to 'New Comment', new_ticket_comment_path(@ticket_by_params), :class => "btn btn-info" %>
+  <% if @project.user_id == current_user.id %>
+    <%= link_to 'Edit Ticket', edit_user_project_ticket_path(@user, @project, @ticket), :class => "btn" %>
+    <%= link_to 'Destroy', user_project_ticket_path(@user, @project, @ticket), :class => "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% end %>
+  <%= link_to 'Back To Tickets', user_project_tickets_path(@user, @project), :class => "btn" %>
+</div>
+
+
+
+

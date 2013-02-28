@@ -1,52 +1,61 @@
-<h3>Listing tickets under Project <%= @project.name %></h3>
-<h4>Search:</h4>
-<%= render 'search_form' %>
-<br />
-<%= render 'links_status_tickets' %>
-<br />
-<h4>All tickets</h4>
+<%- model_class = Ticket -%>
 <% if @ticket.blank? %>
-  <table border = 1>
-      <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Status</th>
-        <th>Who's Responsible</th>
-        <th>Download Attached Document</th>
-        <th>Age</th>
-      </tr>
-      <% @tickets.each do |ticket| %>
-        <%= render 'tickets', :ticket => ticket %>
-      <% end %>
-    </table>
-    <br />
-    <% if @project.user_id == current_user.id %>
-      <%= link_to "New Ticket", new_user_project_ticket_path(@user, @project)%>
+<div class="page-header">
+  <h3><%=t '.title', :default => model_class.model_name.human.pluralize %></h3>
+</div>
+<table class="table table-striped">
+  <h5>Tickets under <%= @project.name %></h5>
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:title) %></th>
+      <th><%= model_class.human_attribute_name(:description) %></th>
+      <th><%= model_class.human_attribute_name(:document) %></th>
+      <th><%= model_class.human_attribute_name(:status) %></th>
+      <th><%= model_class.human_attribute_name(:assigned_to) %></th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tickets.each do |ticket| %>
+      <%= render 'tickets', :ticket => ticket %>
     <% end %>
-  <% else %>
-  No tickets has been created yet.
+  </tbody>
+</table>
+  
+  <% if @project.user_id == current_user.id %>
+      <%= link_to "New Ticket", new_user_project_ticket_path(@user, @project), :class => "btn btn-info"%>
+  <% end %>
+<% else %>
+  <h5>No tickets has been created yet.</h5>
   <br />
   <% if @project.user_id == current_user.id %>
-      <%= link_to "Make a new Ticket", new_user_project_ticket_path(@user, @project)%>
-    <% end %>
+      <%= link_to "Make a new Ticket", new_user_project_ticket_path(@user, @project), :class => "btn btn-info"%>
+  <% end %>
 <% end %>
+<br />
+<div class="page-header">
+  <h3>Assigned Tickets.</h3>
+</div>
 
 <% if @user_assigned_tickets.blank? %>
-      <table border = 1>
-        <tr>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Status</th>
-          <th>Download Attached Document</th>
-          <th>Age</th>
-        </tr>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= model_class.human_attribute_name(:title) %></th>
+        <th><%= model_class.human_attribute_name(:description) %></th>
+        <th><%= model_class.human_attribute_name(:document) %></th>
+        <th><%= model_class.human_attribute_name(:status) %></th>
+        <th><%= model_class.human_attribute_name(:assigned_to) %></th>
+        <th>Age</th>
+      </tr>
+    </thead>
+    <tbody>
         <% @user_assigned_tickets.each do |ticket| %>
           <%= render 'tickets', :ticket => ticket %>
         <% end %>
-      </table>
-      <br />
+    </tbody>
+  </table>
 <% else %>
-  No tickets has been assigned to you.
+<h5>No tickets has been Assigned to you.</h5>
 <% end %>
-<br /><br />
-<%= link_to 'Back to project', user_project_path(@user, @project) %>
+<%= link_to 'Back to project', user_project_path(@user, @project), :class => "btn" %>

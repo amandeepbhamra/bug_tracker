@@ -23,7 +23,9 @@
               new_user_project_path(@user),
               :class => 'btn btn-info' %>
 <% else %>
-  <h4>No Projects has been created yet.</h4>
+  <h5>No Projects has been created yet.</h5>
+  
+
 <br />
   <%= link_to t('.new', :default => t("helpers.links.new")),
               new_user_project_path(@user),
@@ -49,7 +51,7 @@
     </tbody>
   </table>
 <% else %>
-  You are not member on any project.
+  <h5>You are not member on any project.</h5>
 <% end %>
 
 <br />
