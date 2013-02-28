@@ -1,38 +1,57 @@
-<h3>All Projects owned by you.</h3>
+<%- model_class = Project -%>
 
 <% if !@projects.blank? %>
-  <table border = 1>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-    <% @projects.each do |project| %>
-      <%= render 'projects', :project => project %>
-    <% end %>
+  <div class="page-header">
+    <h3>All Projects owned by you.</h3>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= model_class.human_attribute_name(:name) %></th>
+        <th><%= model_class.human_attribute_name(:description) %></th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      <% @projects.each do |project| %>
+        <%= render 'projects', :project => project %>
+      <% end %>
+    </tbody>
   </table>
-  <br />
-  <%= link_to 'Create a New Project', new_user_project_path(@user) %>
+
+  <%= link_to t('.new', :default => t("helpers.links.new")),
+              new_user_project_path(@user),
+              :class => 'btn btn-info' %>
 <% else %>
-  No Projects has been created yet.
+  <h4>No Projects has been created yet.</h4>
 <br />
-  <%= link_to 'Make a New Project', new_user_project_path(@user) %>
+  <%= link_to t('.new', :default => t("helpers.links.new")),
+              new_user_project_path(@user),
+              :class => 'btn btn-info' %>
 <% end %>
-<br />
-<%= link_to 'Back to your profile', root_path %>
-<br />
-<h3>All Projects in which you are a member.</h3>
 
 <% if !@assigned_projects.blank? %>
-  <table border = 1>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-    </tr>
-    <% @assigned_projects.each do |project| %>
-      <%= render 'projects', :project => project %>
-    <% end %>
+  <div class="page-header">
+    <h3>All Projects in which you are a member.</h3>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= model_class.human_attribute_name(:name) %></th>
+        <th><%= model_class.human_attribute_name(:description) %></th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      <% @assigned_projects.each do |project| %>
+        <%= render 'projects', :project => project %>
+      <% end %>
+    </tbody>
   </table>
-  <br />
 <% else %>
   You are not member on any project.
 <% end %>
+
+<br />
+<%= link_to 'Back to your profile', root_path, :class => "btn" %>
+<br />
