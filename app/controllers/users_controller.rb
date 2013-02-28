@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   
-  before_filter :validate_user, :only => [:show, :edit, :update, :assign_project_to_user]
+  before_filter :validate_user, :only => [:show, :edit, :update, :assign_project_to_user, :list_of_invited_members]
   
   # GET /users/1
   # GET /users/1.json
