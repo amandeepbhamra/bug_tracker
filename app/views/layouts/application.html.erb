@@ -9,14 +9,10 @@
 	</head>
 
 	<body>
-		<p>
-			<% if user_signed_in? %>
-				<h2><%= link_to 'Dashboard', current_user %></h2>
-				<%= link_to 'Sign Out', destroy_user_session_path, method: :delete %>
-			<% end %>
-		</p>
-
-		<%= yield %>
-
+		<%= render 'layouts/header' %>
+		
+		<div class="container">
+			<%= yield %>
+		</div>
 	</body>
 </html>
