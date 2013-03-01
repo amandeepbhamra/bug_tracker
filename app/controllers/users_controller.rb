@@ -61,6 +61,7 @@ class UsersController < ApplicationController
     @user_invitation_not_accepted = User.not_allowed_users(current_user)
   end
 
+  
   private
 
   # To check whether user is present or not #

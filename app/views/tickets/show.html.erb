@@ -40,9 +40,11 @@
 <% else %>
   <h5>No comments</h5>
 <% end %>
-
+<br />
+<h6>New Comment </h6>
+<%= render 'comments/form', :@comment => Comment.new %>
+<br />
 <div class="form-actions">
-  <%= link_to 'New Comment', new_ticket_comment_path(@ticket_by_params), :class => "btn btn-info" %>
   <% if @project.user_id == current_user.id %>
     <%= link_to 'Edit Ticket', edit_user_project_ticket_path(@user, @project, @ticket), :class => "btn" %>
     <%= link_to 'Destroy', user_project_ticket_path(@user, @project, @ticket), :class => "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
