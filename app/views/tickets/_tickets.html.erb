@@ -1,6 +1,8 @@
 <tr>
     <td>
-        <%= link_to ticket.title, user_project_ticket_path(@user, @project, ticket) %>
+        <strong>
+          <%= link_to ticket.title, user_project_ticket_path(@user, @project, ticket) %>
+        </strong>
     </td>
     <td><%= ticket.description %></td>
     <td><%= ticket.ticket_status %></td>
