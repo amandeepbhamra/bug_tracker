@@ -1,10 +1,12 @@
 <%- model_class = Ticket -%>
+
+<%= render 'links_status_tickets' %>
 <% if @ticket.blank? %>
 <div class="page-header">
-  <h3><%=t '.title', :default => model_class.model_name.human.pluralize %></h3>
+  <h4>Tickets under <%= @project.name %></h4>
 </div>
 <table class="table table-striped">
-  <h5>Tickets under <%= @project.name %></h5>
+  <h5>All Tickets</h5>
   <thead>
     <tr>
       <th><%= model_class.human_attribute_name(:title) %></th>
@@ -34,7 +36,7 @@
 <% end %>
 <br />
 <div class="page-header">
-  <h3>Assigned Tickets.</h3>
+  <h4>Assigned Tickets.</h4>
 </div>
 
 <% if @user_assigned_tickets.blank? %>

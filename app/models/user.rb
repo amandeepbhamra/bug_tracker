@@ -23,4 +23,5 @@ class User < ActiveRecord::Base
   def self.not_allowed_users(current_user)
     invitation_not_accepted.find_all_by_invited_by_id(current_user)
   end
+  
 end

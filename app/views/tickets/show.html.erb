@@ -9,11 +9,15 @@
   <dt><strong><%= model_class.human_attribute_name(:document) %>:</strong></dt>
   <dd>
       <% if @ticket.document.blank? %>
-        <b>No Attachment</b><br />
+        No Attachment<br />
       <% else %>
-        <b>Document Attached</b>
-        <%= link_to 'Download', @ticket.document.url(:original, false),
-        :target => "_blank" %><br />
+        Document Attached
+        <strong><%= link_to 'Download', @ticket.document.url(:original, false),
+        :target => "_blank" %></strong><br />
+        <% if Ticket.validate_document_image(@ticket.document) %>
+          <dd><strong>Preview:</strong></dd>
+          <dd><%= image_tag @ticket.document.url(:thumb) %></dd>
+        <% end %>
       <% end %>
   </dd>
   <dt><strong><%= model_class.human_attribute_name(:status) %>:</strong></dt>
