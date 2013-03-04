@@ -50,9 +50,9 @@ function RemoveLastChoice() {
 
 <% resource.class.invite_key_fields.each do |field| -%>
   	<p><%= f.label field %><br />
-  	<div id="divContent">
-		<%= f.text_field(:user, :email_ids) %></p>
-	</div>
+  	<!-- <div id="divContent"> -->
+		<%= f.text_field field %></p>
+	<!-- </div> -->
 <% end -%>
   <p><%= f.submit t("devise.invitations.new.submit_button") %></p>
 <% end %><br />
