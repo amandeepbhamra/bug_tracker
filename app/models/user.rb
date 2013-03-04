@@ -25,4 +25,13 @@ class User < ActiveRecord::Base
     invitation_not_accepted.find_all_by_invited_by_id(current_user)
   end
   
+  USER_ROLES = { 1=> "Manager", 2 => "Member" }
+
+  def user_role
+    USER_ROLES[user_role]
+  end
+  
+  def self.user_role_array
+    USER_ROLES.to_a.sort
+  end
 end

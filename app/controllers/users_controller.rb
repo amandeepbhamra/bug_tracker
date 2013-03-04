@@ -67,8 +67,6 @@ class UsersController < ApplicationController
   # To check whether user is present or not #
   def validate_user 
     @user = User.find_by_id(params[:id])
-    if @user.nil?
-      @user = current_user
-    end
+    @user = current_user if @user.nil?
   end
 end

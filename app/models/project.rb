@@ -7,15 +7,7 @@ class Project < ActiveRecord::Base
 
   validates :name, :description, :presence => true 
 
-  USER_ROLES = { 1=> "Manager", 2 => "Member" }
-
-  def user_role
-    USER_ROLES[user_role]
-  end
   
-  def self.ticket_status_array
-    USER_ROLES.to_a.sort
-  end
 
   def self.add_members_to_project(current_user,user,project)
   	@member = User.find_by_id(user)

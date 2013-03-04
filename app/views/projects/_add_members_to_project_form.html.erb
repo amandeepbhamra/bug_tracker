@@ -16,11 +16,14 @@
 <% if @project.user_id == current_user.id %>
   <%= form_for (@project), :url => add_member_project_user_project_path do |f| %>
     <div class="field">
-      <%# Project.allowed_users(current_user).each do |user| %>
+      
       <% @allowed_users.each do |user| %>
         <%= check_box_tag "project[user_ids][]", user.id, @project.members.include?(user) %>
-        <%= user.email %><br />
+        <%= user.email %>
+
+        <br />
       <% end %>
+      <%#= f.collection_select :user_role, User.user_role_array, :first, :last %>
     </div>
     <div class="actions">
       <%= f.submit 'Add members' %>
