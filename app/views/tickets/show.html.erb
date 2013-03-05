@@ -25,7 +25,7 @@
   <dt><strong><%= model_class.human_attribute_name(:assigned_to) %>:</strong></dt>
   <dd>
       <% if !(User.find_by_id(@ticket.assigned_to).nil?) %>
-        <%= User.find_by_id(@ticket.assigned_to).email %>
+        <%= User.find_by_id(@ticket.assigned_to).username %>
       <% else %>
         No one.
       <% end %>
