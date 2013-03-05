@@ -8,7 +8,7 @@ class TicketsController < ApplicationController
 
   def index
     @tickets = @project.tickets
-    @user_assigned_tickets = current_user.tickets.find_all_by_project_id(params[:project_id])
+    @user_assigned_tickets = @project.tickets.find_all_by_assigned_to(current_user)
     respond_to do |format|
       format.html # index.html.erb
     end

@@ -66,11 +66,12 @@ class ProjectsController < ApplicationController
   # For Adding user as member in project #
   def add_member_project 
     @project.members.clear
-    if params[:project][:user_ids].present?
+    if defined? params[:project][:user_ids]
       for user in params[:project][:user_ids] 
         Project.add_members_to_project(current_user, user, @project)
       end
-    
+    else
+      @project.members = [current_user]
     end
 
     @project.update_attributes(params[:members])
