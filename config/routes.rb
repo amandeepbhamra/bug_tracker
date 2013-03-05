@@ -24,6 +24,8 @@ Lighthouseapp::Application.routes.draw do
           get 'search'
         end
       end
+
+      resources :roles, :except => [:index, :show, :destroy]
     end
   end
 

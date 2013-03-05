@@ -8,11 +8,12 @@ class User < ActiveRecord::Base
   
   has_many :projects
   has_many :tickets, :through => :projects
+  has_many :roles, :through => :projects, :uniq => true
   
   has_and_belongs_to_many :assigned_projects, :class_name => "Project", :uniq => true, 
                           :join_table => "projects_users"
   
-
+  accepts_nested_attributes_for :roles                        
   validates :username, :presence => true , :if => lambda{|a| !a.new_record?}
   
   has_attached_file :photo, :styles => { :medium => "300x300>", :thumb => "100x100>" }

@@ -3,6 +3,7 @@ class Ticket < ActiveRecord::Base
 
   belongs_to :project
   belongs_to :user
+  
   has_many :comments
 
   validates :title, :description, :status, :presence => true 

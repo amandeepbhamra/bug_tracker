@@ -86,7 +86,6 @@ class ProjectsController < ApplicationController
   # For Adding user as member in project #
   def add_member_project 
     @project.members.clear
-    
     for user in params[:project][:user_ids]
       Project.add_members_to_project(current_user,user,@project)
     end
