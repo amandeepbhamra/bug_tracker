@@ -1,6 +1,5 @@
-<h1>Editing ticket</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', user_project_ticket_path(@user, @project, @ticket) %> |
-<%= link_to 'Back', user_project_tickets_path(@user, @project) %>
+<%- model_class = Ticket -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human, :default => "Edit #{model_class.model_name.human}") %></h1>
+</div>
+<%= render :partial => 'form' %>

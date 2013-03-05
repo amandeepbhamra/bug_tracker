@@ -1,21 +1,19 @@
-<p id="notice"><%= notice %></p>
+<div class="page-header">
+  <% if @user.username? %>
+      <h1><%= @user.username %></h1>
+    <% else %>
+      <h1><%= @user.email %></h1>
+    <% end %>
+</div>
 
-<p>
-	<%= image_tag @user.photo.url(:thumb) %>
-	<b>User:</b>
-  	<% if @user.username.nil? %>
-  		<%= @user.email %>
-  	<% else %>
-	  	<%= @user.username %>
-  	<% end %>
-</p>
+<dl class="dl-horizontal">
+  
+</dl>
 
-<br />
-
-<%= link_to 'Edit Profile', edit_user_path(@user) %> |
-<%= link_to 'Create a New Project', new_user_project_path(@user) %>
-<%= link_to 'View Projects', user_projects_path(@user) %>
-<%= link_to 'Invite Member', new_user_invitation_path %>
-<%= link_to 'View Invited Member', list_of_invited_members_user_path(current_user) %>
-
-<br>
+<div class="form-actions">
+<%= link_to 'Edit Profile', edit_user_path(@user), :class => 'btn' %>
+<%= link_to 'Create a New Project', new_user_project_path(@user), :class => 'btn'  %>
+<%= link_to 'View Projects', user_projects_path(@user), :class => 'btn'  %>
+<%= link_to 'Invite Member', new_user_invitation_path, :class => 'btn'  %>
+<%= link_to 'View Invited Member', list_of_invited_members_user_path(current_user), :class => 'btn'  %>
+</div>

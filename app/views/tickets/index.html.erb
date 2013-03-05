@@ -1,52 +1,41 @@
-<h3>Listing tickets under Project <%= @project.name %></h3>
-<h4>Search:</h4>
+<%- model_class = Ticket -%>
+
+<h4>Search Tickets:</h4>
+
 <%= render 'search_form' %>
-<br />
 <%= render 'links_status_tickets' %>
-<br />
-<h4>All tickets</h4>
+
 <% if @ticket.blank? %>
-  <table border = 1>
-      <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Status</th>
-        <th>Who's Responsible</th>
-        <th>Download Attached Document</th>
-        <th>Age</th>
-      </tr>
+
+  <div class="page-header">
+    <h4>Tickets under <%= @project.name %></h4>
+  </div>
+  <table class="table table-striped">
+    <h5>All Tickets</h5>
+    <thead>
+      <%= render 'thead_for_tickets' %>
+    </thead>
+    <tbody>
       <% @tickets.each do |ticket| %>
         <%= render 'tickets', :ticket => ticket %>
       <% end %>
-    </table>
-    <br />
-    <% if @project.user_id == current_user.id %>
-      <%= link_to "New Ticket", new_user_project_ticket_path(@user, @project)%>
-    <% end %>
-  <% else %>
-  No tickets has been created yet.
+    </tbody>
+  </table>
+  
+  <% if @project.user_id == current_user.id %>
+      <%= link_to "New Ticket", new_user_project_ticket_path(@user, @project), :class => "btn btn-info"%>
+  <% end %>
+
+<% else %>
+  <h5>No tickets has been created yet.</h5>
   <br />
   <% if @project.user_id == current_user.id %>
-      <%= link_to "Make a new Ticket", new_user_project_ticket_path(@user, @project)%>
-    <% end %>
+      <%= link_to "Make a new Ticket", new_user_project_ticket_path(@user, @project), :class => "btn btn-info"%>
+  <% end %>
 <% end %>
 
-<% if @user_assigned_tickets.blank? %>
-      <table border = 1>
-        <tr>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Status</th>
-          <th>Download Attached Document</th>
-          <th>Age</th>
-        </tr>
-        <% @user_assigned_tickets.each do |ticket| %>
-          <%= render 'tickets', :ticket => ticket %>
-        <% end %>
-      </table>
-      <br />
-<% else %>
-  No tickets has been assigned to you.
-<% end %>
-<br /><br />
-<%= link_to 'Back to project', user_project_path(@user, @project) %>
+<br />
+
+<%= render 'user_assigned_tickets' %>
+   
+<%= link_to 'Back to project', user_project_path(@user, @project), :class => "btn" %>

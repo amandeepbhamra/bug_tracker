@@ -1,4 +1,10 @@
 <tr>
-    <td><%= link_to project.name, user_project_path(project.user_id, project) %></td>
+    <td>
+    	<strong>
+    		<%= link_to project.name, user_project_path(project.user_id, project) %>
+    	</strong>
+    </td>
     <td><%= project.description %></td>
+    <td><%= link_to_if(project.user_id == current_user.id , "New Ticket", new_user_project_ticket_path(@user, project), :class => "btn btn-info") %>
+    </td>
 </tr>

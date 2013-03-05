@@ -6,7 +6,7 @@ Lighthouseapp::Application.routes.draw do
     member do 
       get 'list_of_invited_members'
     end
-
+    
     resources :projects do 
       member do
         get 'validate_allowed_users'
@@ -24,6 +24,8 @@ Lighthouseapp::Application.routes.draw do
           get 'search'
         end
       end
+
+      resources :roles, :except => [:index, :show, :destroy]
     end
   end
 

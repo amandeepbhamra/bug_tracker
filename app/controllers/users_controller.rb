@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   
-  before_filter :validate_user, :only => [:show, :edit, :update, :assign_project_to_user]
+  before_filter :validate_user, :only => [:show, :edit, :update, :assign_project_to_user, :list_of_invited_members]
   
   # GET /users/1
   # GET /users/1.json
@@ -61,13 +61,12 @@ class UsersController < ApplicationController
     @user_invitation_not_accepted = User.not_allowed_users(current_user)
   end
 
+  
   private
 
   # To check whether user is present or not #
   def validate_user 
     @user = User.find_by_id(params[:id])
-    if @user.nil?
-      @user = current_user
-    end
+    @user = current_user if @user.nil?
   end
 end

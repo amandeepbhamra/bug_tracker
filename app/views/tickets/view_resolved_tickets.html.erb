@@ -1,35 +1,35 @@
-<h3>Listing tickets under Project <%= @project.name %></h3>
-<h4>Search:</h4>
-<%= render 'search_form' %>
-<br />
-<%= render 'links_status_tickets' %>
-<br />
-<h4>Resolved tickets</h4>
+<%- model_class = Ticket -%>
 
-<% if @resolved_ticket.blank? %>
-  <table border = 1>
-    <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Status</th>
-      <th>Who's Responsible</th>
-      <th>Download Attached Document</th>
-      <th>Age</th>
-    </tr>
-    <% @resolved_tickets.each do |ticket| %>
-      <%= render 'tickets', :ticket => ticket %>
-    <% end %>
+<h4>Search Tickets:</h4>
+
+<%= render 'search_form' %>
+<%= render 'links_status_tickets' %>
+
+<% if @ticket.blank? %>
+  <div class="page-header">
+    <h4>Tickets under <%= @project.name %></h4>
+  </div>
+  <table class="table table-striped">
+    <h5>Resolved Tickets</h5>
+    <thead>
+      <%= render 'thead_for_tickets' %>
+    </thead>
+    <tbody>
+      <% @resolved_tickets.each do |ticket| %>
+        <%= render 'tickets', :ticket => ticket %>
+      <% end %>
+    </tbody>
   </table>
-  <br />
-    <% if @project.user_id == current_user.id %>
-      <%= link_to "New Ticket", new_user_project_ticket_path(@user, @project)%>
-    <% end %>
-  <% else %>
-  No tickets has been created yet.
+  
+  <% if @project.user_id == current_user.id %>
+      <%= link_to "New Ticket", new_user_project_ticket_path(@user, @project), :class => "btn btn-info"%>
+  <% end %>
+<% else %>
+  <h5>No tickets has been created yet.</h5>
   <br />
   <% if @project.user_id == current_user.id %>
-      <%= link_to "Make a new Ticket", new_user_project_ticket_path(@user, @project)%>
-    <% end %>
+      <%= link_to "Make a new Ticket", new_user_project_ticket_path(@user, @project), :class => "btn btn-info"%>
+  <% end %>
 <% end %>
-<br /><br />
-<%= link_to 'Back to project', user_project_path(@user, @project) %>
+
+<%= link_to 'Back to project', user_project_path(@user, @project), :class => "btn" %>

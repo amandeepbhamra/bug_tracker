@@ -1,18 +1,19 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
-  # :lockable, :timeoutable and :omniauthable
+
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, 
   :trackable, :validatable, :confirmable, :token_authenticatable, :invitable
 
-  # Setup accessible (or protected) attributes for your model
   attr_accessible :username, :email, :password, :password_confirmation, 
   :remember_me, :photo
   
   has_many :projects
   has_many :tickets, :through => :projects
-  has_and_belongs_to_many :assigned_projects , :class_name => "Project", :uniq => true
-
+  has_many :roles, :through => :projects, :uniq => true
+  
+  has_and_belongs_to_many :assigned_projects, :class_name => "Project", :uniq => true, 
+                          :join_table => "projects_users"
+  
+  accepts_nested_attributes_for :roles                        
   validates :username, :presence => true , :if => lambda{|a| !a.new_record?}
   
   has_attached_file :photo, :styles => { :medium => "300x300>", :thumb => "100x100>" }
@@ -22,5 +23,15 @@ class User < ActiveRecord::Base
   end
   def self.not_allowed_users(current_user)
     invitation_not_accepted.find_all_by_invited_by_id(current_user)
+  end
+  
+  USER_ROLES = { 1=> "Manager", 2 => "Member" }
+
+  def user_role
+    USER_ROLES[user_role]
+  end
+  
+  def self.user_role_array
+    USER_ROLES.to_a.sort
   end
 end

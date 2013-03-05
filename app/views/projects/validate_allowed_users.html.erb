@@ -1,4 +1,2 @@
-<h4>Add member to <%= @project.name %></h4>
-<br />
 <%= render 'add_members_to_project_form' %>
-<%= link_to 'Cancel, Back to project', user_project_path(@user, @project) %>
+<%= link_to 'Cancel, Back to project', user_project_path(@user, @project), :class => "btn" %>

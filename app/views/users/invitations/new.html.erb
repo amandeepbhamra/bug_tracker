@@ -1,12 +1,58 @@
+<script type="text/JavaScript">
+var MaxTextBoxes = 10;
+var CurrentTextboxes = 1;
+
+$(function () {
+    //answer choices
+    BindChoiceEvents();
+});
+
+function BindChoiceEvents() {  
+    $('div#divContent input:text').unbind('keyup');
+    //bind appropriate events
+    $('div#divContent input:text:last').bind('keyup', BindAnswers);
+    var penultimateTextBox = $('div#divContent  input:text:last').prev().bind('keyup', RemoveLastChoice)
+}
+
+function BindAnswers() { 
+    var lastTxtBox = $('div#divContent input:text:last');
+    var numOfChars = $(lastTxtBox).val().length;
+
+    if (CurrentTextboxes < MaxTextBoxes && numOfChars > 0) { 
+        //new answer possible, just add a new textbox
+        CurrentTextboxes++;
+        var newTxtBox = '<input type="text" id="user_email' + CurrentTextboxes + '" class="myClass" name="user[email_ids]" />';
+        $(newTxtBox).insertAfter($('div#divContent  input:text:last'));
+        //rebind
+        BindChoiceEvents();
+    }
+}
+
+function RemoveLastChoice() {
+    //remove if there's more than one textbox and penultimate textbox is empty
+    if (CurrentTextboxes != 0) {
+        var penultimateTxtBox = $('div#divContent  input:text:last').prev();
+        var numOfChars = $(penultimateTxtBox).val().length;
+
+        if (numOfChars == 0) {
+            $('div#divContent input:text:last').remove();
+            CurrentTextboxes--;
+            //rebind
+            BindChoiceEvents();
+        }
+    }
+}
+</script>
 <h2><%= t "devise.invitations.new.header" %></h2>
 
 <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
   <%= devise_error_messages! %>
 
 <% resource.class.invite_key_fields.each do |field| -%>
-  <p><%= f.label field %><br />
-  <%= f.text_field field %></p>
+  	<p><%= f.label field %><br />
+  	<!-- <div id="divContent"> -->
+		<%= f.text_field field %></p>
+	<!-- </div> -->
 <% end -%>
-
   <p><%= f.submit t("devise.invitations.new.submit_button") %></p>
-<% end %>
+<% end %><br />

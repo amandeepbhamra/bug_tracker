@@ -3,6 +3,7 @@ class Ticket < ActiveRecord::Base
 
   belongs_to :project
   belongs_to :user
+  
   has_many :comments
 
   validates :title, :description, :status, :presence => true 
@@ -22,5 +23,11 @@ class Ticket < ActiveRecord::Base
   
   def self.ticket_status_array
   	TICKET_STATES.to_a.sort
+  end
+
+  def self.validate_document_image(document)
+    if (document.content_type =~ %r{^(image|(x-)?application)/(x-png|pjpeg|jpeg|jpg|png|gif)$})
+      true  
+    end
   end
 end
