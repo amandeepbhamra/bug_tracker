@@ -1,3 +1,3 @@
-Hey, <%= User.find_by_id(@ticket.assigned_to).email %>
+Hey, <%= User.find_by_id(@ticket.assigned_to).username %>
 <br />
-A ticket with title <%= @ticket.title %> under project <%= @project.name %> has been assigned to you by <%= @admin.email %>
+A ticket with title <%= @ticket.title %> under project <%= @project.name %> has been assigned to you by <%= @admin.username %>

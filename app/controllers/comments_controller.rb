@@ -2,8 +2,6 @@ class CommentsController < ApplicationController
   
   before_filter :validate_ticket
   
-  # GET /comments/new
-  # GET /comments/new.json
   def new
     @comment = @ticket.comments.build
     respond_to do |format|
@@ -23,7 +21,10 @@ class CommentsController < ApplicationController
     end
   end
   
-  def validate_ticket #To validate that ticket exists or not#
+  private
+
+  #To validate that ticket exists or not#
+  def validate_ticket 
     @ticket = Ticket.find_by_id(params[:ticket_id])
     redirect to @user, :notice => "Ticket not found" if @ticket.nil? 
   end

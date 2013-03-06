@@ -4,8 +4,6 @@ class RolesController < ApplicationController
   before_filter :validate_user
   before_filter :validate_project_members
   
-  # GET /roles/new
-  # GET /roles/new.json
   def new
     @role = @project.roles.build
     respond_to do |format|
@@ -13,13 +11,10 @@ class RolesController < ApplicationController
     end
   end
 
-  # GET /roles/1/edit
   def edit
     @role = @project.roles.find(params[:id])
   end
 
-  # POST /roles
-  # POST /roles.json
   def create
     @role = @project.roles.build(params[:role])
     respond_to do |format|
@@ -31,8 +26,6 @@ class RolesController < ApplicationController
     end
   end
 
-  # PUT /roles/1
-  # PUT /roles/1.json
   def update
     @role = @project.roles.find(params[:id])
     respond_to do |format|

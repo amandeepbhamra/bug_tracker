@@ -1,13 +1,15 @@
 <%= form_for([@ticket, @comment]) do |f| %>
   <% if @comment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+    <div class="alert alert-error">
+      <div id="error_explanation">
+        <h5><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h5>
 
-      <ul>
-      <% @comment.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+        <ul>
+        <% @comment.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
@@ -15,7 +17,7 @@
     <%= f.text_area :content, :rows => 2, :cols => 20 %>
   </div>
   <div class="field">
-    <%= f.hidden_field :commentor, :value => current_user.email %>
+    <%= f.hidden_field :commentor, :value => current_user.username %>
   </div>
   <div class="actions">
     <%= f.submit "Comment", :class => "btn btn-info" %>

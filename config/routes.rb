@@ -9,7 +9,7 @@ Lighthouseapp::Application.routes.draw do
     
     resources :projects do 
       member do
-        get 'validate_allowed_users'
+        get 'project_members'
         post 'add_member_project'
         put 'add_member_project'
       end

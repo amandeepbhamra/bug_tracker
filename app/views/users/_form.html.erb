@@ -1,4 +1,17 @@
 <%= form_for @user, :html => { :class => 'form-horizontal' } do |f| %>
+  <% if @user.errors.any? %>
+    <div class="alert alert-error">
+      <div id="error_explanation">
+        <h5><%= pluralize(@user.errors.count, "error") %> prohibited this comment from being saved:</h5>
+
+        <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
   <div class="control-group">
     <%= f.label :username, :class => 'control-label' %>
     <div class="controls">

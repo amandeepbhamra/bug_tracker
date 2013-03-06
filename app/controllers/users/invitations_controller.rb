@@ -17,7 +17,7 @@ class Users::InvitationsController < Devise::InvitationsController
 
     if resource.errors.empty?
       set_flash_message :notice, :send_instructions, :email => self.resource.email
-      respond_with resource, :location => after_invite_path_for(resource)
+      redirect_to current_inviter
     else
       respond_with_navigational(resource) { render :new }
     end
@@ -41,7 +41,7 @@ class Users::InvitationsController < Devise::InvitationsController
       flash_message = resource.active_for_authentication? ? :updated : :updated_not_active                                                                                        
       set_flash_message :notice, flash_message
       sign_in(resource_name, resource)
-      respond_with resource, :location => after_accept_path_for(resource)
+      redirect_to current_inviter
     else
       respond_with_navigational(resource){ render :edit }
     end

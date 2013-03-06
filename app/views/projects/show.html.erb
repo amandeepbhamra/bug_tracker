@@ -24,7 +24,7 @@
     
     <%= link_to 'View Tickets', user_project_tickets_path(@user, @project), :class => 'btn' %>
     
-    <%= link_to 'Add / Remove Members', validate_allowed_users_user_project_path(@user, @project),:class => 'btn btn-info' %>
+    <%= link_to 'Add / Remove Members', project_members_user_project_path(@user, @project),:class => 'btn btn-info' %>
 
     <%= link_to 'Assign Roles to Members', new_user_project_role_path(@user, @project),
         :class => 'btn btn-info' %>

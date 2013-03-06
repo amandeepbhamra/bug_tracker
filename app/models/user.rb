@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   attr_accessible :username, :email, :password, :password_confirmation, 
   :remember_me, :photo
   
-  has_many :projects
+  has_many :projects, :dependent => :destroy
   has_many :tickets, :through => :projects
   has_many :roles, :through => :projects, :uniq => true
   
@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   def self.allowed_users(current_user)
     invitation_accepted.find_all_by_invited_by_id(current_user)
   end
+  
   def self.not_allowed_users(current_user)
     invitation_not_accepted.find_all_by_invited_by_id(current_user)
   end

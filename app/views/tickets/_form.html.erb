@@ -1,4 +1,17 @@
 <%= form_for [@user, @project, @ticket], :html => { :multipart => true, :class => 'form-horizontal' } do |f| %>
+  <% if @ticket.errors.any? %>
+    <div class="alert alert-error">
+      <div id="error_explanation">
+        <h5><%= pluralize(@ticket.errors.count, "error") %> prohibited this comment from being saved:</h5>
+
+        <ul>
+        <% @ticket.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
   <div class="control-group">
     <%= f.label :title, :class => 'control-label' %>
     <div class="controls">
@@ -20,7 +33,7 @@
   <div class="control-group">
     <%= f.label :assigned_to, :class => 'control-label' %>
     <div class="controls">
-      <%= f.collection_select :assigned_to, @project.members, :id, :email, 
+      <%= f.collection_select :assigned_to, @project.members, :id, :username, 
     :include_blank => true, :class => 'number_field' %>
     </div>
   </div>

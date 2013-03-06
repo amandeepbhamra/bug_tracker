@@ -14,18 +14,21 @@
 
 <div class="form-actions">
 <% if @project.user_id == current_user.id %>
-  <%= form_for ([@user, @project]), :url => add_member_project_user_project_path do |f| %>
-    <div class="field">
-      
-      <% @allowed_users.each do |user| %>
-        <%= check_box_tag "project[user_ids][]", user.id, @project.members.include?(user) %>
-        <%= user.email %><br />
-      <% end %>
-       
-    </div>
-    <div class="actions">
-      <%= f.submit 'Add members' %>
-    </div>
+  <% if !@allowed_users.blank? %>
+    <%= form_for ([@user, @project]), :url => add_member_project_user_project_path do |f| %>
+      <div class="field">
+        <% @allowed_users.each do |user| %>
+          <%= check_box_tag "project[user_ids][]", user.id, @project.members.include?(user) %>
+          <%= user.username %><br />
+        <% end %>
+      </div>
+      <br /> <br />
+      <div class="actions">
+        <%= f.submit 'Add members' %>
+      </div>
+    <% end %>
+  <% else %>
+    <h6>No member is Invited by you</h6>
   <% end %>
   <%= link_to "Invite New Member", new_user_invitation_path, :class => "btn btn-info" %>
 <% end %>

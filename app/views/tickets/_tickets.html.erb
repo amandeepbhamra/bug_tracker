@@ -7,7 +7,7 @@
     <td><%= ticket.description %></td>
     <td><%= ticket.ticket_status %></td>
     <% if !(User.find_by_id(ticket.assigned_to).nil?) %>
-      <td><%= User.find_by_id(ticket.assigned_to).email %></td>
+      <td><%= User.find_by_id(ticket.assigned_to).username %></td>
     <% else %>
       <td><%= "No one" %></td>
     <% end %>
