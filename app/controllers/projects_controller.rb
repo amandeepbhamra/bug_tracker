@@ -33,7 +33,7 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       if @project.save
         @project.members = [current_user]
-        format.html { redirect_to user_project_path(@user,@project), notice: 'Project was successfully created.' }
+        format.html { redirect_to project_path(@project), notice: 'Project was successfully created.' }
       else
         format.html { render action: "new" }
       end
@@ -43,7 +43,7 @@ class ProjectsController < ApplicationController
   def update
     respond_to do |format|
       if @project.update_attributes(params[:project]) 
-        format.html { redirect_to user_project_path(@user,@project), notice: 'Project was successfully updated.' }
+        format.html { redirect_to project_path(@project), notice: 'Project was successfully updated.' }
       else
         format.html { render action: "edit" }
       end
@@ -53,7 +53,7 @@ class ProjectsController < ApplicationController
   def destroy
     @project.destroy
     respond_to do |format|
-      format.html { redirect_to user_projects_path(@user), notice: 'Project was successfully deleted.' }
+      format.html { redirect_to projects_path, notice: 'Project was successfully deleted.' }
       format.json { head :no_content }
     end
   end

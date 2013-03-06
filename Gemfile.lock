@@ -31,11 +31,17 @@ GEM
     addressable (2.3.3)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
+    better_errors (0.7.0)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+    binding_of_caller (0.7.1)
+      debug_inspector (>= 0.0.1)
     builder (3.0.4)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.1)
       climate_control (>= 0.0.3, < 1.0)
+    coderay (1.0.9)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -45,6 +51,7 @@ GEM
     coffee-script-source (1.6.1)
     commonjs (0.2.6)
     daemons (1.1.9)
+    debug_inspector (0.0.2)
     delayed_job (3.0.5)
       activesupport (~> 3.0)
     delayed_job_active_record (0.4.3)
@@ -64,6 +71,8 @@ GEM
     excon (0.16.10)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    haml (4.0.0)
+      tilt
     heroku (2.35.0)
       heroku-api (~> 0.3.7)
       launchy (>= 0.3.2)
@@ -91,6 +100,16 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    mailcatcher (0.2.4)
+      eventmachine
+      haml
+      i18n
+      json
+      mail
+      sinatra
+      skinny (>= 0.1.2)
+      sqlite3-ruby
+      thin
     mime-types (1.21)
     multi_json (1.6.1)
     mysql2 (0.3.11)
@@ -104,6 +123,8 @@ GEM
       mime-types
     pg (0.14.1)
     polyglot (0.3.3)
+    quiet_assets (1.0.2)
+      railties (>= 3.1, < 5.0)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -142,11 +163,17 @@ GEM
     sequel (3.20.0)
     sinatra (1.0)
       rack (>= 1.0)
+    skinny (0.2.3)
+      eventmachine (~> 1.0.0)
+      thin (~> 1.5.0)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+    sqlite3 (1.3.7)
+    sqlite3-ruby (1.3.3)
+      sqlite3 (>= 1.3.3)
     taps (0.3.24)
       rack (>= 1.0.1)
       rest-client (>= 1.4.0, < 1.7.0)
@@ -184,6 +211,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  better_errors
+  binding_of_caller
   coffee-rails (~> 3.2.1)
   delayed_job_active_record
   devise
@@ -193,9 +222,11 @@ DEPENDENCIES
   jquery-rails
   less-rails
   libv8 (~> 3.11.8.13)
+  mailcatcher
   mysql2
   paperclip (~> 3.0)
   pg
+  quiet_assets
   rails (= 3.2.9)
   sass-rails (~> 3.2.3)
   taps

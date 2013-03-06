@@ -1,4 +1,4 @@
-<%= form_for ([@user, @project]), :html => { :class => 'form-horizontal' } do |f| %>
+<%= form_for @project, :html => { :class => 'form-horizontal' } do |f| %>
   <% if @project.errors.any? %>
     <div class="alert alert-error">
       <div id="error_explanation">
@@ -28,6 +28,6 @@
   <div class="form-actions">
     <%= f.submit "Submit", :class => 'btn btn-info' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                user_projects_path(@user), :class => 'btn' %>
+                projects_path, :class => 'btn' %>
   </div>
 <% end %>

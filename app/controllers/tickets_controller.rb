@@ -96,7 +96,7 @@ class TicketsController < ApplicationController
 
   # Filter To check whether user exits or not #
   def validate_user 
-    @user = User.find_by_id(params[:user_id])
+    @user = current_user
     redirect_to current_user, notice: 'User not found.' if @user.nil?
   end
 

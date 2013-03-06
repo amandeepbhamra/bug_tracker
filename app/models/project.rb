@@ -1,5 +1,5 @@
 class Project < ActiveRecord::Base
-  attr_accessible :description, :name, :user_ids
+  attr_accessible :description, :title, :user_ids
 
   has_many :tickets, :dependent => :destroy
   has_many :roles, :dependent => :destroy
@@ -10,7 +10,7 @@ class Project < ActiveRecord::Base
 
   accepts_nested_attributes_for :roles
   
-  validates :name, :description, :presence => true 
+  validates :title, :description, :presence => true 
 
   def self.add_members_to_project(current_user,user,project)
   	@member = User.find_by_id(user)

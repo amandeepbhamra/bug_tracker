@@ -9,7 +9,6 @@
       <tr>
         <th><%= model_class.human_attribute_name(:title) %></th>
         <th><%= model_class.human_attribute_name(:description) %></th>
-        
       </tr>
     </thead>
     <tbody>
@@ -22,15 +21,14 @@
     <%= will_paginate @projects %>
   </div>
   
-  <%= link_to 'New Project', new_user_project_path(@user), :class => 'btn btn-info' %>
+  <%= link_to 'New Project', new_project_path, :class => 'btn btn-info' %>
 <% else %>
   <h5>No Projects has been created yet.</h5>
   
 
 <br />
-  <%= link_to t('.new', :default => t("helpers.links.new")),
-              new_user_project_path(@user),
-              :class => 'btn btn-info' %>
+  <%= link_to 'New Project', new_project_path, :class => 'btn btn-info' %>
+
 <% end %>
 
 <% if !@assigned_projects.blank? %>
