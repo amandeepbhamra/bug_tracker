@@ -46,13 +46,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # Action to show the list of members invited #
-  def list_of_invited_members
-    @user_invitation_accepted = User.allowed_users(current_user)
-    @user_invitation_not_accepted = User.not_allowed_users(current_user)
-  end
-
-  
   private
 
   # Filter To check whether user exits or not #

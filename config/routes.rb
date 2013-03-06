@@ -3,10 +3,7 @@ Lighthouseapp::Application.routes.draw do
   devise_for :users, :controllers => { :invitations => 'users/invitations' }
 
   resources :users, :except => [:index, :destroy] do
-    member do 
-      get 'list_of_invited_members'
-    end
-    
+      
     resources :projects do 
       member do
         get 'project_members'

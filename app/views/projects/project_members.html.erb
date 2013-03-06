@@ -1,2 +1,12 @@
 <%= render 'add_members_to_project_form' %>
+<% if !(@user_invitation_not_accepted.nil?) %>
+	<br />
+	<h4>Pending Members</h4><br />
+	
+	<ul>
+	<% @user_invitation_not_accepted.each do |user| %>
+		<li><%= user.username %><br /></li>
+	<% end %>
+	</ul>
+<% end %>
 <%= link_to 'Cancel, Back to project', user_project_path(@user, @project), :class => "btn" %>
