@@ -75,7 +75,7 @@ class ProjectsController < ApplicationController
     end
 
     @project.update_attributes(params[:members])
-    redirect_to user_project_path(@user,@project), notice: "Members Added"
+    redirect_to project_path(@project), notice: "Members Added"
   end
 
   private

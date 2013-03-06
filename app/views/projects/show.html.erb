@@ -15,6 +15,6 @@
     <%= render 'links_if_user_is_owner_of_project', :project => @project %>
    
   <% else %>
-    <%= link_to 'View Tickets', user_project_tickets_path(@user, @project), :class => 'btn' %>
+    <%= link_to 'View Tickets', project_tickets_path(project), :class => 'btn' %>
   <% end %>
 </div>
