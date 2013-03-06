@@ -37,7 +37,7 @@ class TicketsController < ApplicationController
       if @ticket.save
         Notify.delay(queue: "ticket_creation_notification", priority: 3, run_at: 2.minutes.from_now ).ticket_creation_notification(@user, @project, @ticket)
         Notify.delay(queue: "notify_to_whom_ticket_is_assigned", priority: 2, run_at: 2.minutes.from_now ).notify_to_whom_ticket_is_assigned(@user, @project, @ticket)
-        format.html { redirect_to user_project_tickets_path(@user, @project), notice: 'Ticket was successfully created.' }
+        format.html { redirect_to project_ticket_path(@project,@ticket), notice: 'Ticket was successfully created.' }
       else
         format.html { render action: "new" }
       end
@@ -47,7 +47,7 @@ class TicketsController < ApplicationController
   def update
     respond_to do |format|
       if @ticket.update_attributes(params[:ticket])
-        format.html { redirect_to user_project_tickets_path(@user, @project), notice: 'Ticket was successfully updated.' }
+        format.html { redirect_to project_ticket_path(@project,@ticket), notice: 'Ticket was successfully updated.' }
       else
         format.html { render action: "edit" }
       end
@@ -57,7 +57,7 @@ class TicketsController < ApplicationController
   def destroy
     @ticket.destroy
     respond_to do |format|
-      format.html { redirect_to user_project_tickets_path(@user, @project), notice: "Ticket destroyed" }
+      format.html { redirect_to project_tickets_path(@project), notice: "Ticket destroyed" }
     end
   end
 
@@ -69,27 +69,27 @@ class TicketsController < ApplicationController
   
   # Action to get list of all new tickets #
   def view_new_tickets
-    @new_tickets = @project.tickets.find_all_by_status(1)
+    @new_tickets = @project.tickets.paginate(:page => params[:page], :per_page => 5).find_all_by_status(1)
   end
 
   # Action to get list of all open tickets #
   def view_open_tickets
-    @open_tickets = @project.tickets.find_all_by_status(2)
+    @open_tickets = @project.tickets.paginate(:page => params[:page], :per_page => 5).find_all_by_status(2)
   end
   
   # Action to get list of all hold tickets #
   def view_hold_tickets
-    @hold_tickets = @project.tickets.find_all_by_status(3)
+    @hold_tickets = @project.tickets.paginate(:page => params[:page], :per_page => 5).find_all_by_status(3)
   end
   
   # Action to get list of all resolved tickets #
   def view_resolved_tickets
-    @resolved_tickets = @project.tickets.find_all_by_status(4)
+    @resolved_tickets = @project.tickets.paginate(:page => params[:page], :per_page => 5).find_all_by_status(4)
   end
 
   # Action to get list of all closed tickets #
   def view_closed_tickets
-    @closed_tickets = @project.tickets.find_all_by_status(5)
+    @closed_tickets = @project.tickets.paginate(:page => params[:page], :per_page => 5).find_all_by_status(5)
   end
 
   private

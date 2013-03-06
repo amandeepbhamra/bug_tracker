@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
     @comment = @ticket.comments.build(params[:comment])
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to user_project_ticket_path(current_user,@ticket.project.id,@ticket), notice: 'Comment was successfully created.' }
+        format.html { redirect_to project_ticket_path(@ticket.project.id,@ticket), notice: 'Comment was successfully created.' }
       else
         format.html { render action: "new" }
       end

@@ -3,9 +3,10 @@
 <h4>Search Tickets:</h4>
 
 <%= render 'search_form' %>
-<%= render 'links_status_tickets' %>
+<%= render 'links_status_tickets', :project => @project %>
 
-<% if @ticket.blank? %>
+<% if @resolved_ticket.blank? %>
+
   <div class="page-header">
     <h4>Tickets under <%= @project.title %></h4>
   </div>
@@ -16,20 +17,26 @@
     </thead>
     <tbody>
       <% @resolved_tickets.each do |ticket| %>
-        <%= render 'tickets', :ticket => ticket %>
+        <%= render 'tickets', :ticket => ticket, :project => @project %>
       <% end %>
     </tbody>
   </table>
-  
+  <div class="pagination pagination-centered pagination-small">
+    <%= will_paginate @resolved_tickets %>
+  </div>
+  <br />
   <% if @project.user_id == current_user.id %>
-      <%= link_to "New Ticket", new_user_project_ticket_path(@user, @project), :class => "btn btn-info"%>
+      <%= link_to "New Ticket", new_project_ticket_path(@project), :class => "btn btn-info"%>
   <% end %>
+
 <% else %>
   <h5>No tickets has been created yet.</h5>
   <br />
   <% if @project.user_id == current_user.id %>
-      <%= link_to "Make a new Ticket", new_user_project_ticket_path(@user, @project), :class => "btn btn-info"%>
+      <%= link_to "Make a new Ticket", new_project_ticket_path(@project), :class => "btn btn-info"%>
   <% end %>
 <% end %>
 
-<%= link_to 'Back to project', user_project_path(@user, @project), :class => "btn" %>
+<br /><br />
+
+<%= link_to 'Back to project', project_path(@project), :class => "btn" %>

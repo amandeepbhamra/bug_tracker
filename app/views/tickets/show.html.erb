@@ -50,10 +50,10 @@
 <br />
 <div class="form-actions">
   <% if @project.user_id == current_user.id %>
-    <%= link_to 'Edit Ticket', edit_user_project_ticket_path(@user, @project, @ticket), :class => "btn" %>
-    <%= link_to 'Destroy', user_project_ticket_path(@user, @project, @ticket), :class => "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+    <%= link_to 'Edit Ticket', edit_project_ticket_path(@project, @ticket), :class => "btn" %>
+    <%= link_to 'Destroy', project_ticket_path(@project, @ticket), :class => "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
   <% end %>
-  <%= link_to 'Back To Tickets', user_project_tickets_path(@user, @project), :class => "btn" %>
+  <%= link_to 'Back To Tickets', project_tickets_path(@project), :class => "btn" %>
 </div>
 
 

@@ -9,7 +9,7 @@
     </thead>
     <tbody>
         <% @user_assigned_tickets.each do |ticket| %>
-          <%= render 'tickets', :ticket => ticket %>
+          <%= render 'tickets', :ticket => ticket, :project => @project %>
         <% end %>
     </tbody>
   </table>
