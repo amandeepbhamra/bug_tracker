@@ -20,7 +20,7 @@
   <div class="field">
     <% Project.all.each do |project| %>
       <%= check_box_tag "project[assigned_project_ids][]", project.id %>
-      <%= project.name %><br />
+      <%= project.title %><br />
     <% end %>
   </div>
   <div class="actions">

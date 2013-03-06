@@ -7,8 +7,8 @@ class TicketsController < ApplicationController
   before_filter :tickets_count_by_status, :only => [:index, :view_new_tickets, :view_open_tickets, :view_hold_tickets, :view_resolved_tickets, :view_closed_tickets]
 
   def index
-    @tickets = @project.tickets
-    @user_assigned_tickets = @project.tickets.find_all_by_assigned_to(current_user)
+    @tickets = @project.tickets.paginate(:page => params[:page], :per_page => 5)
+    @user_assigned_tickets = @project.tickets.paginate(:page => params[:page], :per_page => 5).find_all_by_assigned_to(current_user)
     respond_to do |format|
       format.html # index.html.erb
     end

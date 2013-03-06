@@ -17,7 +17,7 @@ Devise.setup do |config|
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
-  # just :email. You can configure it to use [:username, :subdomain], so for
+  # just :email. You can configure it to use [:name, :subdomain], so for
   # authenticating a user, both parameters are required. Remember that those
   # parameters are used only when authenticating and not when retrieving from
   # session. If you need permissions, you should implement that in a before filter.
@@ -103,7 +103,7 @@ Devise.setup do |config|
   # The key to be used to check existing users when sending an invitation
   # and the regexp used to test it when validate_on_invite is not set.
    config.invite_key = {:email => /^(|(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6})$/i}
-  # config.invite_key = {:email => /A[^@]+@[^@]+z/, :username => nil}
+  # config.invite_key = {:email => /A[^@]+@[^@]+z/, :name => nil}
 
   # Flag that force a record to be valid before being actually invited
   # Default: false

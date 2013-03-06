@@ -7,7 +7,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th><%= model_class.human_attribute_name(:name) %></th>
+        <th><%= model_class.human_attribute_name(:title) %></th>
         <th><%= model_class.human_attribute_name(:description) %></th>
         
       </tr>
@@ -18,10 +18,11 @@
       <% end %>
     </tbody>
   </table>
-
-  <%= link_to t('.new', :default => t("helpers.links.new")),
-              new_user_project_path(@user),
-              :class => 'btn btn-info' %>
+  <div class="pagination pagination-centered pagination-small">
+    <%= will_paginate @projects %>
+  </div>
+  
+  <%= link_to 'New Project', new_user_project_path(@user), :class => 'btn btn-info' %>
 <% else %>
   <h5>No Projects has been created yet.</h5>
   
@@ -39,7 +40,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th><%= model_class.human_attribute_name(:name) %></th>
+        <th><%= model_class.human_attribute_name(:title) %></th>
         <th><%= model_class.human_attribute_name(:description) %></th>
         
       </tr>
@@ -50,6 +51,9 @@
       <% end %>
     </tbody>
   </table>
+  <div class="pagination pagination-centered pagination-small">
+    <%= will_paginate @assigned_projects %>
+  </div>
 <% else %>
   <h5>You are not member on any project.</h5>
 <% end %>
@@ -57,3 +61,4 @@
 <br />
 <%= link_to 'Back to your profile', current_user, :class => "btn" %>
 <br />
+

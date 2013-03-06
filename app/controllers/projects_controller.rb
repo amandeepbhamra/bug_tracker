@@ -4,8 +4,8 @@ class ProjectsController < ApplicationController
   before_filter :validate_project, :only => [:show, :project_members, :add_member_project,:edit, :update, :destroy]
  
   def index
-    @projects = @user.projects
-    @assigned_projects = @user.assigned_projects
+    @projects = @user.projects.paginate(:page => params[:page], :per_page => 5)
+    @assigned_projects = @user.assigned_projects.paginate(:page => params[:page], :per_page => 5)
     respond_to do |format|
       format.html # index.html.erb
     end
@@ -82,7 +82,7 @@ class ProjectsController < ApplicationController
 
   # Filter To check whether user exits or not #
   def validate_user
-    @user = User.find_by_id(params[:user_id])
+    @user = current_user
     redirect_to current_user, notice: "User doesn't exists with this id." if @user.nil?
   end
   

@@ -1,11 +1,11 @@
 <%- model_class = Project -%>
 <div class="page-header">
-  <h1><%= @project.name %></h1>
+  <h1><%= @project.title %></h1>
 </div>
 
 <dl class="dl-horizontal">
   <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
-  <dd><%= @project.name %></dd>
+  <dd><%= @project.title %></dd>
   <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
   <dd><%= @project.description %></dd>
   <dt><strong>Project Members</strong></dt>
@@ -19,7 +19,7 @@
       <div class="field">
         <% @allowed_users.each do |user| %>
           <%= check_box_tag "project[user_ids][]", user.id, @project.members.include?(user) %>
-          <%= user.username %><br />
+          <%= user.name %><br />
         <% end %>
       </div>
       <br /> <br />

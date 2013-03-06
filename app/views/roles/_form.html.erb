@@ -16,7 +16,7 @@
     <table>
       <% @project_members.each do |member| %>
         <tr>
-          <td><%= member.username %></td>
+          <td><%= member.name %></td>
           <td>
             <%= f.collection_select :user_role, User.user_role_array, :first, :last %>
             <%= f.hidden_field :user_id, :value => member.id %>

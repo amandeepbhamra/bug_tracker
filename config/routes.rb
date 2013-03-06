@@ -2,28 +2,24 @@ Lighthouseapp::Application.routes.draw do
 
   devise_for :users, :controllers => { :invitations => 'users/invitations' }
 
-  resources :users, :except => [:index, :destroy] do
-      
-    resources :projects do 
-      member do
-        get 'project_members'
-        post 'add_member_project'
-        put 'add_member_project'
-      end
-
-      resources :tickets do
-        collection do
-          get 'view_new_tickets'
-          get 'view_open_tickets'
-          get 'view_hold_tickets'
-          get 'view_resolved_tickets'
-          get 'view_closed_tickets'
-          get 'search'
-        end
-      end
-
-      resources :roles, :except => [:index, :show, :destroy]
+  resources :users, :except => [:index, :destroy]
+  resources :projects do 
+    member do
+      get 'project_members'
+      post 'add_member_project'
+      put 'add_member_project'
     end
+    resources :tickets do
+      collection do
+        get 'view_new_tickets'
+        get 'view_open_tickets'
+        get 'view_hold_tickets'
+        get 'view_resolved_tickets'
+        get 'view_closed_tickets'
+        get 'search'
+      end
+    end
+    resources :roles, :except => [:index, :show, :destroy]
   end
 
   resources :tickets, :only => [:show] do

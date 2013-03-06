@@ -17,7 +17,7 @@
     <%= f.text_area :content, :rows => 2, :cols => 20 %>
   </div>
   <div class="field">
-    <%= f.hidden_field :commentor, :value => current_user.username %>
+    <%= f.hidden_field :commentor, :value => current_user.name %>
   </div>
   <div class="actions">
     <%= f.submit "Comment", :class => "btn btn-info" %>

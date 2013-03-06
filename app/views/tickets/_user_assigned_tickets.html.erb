@@ -13,6 +13,9 @@
         <% end %>
     </tbody>
   </table>
+  <div class="pagination pagination-centered pagination-small">
+    <%= will_paginate @user_assigned_tickets %>
+  </div>
 <% else %>
 <h5>No tickets has been Assigned to you.</h5>
 <% end %>
