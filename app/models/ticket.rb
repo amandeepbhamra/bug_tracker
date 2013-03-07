@@ -1,14 +1,15 @@
 class Ticket < ActiveRecord::Base
-  attr_accessible :description, :title, :project_id, :document, :status, :assigned_to
+  attr_accessible :description, :title, :project_id, :status, :assigned_to
+
+  has_many :attachments, :as => :attachable
+  has_many :comments, :dependent => :destroy
 
   belongs_to :project
   belongs_to :user
   
-  has_many :comments, :dependent => :destroy
-
   validates :title, :description, :status, :presence => true 
 
-  has_attached_file :document, :styles => { :medium => "300x300>", :thumb => "100x100>" }
+  #has_attached_file :document, :styles => { :medium => "300x300>", :thumb => "100x100>" }
 
   define_index do
     indexes :title
