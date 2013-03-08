@@ -33,17 +33,13 @@
     <div class="controls">
       <% for attachments in @ticket.attachments %>
         <%= fields_for "ticket[attachments_attributes][]", attachments do |builder| %>
-          <fieldset>
-            <%= builder.label :file, "Attachment" %>
-            <%= builder.file_field :file %>
-            <%#= builder.check_box :_destroy %>
-            <%#= builder.label :_destroy, "Remove File" %>
-          </fieldset>
+          <p>
+            Attachment: <%= builder.file_field :file %>
+          </p>
         <% end %>
       <% end %>
     </div>
   </div>
-
   <div class="control-group">
     <%= f.label :assigned_to, :class => 'control-label' %>
     <div class="controls">

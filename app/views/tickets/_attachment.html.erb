@@ -1,11 +1,8 @@
-<div class="attachment"> 
-  <% new_or_existing = attachment.new_record? ? 'new' : 'existing' %>
-  <% prefix = "ticket[#{new_or_existing}_attachment_attributes][]" %>
-  
-  <% fields_for prefix, attachment do |attachment_form| -%> 
-    <p> 
-      Attachment: <%= attachment_form.file_field :file %> 
-      <%= link_to_function "remove", "$(this).up('.attachment').remove()" %> 
-    </p> 
-<% end -%> 
+<div class="attachment">
+	<%= fields_for "ticket[attachments_attributes][]", attachments do |builder| %>
+		<p>
+		  	Attachment: <%= builder.file_field :file %>
+		    <%= link_to_function "remove", "$(this).up('.attachment').remove()" %>
+		</p>
+	<% end %>
 </div>
