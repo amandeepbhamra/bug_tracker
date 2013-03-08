@@ -22,7 +22,9 @@ class TicketsController < ApplicationController
   end
 
   def new
-    @ticket = @project.tickets.build
+    @ticket = Ticket.new
+    @project.tickets.build
+    @ticket.attachments.build
     respond_to do |format|
       format.html # new.html.erb
     end

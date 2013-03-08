@@ -11,12 +11,13 @@
     <% else %>
       <td><%= "No one" %></td>
     <% end %>
-    <% if ticket.document.blank? %>
-      <td>No Attachments</td>
-    <% else %>
-      <td><%= link_to 'Download', ticket.document.url(:original, false),
+
+    <%# if ticket.document.blank? %>
+      <!-- <td>No Attachments</td>
+    <%# else %>
+      <td><%#= link_to 'Download', ticket.document.url(:original, false),
       :target => "_blank" %></td>
-    <% end %>
-    
+    <%# end %>
+ -->    
     <td><%= event_time_format(ticket.created_at) %></td>    
 </tr>

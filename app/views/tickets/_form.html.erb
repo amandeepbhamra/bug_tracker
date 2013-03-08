@@ -30,18 +30,28 @@
     </div>
   </div>
   <div class="control-group">
+    <div class="controls">
+      <% for attachments in @ticket.attachments %>
+        <%= fields_for "ticket[attachments_attributes][]", attachments do |builder| %>
+          <fieldset>
+            <%= builder.label :file, "Attachment" %>
+            <%= builder.file_field :file %>
+            <%#= builder.check_box :_destroy %>
+            <%#= builder.label :_destroy, "Remove File" %>
+          </fieldset>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="control-group">
     <%= f.label :assigned_to, :class => 'control-label' %>
     <div class="controls">
       <%= f.collection_select :assigned_to, @project.members, :id, :name, 
     :include_blank => true, :class => 'number_field' %>
     </div>
   </div>
-  <div class="control-group">
-    <%= f.label :document, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.file_field :document, :class => 'text_field' %>
-    </div>
-  </div>
+  
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-info' %>
     <%= link_to "Cancel", project_tickets_path(@project), :class => 'btn' %>

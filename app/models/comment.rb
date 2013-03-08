@@ -1,7 +1,9 @@
 class Comment < ActiveRecord::Base
-	attr_accessible :commentor, :content, :ticket_id
+	attr_accessible :commentor, 
+					:content, 
+					:ticket_id
 
-  	has_many :attachments, :as => :attachable
+  	has_many :attachments, :as => :attachable, :dependent => :destroy
 
   	belongs_to :user
 
