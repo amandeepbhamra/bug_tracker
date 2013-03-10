@@ -1,0 +1,22 @@
+<%= form_for([@attachable, @attachment]), :html => { :multipart => true } do |f| %>
+  <% if @attachment.errors.any? %>
+    <div class="alert alert-error">
+      <div id="error_explanation">
+        <h5><%= pluralize(@attachment.errors.count, "error") %> prohibited this from being saved:</h5>
+
+        <ul>
+        <% @attachment.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.file_field :file %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Comment", :class => "btn btn-info" %>
+  </div>
+<% end %>

@@ -29,6 +29,11 @@
       <%= f.collection_select :status, Ticket.ticket_status_array, :first, :last, :class => 'number_field' %>
     </div>
   </div>
+  <% for attachment in @ticket.attachments %>
+    <%= fields_for "ticket[attachments_attributes][]",  attachment do |builder| %>
+      <p>Attachment: <%= builder.file_field :file %></p>
+    <% end %>
+  <% end %>
   <div class="control-group">
     <%= f.label :assigned_to, :class => 'control-label' %>
     <div class="controls">
@@ -36,12 +41,7 @@
     :include_blank => true, :class => 'number_field' %>
     </div>
   </div>
-  <div class="control-group">
-    <%= f.label :document, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.file_field :document, :class => 'text_field' %>
-    </div>
-  </div>
+  
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-info' %>
     <%= link_to "Cancel", project_tickets_path(@project), :class => 'btn' %>

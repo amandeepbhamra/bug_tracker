@@ -2,7 +2,8 @@ Lighthouseapp::Application.routes.draw do
 
   devise_for :users, :controllers => { :invitations => 'users/invitations' }
 
-  resources :users, :except => [:index, :destroy]
+  resources :users, :except => [:index, :destroy] 
+
   resources :projects do 
     member do
       get 'project_members'
@@ -26,7 +27,18 @@ Lighthouseapp::Application.routes.draw do
     resources :comments, :only => [:new, :create]
   end
 
-  root :to => 'users#show'
+  resources :tickets do
+    resources :attachments
+  end
+
+  resources :comments do
+    resources :attachments
+  end
+
+  match 'home' => 'users#home', :as => :home
+
+
+  root :to => 'users#home'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

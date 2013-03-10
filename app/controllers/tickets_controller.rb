@@ -16,13 +16,17 @@ class TicketsController < ApplicationController
 
   def show
     @comments = @ticket.comments
+    @comment = Comment.new
+    @comment.attachments.build
     respond_to do |format|
       format.html # show.html.erb
     end
   end
 
   def new
-    @ticket = @project.tickets.build
+    @ticket = Ticket.new
+    @project.tickets.build
+    @ticket.attachments.build
     respond_to do |format|
       format.html # new.html.erb
     end

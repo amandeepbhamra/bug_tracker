@@ -1,10 +1,21 @@
 class User < ActiveRecord::Base
 
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, 
-  :trackable, :validatable, :confirmable, :token_authenticatable, :invitable
+  devise  :database_authenticatable, 
+          :registerable, 
+          :recoverable, 
+          :rememberable, 
+          :trackable, 
+          :validatable, 
+          :confirmable, 
+          :token_authenticatable, 
+          :invitable
 
-  attr_accessible :name, :email, :password, :password_confirmation, 
-  :remember_me, :photo
+  attr_accessible :name, 
+                  :email, 
+                  :password, 
+                  :password_confirmation, 
+                  :remember_me, 
+                  :photo
   
   has_many :projects, :dependent => :destroy
   has_many :tickets, :through => :projects
@@ -14,6 +25,7 @@ class User < ActiveRecord::Base
                           :join_table => "projects_users"
   
   accepts_nested_attributes_for :roles                        
+  
   validates :name, :presence => true , :if => lambda{|a| !a.new_record?}
   
   has_attached_file :photo, :styles => { :medium => "300x300>", :thumb => "100x100>" }

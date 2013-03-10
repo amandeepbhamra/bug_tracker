@@ -1,7 +1,7 @@
 <tr>
     <td>
         <strong>
-          <%= link_to ticket.title, project_ticket_path(project, ticket) %>
+          <%= link_to ticket.title, project_ticket_path(ticket.project_id, ticket) %>
         </strong>
     </td>
     <td><%= ticket.description %></td>
@@ -11,12 +11,14 @@
     <% else %>
       <td><%= "No one" %></td>
     <% end %>
-    <% if ticket.document.blank? %>
+
+    <% if ticket.attachments.blank? %>
       <td>No Attachments</td>
     <% else %>
-      <td><%= link_to 'Download', ticket.document.url(:original, false),
-      :target => "_blank" %></td>
+      <% ticket.attachments.all.each do |attachment| %>
+        <td><%= attachment.file_file_name %><%= link_to 'Download', attachment.file.url(:original, false), :target => "_blank" %></td>
+      <% end %>  
     <% end %>
-    
+   
     <td><%= event_time_format(ticket.created_at) %></td>    
 </tr>

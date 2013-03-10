@@ -1,20 +1,36 @@
 class Ticket < ActiveRecord::Base
-  attr_accessible :description, :title, :project_id, :document, :status, :assigned_to
+  attr_accessible :description, 
+                  :title, 
+                  :project_id, 
+                  :status, 
+                  :assigned_to, 
+                  :attachments_attributes
+      
+
+  has_many  :attachments, 
+            :as => :attachable, 
+            :dependent => :destroy
+  has_many  :comments, 
+            :dependent => :destroy
 
   belongs_to :project
   belongs_to :user
   
-  has_many :comments, :dependent => :destroy
-
   validates :title, :description, :status, :presence => true 
 
-  has_attached_file :document, :styles => { :medium => "300x300>", :thumb => "100x100>" }
+  accepts_nested_attributes_for :attachments, :allow_destroy => true
 
   define_index do
     indexes :title
     indexes :description
   end
 
+  def attachments_attributes=(attachments_attributes)
+    attachments_attributes.each do |attributes|
+      attachments.build(attributes)
+    end
+  end
+  
   TICKET_STATES = {1=> "New", 2 => "Open", 3 => "Hold", 4 => "Resolved", 5 => "Closed"}
 
   def ticket_status

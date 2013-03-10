@@ -1,0 +1,8 @@
+<div class="attachment">
+	<% fields_for_attachment(attachment) do |attachment_form| %>
+  	<p>   Attachment: <%= attachment_form.file_field :file %>
+            <%= link_to_function "remove", "$(this).up('.attachment').remove()" %>
+          </p>
+        
+      <% end %>
+</div>
