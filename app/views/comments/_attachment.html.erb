@@ -1,0 +1,5 @@
+<%= fields_for "comment[attachments_attributes][]", attachments do |builder| %>
+    <p>
+        Attachment: <%= builder.file_field :file %>
+    </p>
+<% end %>

@@ -16,6 +16,8 @@ class TicketsController < ApplicationController
 
   def show
     @comments = @ticket.comments
+    @comment = Comment.new
+    @comment.attachments.build
     respond_to do |format|
       format.html # show.html.erb
     end

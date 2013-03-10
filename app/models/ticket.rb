@@ -30,7 +30,7 @@ class Ticket < ActiveRecord::Base
       attachments.build(attributes)
     end
   end
-
+  
   TICKET_STATES = {1=> "New", 2 => "Open", 3 => "Hold", 4 => "Resolved", 5 => "Closed"}
 
   def ticket_status
