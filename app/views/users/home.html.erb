@@ -1,11 +1,8 @@
 
 <% if @user_ticket.blank? %>
-
-  <div class="page-header">
-    <h2>Hi <%= link_to @user.name, @user %>,</h2>
-  </div>
   <table class="table table-striped">
-    <h5> All Assigned Tickets to you.</h5>
+    <h5> All Tickets created by you.</h5>
+    
     <thead>
       <%= render 'tickets/thead_for_tickets' %>
     </thead>

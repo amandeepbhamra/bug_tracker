@@ -10,11 +10,10 @@
       </a>
  
       <!-- Be sure to leave the brand out there if you want it shown -->
-      <%= link_to_if(user_signed_in?, "Bug Tracker", current_user, :class => "brand" ) do link_to "Bug Tracker", new_user_session_path, :class => "brand" end %>
+      <%= link_to_if(user_signed_in?, "Bug Tracker", home_path, :class => "brand" ) do link_to "Bug Tracker", new_user_session_path, :class => "brand" end %>
       <div class="nav-collapse collapse">
         <% if user_signed_in? %>
           <ul class="nav">
-            <li><%= link_to 'Dashboard', home_path %></li>
             <li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></li>
           </ul>
         <% end %>
