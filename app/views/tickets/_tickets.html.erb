@@ -1,22 +1,24 @@
 <tr>
     <td>
         <strong>
-          <%= link_to ticket.title, user_project_ticket_path(@user, @project, ticket) %>
+          <%= link_to ticket.title, project_ticket_path(ticket.project_id, ticket) %>
         </strong>
     </td>
     <td><%= ticket.description %></td>
     <td><%= ticket.ticket_status %></td>
     <% if !(User.find_by_id(ticket.assigned_to).nil?) %>
-      <td><%= User.find_by_id(ticket.assigned_to).username %></td>
+      <td><%= User.find_by_id(ticket.assigned_to).name %></td>
     <% else %>
       <td><%= "No one" %></td>
     <% end %>
-    <% if ticket.document.blank? %>
+
+   <!--  <%# if ticket.attachments.blank? %>
       <td>No Attachments</td>
-    <% else %>
-      <td><%= link_to 'Download', ticket.document.url(:original, false),
-      :target => "_blank" %></td>
-    <% end %>
-    
+    <%# else %>
+      <%# ticket.attachments.all.each do |attachment| %>
+        <td><%#= attachment.file_file_name %><%#= link_to 'Download', attachment.file.url(:original, false), :target => "_blank" %></td>
+      <%# end %>  
+    <%# end %> -->
+   
     <td><%= event_time_format(ticket.created_at) %></td>    
 </tr>

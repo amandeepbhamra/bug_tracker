@@ -1,0 +1,24 @@
+
+<% if @user_ticket.blank? %>
+  <table class="table table-striped">
+    <h5> All Tickets created by you.</h5>
+    
+    <thead>
+      <%= render 'tickets/thead_for_tickets' %>
+    </thead>
+    <tbody>
+      <% @user_tickets.each do |ticket| %>
+        <%= render 'tickets/tickets', :ticket => ticket, :project => @project %>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="pagination pagination-centered pagination-small">
+    <%= will_paginate @user_tickets %>
+  </div>
+<% else %>
+  <h5>No tickets has been assigned to you.</h5>
+  <br />
+  
+<% end %>
+
+<br />

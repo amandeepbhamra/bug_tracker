@@ -4,8 +4,8 @@ class ProjectsController < ApplicationController
   before_filter :validate_project, :only => [:show, :project_members, :add_member_project,:edit, :update, :destroy]
  
   def index
-    @projects = @user.projects
-    @assigned_projects = @user.assigned_projects
+    @projects = @user.projects.paginate(:page => params[:page], :per_page => 5)
+    @assigned_projects = @user.assigned_projects.paginate(:page => params[:page], :per_page => 5)
     respond_to do |format|
       format.html # index.html.erb
     end
@@ -33,7 +33,7 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       if @project.save
         @project.members = [current_user]
-        format.html { redirect_to user_project_path(@user,@project), notice: 'Project was successfully created.' }
+        format.html { redirect_to project_path(@project), notice: 'Project was successfully created.' }
       else
         format.html { render action: "new" }
       end
@@ -43,7 +43,7 @@ class ProjectsController < ApplicationController
   def update
     respond_to do |format|
       if @project.update_attributes(params[:project]) 
-        format.html { redirect_to user_project_path(@user,@project), notice: 'Project was successfully updated.' }
+        format.html { redirect_to project_path(@project), notice: 'Project was successfully updated.' }
       else
         format.html { render action: "edit" }
       end
@@ -53,7 +53,8 @@ class ProjectsController < ApplicationController
   def destroy
     @project.destroy
     respond_to do |format|
-      format.html { redirect_to user_projects_path(@user), notice: 'Project was successfully deleted.' }
+      format.html { redirect_to projects_path, notice: 'Project was successfully deleted.' }
+      format.json { head :no_content }
     end
   end
 
@@ -74,14 +75,14 @@ class ProjectsController < ApplicationController
     end
 
     @project.update_attributes(params[:members])
-    redirect_to user_project_path(@user,@project), notice: "Members Added"
+    redirect_to project_path(@project), notice: "Members Added"
   end
 
   private
 
   # Filter To check whether user exits or not #
   def validate_user
-    @user = User.find_by_id(params[:user_id])
+    @user = current_user
     redirect_to current_user, notice: "User doesn't exists with this id." if @user.nil?
   end
   

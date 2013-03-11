@@ -1,6 +1,6 @@
 <%- model_class = Project -%>
 <div class="page-header">
-  <h1><%= @project.name %></h1>
+  <h1><%= @project.title %></h1>
 </div>
 
 <dl class="dl-horizontal">
@@ -12,23 +12,9 @@
 
 <div class="form-actions">
   <% if @project.user_id == current_user.id %>
-    <%= link_to 'Edit', edit_user_project_path(@user, @project), 
-        :class => 'btn' %>
-    <%= link_to 'Destroy', user_project_path(@user, @project), 
-        :class => 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
-    
-    <%= link_to 'Back to Projects', user_projects_path(@user), :class => 'btn' %>
-    
-    <%= link_to 'Create a Ticket', new_user_project_ticket_path(@user, @project), 
-        :class => 'btn btn-info' %>
-    
-    <%= link_to 'View Tickets', user_project_tickets_path(@user, @project), :class => 'btn' %>
-    
-    <%= link_to 'Add / Remove Members', project_members_user_project_path(@user, @project),:class => 'btn btn-info' %>
-
-    <%= link_to 'Assign Roles to Members', new_user_project_role_path(@user, @project),
-        :class => 'btn btn-info' %>
+    <%= render 'links_if_user_is_owner_of_project', :project => @project %>
+   
   <% else %>
-    <%= link_to 'View Tickets', user_project_tickets_path(@user, @project), :class => 'btn' %>
+    <%= link_to 'View Tickets', project_tickets_path(project), :class => 'btn' %>
   <% end %>
 </div>

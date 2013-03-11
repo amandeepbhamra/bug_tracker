@@ -9,10 +9,13 @@
     </thead>
     <tbody>
         <% @user_assigned_tickets.each do |ticket| %>
-          <%= render 'tickets', :ticket => ticket %>
+          <%= render 'tickets', :ticket => ticket, :project => @project %>
         <% end %>
     </tbody>
   </table>
+  <div class="pagination pagination-centered pagination-small">
+    <%= will_paginate @user_assigned_tickets %>
+  </div>
 <% else %>
 <h5>No tickets has been Assigned to you.</h5>
 <% end %>

@@ -1,8 +1,14 @@
 class UsersController < ApplicationController
   
-  before_filter :validate_user, :only => [:show, :edit, :update, :assign_project_to_user, :list_of_invited_members]
+  before_filter :validate_user, :only => [:home, :show, :edit, :update, :assign_project_to_user, :list_of_invited_members]
   
+  # home page action for showing user the assigned projects #
+  def home
+    @user_tickets = @user.tickets.paginate(:page => params[:page], :per_page => 5)
+  end
+
   def show
+    @user_tickets = @user.tickets.paginate(:page => params[:page], :per_page => 5)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
@@ -46,18 +52,11 @@ class UsersController < ApplicationController
     end
   end
 
-  # Action to show the list of members invited #
-  def list_of_invited_members
-    @user_invitation_accepted = User.allowed_users(current_user)
-    @user_invitation_not_accepted = User.not_allowed_users(current_user)
-  end
-
-  
   private
 
   # Filter To check whether user exits or not #
   def validate_user 
-    @user = User.find_by_id(params[:id])
-    redirect_to current_user, notice: 'User not found.' if @user.nil?
+    @user = current_user
+    redirect_to current_user, notice: 'User not found.' if @user != current_user
   end
 end

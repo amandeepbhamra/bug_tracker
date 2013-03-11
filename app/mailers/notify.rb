@@ -17,14 +17,14 @@ class Notify < ActionMailer::Base
   	@admin = admin
   	@user = user
   	@project = project
-  	mail(:to => @admin.email, :subject => "A member with email (#{@user.email}) has been added to project (#{@project.name}).")
+  	mail(:to => @admin.email, :subject => "A member with email (#{@user.email}) has been added to project (#{@project.title}).")
   end
 
   def notification_to_member_that_added(admin, project, user)
 	@admin = admin
   	@user = user
   	@project = project
-  	mail(:to => @user.email, :subject => "You  are added by (#{@admin.email}) as member in project (#{@project.name}).")
+  	mail(:to => @user.email, :subject => "You  are added by (#{@admin.email}) as member in project (#{@project.title}).")
   end
 
   def notify_to_whom_ticket_is_assigned(admin, project, ticket)
