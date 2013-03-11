@@ -1,14 +1,14 @@
 class TicketsController < ApplicationController
   
-  before_filter :validate_project
-  before_filter :validate_user 
+  before_filter :validate_project, :only => [:show, :new, :edit, :create, :update, :destroy]
+  before_filter :validate_user
   before_filter :validate_ticket, :only => [:edit, :update, :destroy]
-  before_filter :validate_just_ticket, :only => [:show]
+  before_filter :validate_just_ticket, :only => [:show,]
   before_filter :tickets_count_by_status, :only => [:index, :view_new_tickets, :view_open_tickets, :view_hold_tickets, :view_resolved_tickets, :view_closed_tickets]
 
   def index
-    @tickets = @project.tickets.paginate(:page => params[:page], :per_page => 5)
-    @user_assigned_tickets = @project.tickets.paginate(:page => params[:page], :per_page => 5).find_all_by_assigned_to(current_user)
+    @tickets = Ticket.paginate(:page => params[:page], :per_page => 5).all
+    @user_assigned_tickets = Ticket.paginate(:page => params[:page], :per_page => 5).find_all_by_assigned_to(current_user)
     respond_to do |format|
       format.html # index.html.erb
     end
@@ -73,27 +73,27 @@ class TicketsController < ApplicationController
   
   # Action to get list of all new tickets #
   def view_new_tickets
-    @new_tickets = @project.tickets.paginate(:page => params[:page], :per_page => 5).find_all_by_status(1)
+    @new_tickets = Ticket.paginate(:page => params[:page], :per_page => 5).find_all_by_status(1)
   end
 
   # Action to get list of all open tickets #
   def view_open_tickets
-    @open_tickets = @project.tickets.paginate(:page => params[:page], :per_page => 5).find_all_by_status(2)
+    @open_tickets = Ticket.paginate(:page => params[:page], :per_page => 5).find_all_by_status(2)
   end
   
   # Action to get list of all hold tickets #
   def view_hold_tickets
-    @hold_tickets = @project.tickets.paginate(:page => params[:page], :per_page => 5).find_all_by_status(3)
+    @hold_tickets = Ticket.paginate(:page => params[:page], :per_page => 5).find_all_by_status(3)
   end
   
   # Action to get list of all resolved tickets #
   def view_resolved_tickets
-    @resolved_tickets = @project.tickets.paginate(:page => params[:page], :per_page => 5).find_all_by_status(4)
+    @resolved_tickets = Ticket.paginate(:page => params[:page], :per_page => 5).find_all_by_status(4)
   end
 
   # Action to get list of all closed tickets #
   def view_closed_tickets
-    @closed_tickets = @project.tickets.paginate(:page => params[:page], :per_page => 5).find_all_by_status(5)
+    @closed_tickets = Ticket.paginate(:page => params[:page], :per_page => 5).find_all_by_status(5)
   end
 
   private
@@ -113,22 +113,22 @@ class TicketsController < ApplicationController
   # Filter to get ticket #
   def validate_ticket
     @ticket = @project.tickets.find_by_id(params[:id])
-    redirect_to user_project_tickets_path(@user,@project), notice: "Invalid Ticket" if @ticket.nil?
+    redirect_to current_user, notice: "Invalid Ticket" if @ticket.nil?
   end
 
   # Filter to get ticket #
   def validate_just_ticket
     @ticket = Ticket.find_by_id(params[:id])
-    redirect_to user_project_tickets_path(@user,@project), notice: "Invalid Ticket" if @ticket.nil?
+    redirect_to current_user, notice: "Invalid Ticket" if @ticket.nil?
   end
 
   # Filter to get count tickets ordered by status for respective actions #
   def tickets_count_by_status
-    @all_tickets_count = @project.tickets.count
-    @new_tickets_count = @project.tickets.find_all_by_status(1).count
-    @open_tickets_count = @project.tickets.find_all_by_status(2).count
-    @hold_tickets_count = @project.tickets.find_all_by_status(3).count
-    @resolved_tickets_count = @project.tickets.find_all_by_status(4).count
-    @closed_tickets_count = @project.tickets.find_all_by_status(5).count
+    @all_tickets_count = @user.tickets.count
+    @new_tickets_count = @user.tickets.find_all_by_status(1).count
+    @open_tickets_count = @user.tickets.find_all_by_status(2).count
+    @hold_tickets_count = @user.tickets.find_all_by_status(3).count
+    @resolved_tickets_count = @user.tickets.find_all_by_status(4).count
+    @closed_tickets_count = @user.tickets.find_all_by_status(5).count
   end
 end

@@ -1,62 +1,69 @@
 <%- model_class = Project -%>
-
-<% if !@projects.blank? %>
-  <div class="page-header">
-    <h3>All Projects owned by you.</h3>
+<div class="dropdown">
+  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+    Show me <b class="caret"></b>
+  </a>
+  <ul class="dropdown-menu">
+    <a href="#projects_tab1" data-toggle="tab">Hosted Projects</a><br />
+    <a href="#projects_tab2" data-toggle="tab">Assigned Projects</a>
+  </ul>
+</div>
+<div class="tab-content">
+  <div class="tab-pane" id="projects_tab1">
+    <% if !@projects.blank? %>
+      <h5>Hosted Projects</h5>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th><%= model_class.human_attribute_name(:title) %></th>
+            <th><%= model_class.human_attribute_name(:description) %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @projects.each do |project| %>
+            <%= render 'projects', :project => project %>
+          <% end %>
+        </tbody>
+      </table>
+      <div class="pagination pagination-centered pagination-small">
+        <%= will_paginate @projects %>
+      </div>
+      <%= link_to 'New Project', new_project_path, :class => 'btn btn-info' %>
+    <% else %>
+      <h5>No Projects has been hosted yet.</h5>
+      <br />
+      <%= link_to 'New Project', new_project_path, :class => 'btn btn-info' %>
+    <% end %>
   </div>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th><%= model_class.human_attribute_name(:title) %></th>
-        <th><%= model_class.human_attribute_name(:description) %></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @projects.each do |project| %>
-        <%= render 'projects', :project => project %>
-      <% end %>
-    </tbody>
-  </table>
-  <div class="pagination pagination-centered pagination-small">
-    <%= will_paginate @projects %>
+  <div class="tab-pane" id="projects_tab2">
+    <% if !@assigned_projects.blank? %>
+      <h5>All Projects in which you are a member.</h5>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th><%= model_class.human_attribute_name(:title) %></th>
+            <th><%= model_class.human_attribute_name(:description) %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @assigned_projects.each do |project| %>
+            <%= render 'projects', :project => project %>
+          <% end %>
+        </tbody>
+      </table>
+      <div class="pagination pagination-centered pagination-small">
+        <%= will_paginate @assigned_projects %>
+      </div>
+    <% else %>
+      <h5>You are not member on any project.</h5>
+    <% end %>
+    <br />
+    <%= link_to 'Back to your profile', current_user, :class => "btn" %>
+    <br />
+    <br />
   </div>
-  
-  <%= link_to 'New Project', new_project_path, :class => 'btn btn-info' %>
-<% else %>
-  <h5>No Projects has been created yet.</h5>
-  
+</div>
 
-<br />
-  <%= link_to 'New Project', new_project_path, :class => 'btn btn-info' %>
 
-<% end %>
 
-<% if !@assigned_projects.blank? %>
-  <div class="page-header">
-    <h3>All Projects in which you are a member.</h3>
-  </div>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th><%= model_class.human_attribute_name(:title) %></th>
-        <th><%= model_class.human_attribute_name(:description) %></th>
-        
-      </tr>
-    </thead>
-    <tbody>
-      <% @assigned_projects.each do |project| %>
-        <%= render 'projects', :project => project %>
-      <% end %>
-    </tbody>
-  </table>
-  <div class="pagination pagination-centered pagination-small">
-    <%= will_paginate @assigned_projects %>
-  </div>
-<% else %>
-  <h5>You are not member on any project.</h5>
-<% end %>
-
-<br />
-<%= link_to 'Back to your profile', current_user, :class => "btn" %>
-<br />
 

@@ -10,20 +10,19 @@ Lighthouseapp::Application.routes.draw do
       post 'add_member_project'
       put 'add_member_project'
     end
-    resources :tickets do
-      collection do
-        get 'view_new_tickets'
-        get 'view_open_tickets'
-        get 'view_hold_tickets'
-        get 'view_resolved_tickets'
-        get 'view_closed_tickets'
-        get 'search'
-      end
-    end
+    resources :tickets 
     resources :roles, :except => [:index, :show, :destroy]
   end
 
   resources :tickets, :only => [:show] do
+    collection do
+      get 'view_new_tickets'
+      get 'view_open_tickets'
+      get 'view_hold_tickets'
+      get 'view_resolved_tickets'
+      get 'view_closed_tickets'
+      get 'search'
+    end
     resources :comments, :only => [:new, :create]
   end
 

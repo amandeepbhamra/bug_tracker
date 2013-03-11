@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   private
   #--------Redirect to user path after sign in----------#
   def after_sign_in_path_for(resource)
-    root_path
+    current_user
   end
 
   #--------Redirect to root path after sign out---------#

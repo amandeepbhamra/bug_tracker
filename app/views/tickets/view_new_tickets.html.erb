@@ -2,14 +2,11 @@
 
 <h4>Search Tickets:</h4>
 
-<%= render 'search_form' %>
-<%= render 'links_status_tickets', :project => @project %>
+<%#= render 'search_form' %>
+<%= render 'links_status_tickets'%>
 
 <% if @new_ticket.blank? %>
 
-  <div class="page-header">
-    <h4>Tickets under <%= @project.title %></h4>
-  </div>
   <table class="table table-striped">
     <h5>New Tickets</h5>
     <thead>
@@ -17,7 +14,7 @@
     </thead>
     <tbody>
       <% @new_tickets.each do |ticket| %>
-        <%= render 'tickets', :ticket => ticket, :project => @project %>
+        <%= render 'tickets', :ticket => ticket %>
       <% end %>
     </tbody>
   </table>
@@ -25,18 +22,9 @@
     <%= will_paginate @new_tickets %>
   </div>
   <br />
-  <% if @project.user_id == current_user.id %>
-      <%= link_to "New Ticket", new_project_ticket_path(@project), :class => "btn btn-info"%>
-  <% end %>
-
 <% else %>
   <h5>No tickets has been created yet.</h5>
   <br />
-  <% if @project.user_id == current_user.id %>
-      <%= link_to "Make a new Ticket", new_project_ticket_path(@project), :class => "btn btn-info"%>
-  <% end %>
 <% end %>
 
 <br /><br />
-
-<%= link_to 'Back to project', project_path(@project), :class => "btn" %>
