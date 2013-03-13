@@ -1,6 +1,6 @@
 
-<% if !@user_ticket.nil? %>
-  <h5> All Tickets Assigned to you yet</h5>
+<% if @user_ticket.blank? %>
+  <h5> All Assigned Tickets</h5>
   <table class="table table-striped">
     <thead>
       <%= render 'tickets/thead_for_tickets' %>
