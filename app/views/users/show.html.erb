@@ -1,7 +1,7 @@
 
-<% if @user_ticket.blank? %>
+<% if !@user_ticket.blank? %>
   <table class="table table-striped">
-    <h5> All Tickets created by you.</h5>
+    <h5> All Tickets Assigned to you yet.</h5>
     
     <thead>
       <%= render 'tickets/thead_for_tickets' %>

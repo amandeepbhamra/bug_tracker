@@ -23,16 +23,17 @@
         <% else %>
             <strong>Document Attached</strong><br />
             <% @ticket.attachments.each do |attachment| %>
-                <strong>
-                    <%= attachment.file_file_name %>
-                    <%= link_to 'Download', attachment.file.url(:original, false),
-                        :target => "_blank" %>
-                </strong>
-                <br />
-                <% if Attachment.validate_document_image(attachment.file) %>
-                    <dd><strong>Preview:</strong></dd>
-                    <dd><%= image_tag attachment.file.url(:thumb) %></dd>
-                <% end %>
+                <div class="row-fluid">
+                    <strong>
+                        <div class="span4">
+                            <%= attachment.file_file_name %>
+                        </div>
+                        <div class="span4">
+                            <%= link_to 'Preview', attachment.file.url(:original, false),:target => "_blank" %>
+                        </div>
+                    </strong>
+                    <br />
+                </div>
             <% end %>
         <% end %>
     </dd>
@@ -44,24 +45,21 @@
 
 <% if !@comments.blank? %>
     <% @comments.each do |comment| %>
-        <%= comment.content %> <b>by:</b> <%= comment.commentor %><br />
+        <h4><%= comment.content %> <b>by:</b> <%= comment.commentor %></h4><br />
         <% if comment.attachments.blank? %>
-            No Attachment
-            <br />
+            No Attachment<br />
         <% else %>
-            <strong>Document Attached</strong>
-            <br />
+            <strong>Document Attached</strong><br />
             <% comment.attachments.each do |attachment| %>
-                <strong>
-                    <%= attachment.file_file_name %>
-                    <%= link_to 'Download', attachment.file.url(:original, false),
-                        :target => "_blank" %>
-                </strong>
-                <br />
-                <% if Attachment.validate_document_image(attachment.file) %>
-                    <dd><strong>Preview:</strong></dd>
-                    <dd><%= image_tag attachment.file.url(:thumb) %></dd>
-                <% end %>
+                <div class="row-fluid">
+                    <div class="span4">
+                        <%= attachment.file_file_name %>
+                    </div>
+                    <div class="span4">
+                        <%= link_to 'Preview', attachment.file.url(:original, false),:target => "_blank" %>
+                    </div>
+                    <br />
+                </div>
             <% end %>
         <% end %>
     <% end %>

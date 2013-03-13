@@ -48,7 +48,6 @@ class TicketsController < ApplicationController
   end
 
   def update
-    
     respond_to do |format|
       if @ticket.update_attributes(params[:ticket])
         format.html { redirect_to project_ticket_path(@project,@ticket), notice: 'Ticket was successfully updated.' }
@@ -75,6 +74,7 @@ class TicketsController < ApplicationController
   def view_all_tickets
     @tickets = Ticket.order("created_at DESC").paginate(:page => params[:page], :per_page => 5).all
   end
+
   # Action to get list of all new tickets #
   def view_new_tickets
     @new_tickets = Ticket.order("created_at DESC").paginate(:page => params[:page], :per_page => 5).find_all_by_status(1)
