@@ -23,8 +23,8 @@ class Project < ActiveRecord::Base
   def self.add_members_to_project(current_user,user,project)
   	@member = User.find_by_id(user)
     project.members << [current_user] <<(@member)
-    Notify.delay(queue: "member_added_notification_to_admin", priority: 3).member_added_notification_to_admin(current_user, project, @member)
-    Notify.delay(queue: "notification_to_member_tvalidate_allowed_usershat_added", priority: 3).notification_to_member_that_added(current_user, project, @member)
+    Notify.member_added_notification_to_admin(current_user, project, @member).deliever
+    Notify.notification_to_member_that_added(current_user, project, @member).deliever
   end
  
 end
