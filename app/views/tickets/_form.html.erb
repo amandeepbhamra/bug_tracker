@@ -29,11 +29,12 @@
       <%= f.collection_select :status, Ticket.ticket_status_array, :first, :last, :class => 'number_field' %>
     </div>
   </div>
-  <% for attachment in @ticket.attachments %>
-    <%= fields_for "ticket[attachments_attributes][]",  attachment do |builder| %>
-      <p>Attachment: <%= builder.file_field :file %></p>
-    <% end %>
+  
+  <%= f.fields_for :attachments do |builder| %>
+      <%= render 'attachment_fields', :f => builder %>
   <% end %>
+    <%= link_to_add_fields "Add more attachments", f, :attachments %>
+  
   <div class="control-group">
     <%= f.label :assigned_to, :class => 'control-label' %>
     <div class="controls">

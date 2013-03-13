@@ -17,12 +17,21 @@ class User < ActiveRecord::Base
                   :remember_me, 
                   :photo
   
-  has_many :projects, :dependent => :destroy
-  has_many :tickets, :through => :projects
-  has_many :roles, :through => :projects, :uniq => true
+  has_many  :projects, 
+            :dependent => :destroy, 
+            :order => 'created_at DESC'
+  has_many  :tickets, 
+            :through => :projects, 
+            :order => 'created_at DESC'
+  has_many  :roles, 
+            :through => :projects, 
+            :uniq => true
   
-  has_and_belongs_to_many :assigned_projects, :class_name => "Project", :uniq => true, 
-                          :join_table => "projects_users"
+  has_and_belongs_to_many :assigned_projects, 
+                          :class_name => "Project", 
+                          :uniq => true, 
+                          :join_table => "projects_users", 
+                          :order => 'created_at DESC'
   
   accepts_nested_attributes_for :roles                        
   

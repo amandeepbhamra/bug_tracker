@@ -1,35 +1,42 @@
 <%- model_class = Ticket -%>
 <div class="page-header">
-  <h1><%= @ticket.title %> under <%= Project.find_by_id(@ticket.project_id).title %></h1>
+    <h3><%= @ticket.title %> under <%= Project.find_by_id(@ticket.project_id).title %></h3>
 </div>
 
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
-  <dd><%= @ticket.description %></dd>
-  <dt><strong>Attachement:</strong></dt>
-  <dd>
-      <%# if @ticket.document.blank? %>
-        <!-- No Attachment<br /> -->
-      <%# else %>
-        <!-- Document Attached -->
-        <!-- <strong><%#= link_to 'Download', @ticket.document.url(:original, false),
-        :target => "_blank" %></strong><br /> -->
-        <%# if Ticket.validate_document_image(@ticket.document) %>
-          <!-- <dd><strong>Preview:</strong></dd>
-          <dd><%#= image_tag @ticket.document.url(:thumb) %></dd> -->
-        <%# end %>
-      <%# end %>
-  </dd>
-  <dt><strong><%= model_class.human_attribute_name(:status) %>:</strong></dt>
-  <dd><%= @ticket.ticket_status %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:assigned_to) %>:</strong></dt>
-  <dd>
-      <% if !(User.find_by_id(@ticket.assigned_to).nil?) %>
-        <%= User.find_by_id(@ticket.assigned_to).name %>
-      <% else %>
-        No one.
-      <% end %>
-  </dd>
+    <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
+    <dd><%= @ticket.description %></dd>
+    <dt><strong><%= model_class.human_attribute_name(:status) %>:</strong></dt>
+    <dd><%= @ticket.ticket_status %></dd>
+    <dt><strong><%= model_class.human_attribute_name(:assigned_to) %>:</strong></dt>
+    <dd>
+        <% if !(User.find_by_id(@ticket.assigned_to).nil?) %>
+            <%= User.find_by_id(@ticket.assigned_to).name %>
+        <% else %>
+            No one.
+        <% end %>
+    </dd>
+    <dt><strong>Attachement:</strong></dt>
+    <dd>
+        <% if @ticket.attachments.blank? %>
+            No Attachment<br />
+        <% else %>
+            <strong>Document Attached</strong><br />
+            <% @ticket.attachments.each do |attachment| %>
+                <div class="row-fluid">
+                    <strong>
+                        <div class="span4">
+                            <%= attachment.file_file_name %>
+                        </div>
+                        <div class="span4">
+                            <%= link_to 'Preview', attachment.file.url(:original, false),:target => "_blank" %>
+                        </div>
+                    </strong>
+                    <br />
+                </div>
+            <% end %>
+        <% end %>
+    </dd>
 </dl>
 
 <div class="page-header">
@@ -37,23 +44,43 @@
 </div>
 
 <% if !@comments.blank? %>
-  <% @comments.each do |comment| %>
-      <%= comment.content %> <b>by:</b>
-      <%= comment.commentor %><br />
-  <% end %>
+    <% @comments.each do |comment| %>
+        <h4><%= comment.content %> <b>by:</b> <%= comment.commentor %></h4><br />
+        <% if comment.attachments.blank? %>
+            No Attachment<br />
+        <% else %>
+            <strong>Document Attached</strong><br />
+            <% comment.attachments.each do |attachment| %>
+                <div class="row-fluid">
+                    <div class="span4">
+                        <%= attachment.file_file_name %>
+                    </div>
+                    <div class="span4">
+                        <%= link_to 'Preview', attachment.file.url(:original, false),:target => "_blank" %>
+                    </div>
+                    <br />
+                </div>
+            <% end %>
+        <% end %>
+    <% end %>
 <% else %>
-  <h5>No comments</h5>
+    <h5>No comments</h5>
 <% end %>
+
 <br />
+
 <h6>New Comment </h6>
+
 <%= render 'comments/form', :@comment => Comment.new %>
+
 <br />
+
 <div class="form-actions">
-  <% if @project.user_id == current_user.id %>
-    <%= link_to 'Edit Ticket', edit_project_ticket_path(@ticket.project_id, @ticket), :class => "btn" %>
-    <%= link_to 'Destroy', project_ticket_path(@ticket.project_id, @ticket), :class => "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
-  <% end %>
-  <%= link_to 'Back To Tickets', project_tickets_path(@ticket.project_id), :class => "btn" %>
+    <% if @project.user_id == current_user.id %>
+        <%= link_to 'Edit Ticket', edit_project_ticket_path(@ticket.project_id, @ticket), :class => "btn" %>
+        <%= link_to 'Destroy', project_ticket_path(@ticket.project_id, @ticket), :class => "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% end %>
+    <%= link_to 'Back To Tickets', project_tickets_path(@ticket.project_id), :class => "btn" %>
 </div>
 
 

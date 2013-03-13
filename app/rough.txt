@@ -141,3 +141,28 @@ end
     <%= f.submit "Comment", :class => "btn btn-info" %>
   </div>
 <% end %>
+
+for attachments
+<% for attachment in @ticket.attachments %>
+    <%= fields_for "ticket[attachments_attributes][]",  attachment do |builder| %>
+      <p>Attachment: <%= builder.file_field :file %></p>
+    <% end %>
+  <% end %>
+  <% for attachment in @ticket.attachments %>
+    <%= fields_for "ticket[attachments_attributes][]",  attachment do |builder| %>
+      <%= render 'attachment_fields', :f => builder %>
+    <% end %>
+    <%= link_to_add_fields "Add more attachments", f, :attachments %>
+  <% end %>
+
+  jQuery ->
+  $('form').on 'click', '.remove_fields', (event) ->
+    $(this).prev('input[type=hidden]').val('1')
+    $(this).closest('.field').hide()
+    event.preventDefault()
+
+  $('form').on 'click', '.add_fields', (event) ->
+    time = new Date().getTime()
+    regexp = new RegExp($(this).data('id'), 'g')
+    $(this).before($(this).data('fields').replace(regexp, time))
+    event.preventDefault()

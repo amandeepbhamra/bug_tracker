@@ -5,13 +5,14 @@ class Ticket < ActiveRecord::Base
                   :status, 
                   :assigned_to, 
                   :attachments_attributes
-      
 
   has_many  :attachments, 
             :as => :attachable, 
-            :dependent => :destroy
+            :dependent => :destroy,
+            :order => 'created_at DESC'
   has_many  :comments, 
-            :dependent => :destroy
+            :dependent => :destroy,
+            :order => 'created_at DESC'
 
   belongs_to :project
   belongs_to :user
@@ -24,12 +25,6 @@ class Ticket < ActiveRecord::Base
     indexes :title
     indexes :description
   end
-
-  def attachments_attributes=(attachments_attributes)
-    attachments_attributes.each do |attributes|
-      attachments.build(attributes)
-    end
-  end
   
   TICKET_STATES = {1=> "New", 2 => "Open", 3 => "Hold", 4 => "Resolved", 5 => "Closed"}
 
@@ -41,9 +36,5 @@ class Ticket < ActiveRecord::Base
   	TICKET_STATES.to_a.sort
   end
 
-  def self.validate_document_image(document)
-    if (document.content_type =~ %r{^(image|(x-)?application)/(x-png|pjpeg|jpeg|jpg|png|gif)$})
-      true  
-    end
-  end
+  
 end

@@ -4,11 +4,10 @@ class TicketsController < ApplicationController
   before_filter :validate_user
   before_filter :validate_ticket, :only => [:edit, :update, :destroy]
   before_filter :validate_just_ticket, :only => [:show,]
-  before_filter :tickets_count_by_status, :only => [:index, :view_new_tickets, :view_open_tickets, :view_hold_tickets, :view_resolved_tickets, :view_closed_tickets]
+  before_filter :tickets_count_by_status, :only => [:index, :view_all_tickets, :view_new_tickets, :view_open_tickets, :view_hold_tickets, :view_resolved_tickets, :view_closed_tickets]
 
   def index
-    @tickets = Ticket.paginate(:page => params[:page], :per_page => 5).all
-    @user_assigned_tickets = Ticket.paginate(:page => params[:page], :per_page => 5).find_all_by_assigned_to(current_user)
+    @user_assigned_tickets = Ticket.order("created_at DESC").paginate(:page => params[:page], :per_page => 5).find_all_by_assigned_to(current_user)
     respond_to do |format|
       format.html # index.html.erb
     end
@@ -72,28 +71,33 @@ class TicketsController < ApplicationController
   end
   
   # Action to get list of all new tickets #
+  def view_all_tickets
+    @tickets = Ticket.order("created_at DESC").paginate(:page => params[:page], :per_page => 5).all
+  end
+
+  # Action to get list of all new tickets #
   def view_new_tickets
-    @new_tickets = Ticket.paginate(:page => params[:page], :per_page => 5).find_all_by_status(1)
+    @new_tickets = Ticket.order("created_at DESC").paginate(:page => params[:page], :per_page => 5).find_all_by_status(1)
   end
 
   # Action to get list of all open tickets #
   def view_open_tickets
-    @open_tickets = Ticket.paginate(:page => params[:page], :per_page => 5).find_all_by_status(2)
+    @open_tickets = Ticket.order("created_at DESC").paginate(:page => params[:page], :per_page => 5).find_all_by_status(2)
   end
   
   # Action to get list of all hold tickets #
   def view_hold_tickets
-    @hold_tickets = Ticket.paginate(:page => params[:page], :per_page => 5).find_all_by_status(3)
+    @hold_tickets = Ticket.order("created_at DESC").paginate(:page => params[:page], :per_page => 5).find_all_by_status(3)
   end
   
   # Action to get list of all resolved tickets #
   def view_resolved_tickets
-    @resolved_tickets = Ticket.paginate(:page => params[:page], :per_page => 5).find_all_by_status(4)
+    @resolved_tickets = Ticket.order("created_at DESC").paginate(:page => params[:page], :per_page => 5).find_all_by_status(4)
   end
 
   # Action to get list of all closed tickets #
   def view_closed_tickets
-    @closed_tickets = Ticket.paginate(:page => params[:page], :per_page => 5).find_all_by_status(5)
+    @closed_tickets = Ticket.order("created_at DESC").paginate(:page => params[:page], :per_page => 5).find_all_by_status(5)
   end
 
   private
