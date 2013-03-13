@@ -1,9 +1,12 @@
 class CommentsController < ApplicationController
   
   before_filter :validate_ticket
-  
+  before_filter :validate_user
+
   def new
-    @comment = @ticket.comments.build
+    @comment = Comment.new
+    @ticket.comments.build
+    @comment.attachments.build
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @comment }
@@ -27,5 +30,10 @@ class CommentsController < ApplicationController
   def validate_ticket 
     @ticket = Ticket.find_by_id(params[:ticket_id])
     redirect to @user, :notice => "Ticket not found" if @ticket.nil? 
+  end
+  #To validate that user#
+  def validate_user 
+    @user = current_user
+    redirect_to current_user, notice: 'User not found.' if @user.nil?
   end
 end

@@ -3,7 +3,7 @@
     <li><%= link_to 'Dashboard', current_user %></li>
     <li><%= link_to "Projects", projects_path %></li>
      
-    <li><%= link_to "Tickets", tickets_path %></li>
+    <li><%= link_to "Tickets", user_tickets_path(current_user) %></li>
   </ul>
   <!-- <div class="tab-content">
     <div class="tab-pane" id="projects_tab1">

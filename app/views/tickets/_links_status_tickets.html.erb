@@ -4,8 +4,8 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu">
-	<%= link_to "All Tickets (#{@all_tickets_count})", 
-	  	tickets_path %>
+	<%= link_to "Assigned tickets", user_tickets_path(current_user) %>
+	<%= link_to "All Tickets (#{@all_tickets_count})", view_all_tickets_tickets_path %>
 	<%= link_to "New Tickets (#{@new_tickets_count})", view_new_tickets_tickets_path %>
 	<%= link_to "Open Tickets (#{@open_tickets_count})", view_open_tickets_tickets_path %>
 	<%= link_to "Hold Tickets  (#{@hold_tickets_count})", view_hold_tickets_tickets_path %>

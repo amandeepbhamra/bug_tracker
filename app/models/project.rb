@@ -4,7 +4,8 @@ class Project < ActiveRecord::Base
                   :user_ids
 
   has_many  :tickets, 
-            :dependent => :destroy
+            :dependent => :destroy,
+            :order => 'created_at DESC'
   has_many  :roles, 
             :dependent => :destroy
   
@@ -27,3 +28,4 @@ class Project < ActiveRecord::Base
   end
  
 end
+

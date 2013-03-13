@@ -17,14 +17,10 @@
     <%= f.text_area :content, :rows => 2, :cols => 20 %>
   </div>
   <div class="field">
-    
-    <% for attachments in @comment.attachments %>
-      <%= fields_for "comment[attachments_attributes][]", attachments do |builder| %>
-        <p>
-          Attachment: <%= builder.file_field :file %>
-        </p>
-      <% end %>
+    <%= f.fields_for :attachments do |builder| %>
+      <%= render 'attachment_fields', :f => builder %>
     <% end %>
+    <%= link_to_add_fields "Add Attachments", f, :attachments %>
   </div>
   <div class="field">
     <%= f.hidden_field :commentor, :value => current_user.name %>

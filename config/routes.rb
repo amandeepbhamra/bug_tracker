@@ -2,7 +2,9 @@ Lighthouseapp::Application.routes.draw do
 
   devise_for :users, :controllers => { :invitations => 'users/invitations' }
 
-  resources :users, :except => [:index, :destroy] 
+  resources :users, :except => [:index, :destroy] do 
+    resources :tickets, :only => [:index]
+  end
 
   resources :projects do 
     member do
@@ -16,6 +18,7 @@ Lighthouseapp::Application.routes.draw do
 
   resources :tickets, :only => [:show] do
     collection do
+      get 'view_all_tickets'
       get 'view_new_tickets'
       get 'view_open_tickets'
       get 'view_hold_tickets'
@@ -26,12 +29,12 @@ Lighthouseapp::Application.routes.draw do
     resources :comments, :only => [:new, :create]
   end
 
-  resources :tickets do
-    resources :attachments
+  resources :tickets, :except => [:index] do
+    resources :attachments, :only => []
   end
 
-  resources :comments do
-    resources :attachments
+  resources :comments,:except=> [:index,:show] do
+    resources :attachments, :only => []
   end
 
   match 'home' => 'users#home', :as => :home
