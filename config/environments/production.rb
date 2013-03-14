@@ -1,13 +1,25 @@
+require 'tls_smtp'
+
 Bugtracker::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
   config.cache_classes = true
-  
+
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-
+  config.action_mailer.default_url_options = { :host => 'bugtracker.herokuapp.com' }
+  # Disable Rails's static asset server (Apache or nginx will already do this)
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
+    :address => "smtp.gmail.com",
+    :port => 25,
+    :domain => "gmail.com",
+    :user_name => "rails.amandeep@gmail.com",
+    :password => "asdf@1234",
+    :authentication => :plain,
+  }
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
 

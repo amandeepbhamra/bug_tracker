@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user_tickets = @user.tickets.paginate(:page => params[:page], :per_page => 5)
+    @user_tickets = @user.tickets.paginate(:page => params[:page], :per_page => 10)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
@@ -42,7 +42,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        Notify.delay(queue: "user_profile_update_notification", priority: 3).user_profile_update_notification(@user)
+        Notify.user_profile_update_notification(@user).deliver
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { head :no_content }
       else

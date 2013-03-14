@@ -28,7 +28,7 @@
                                 <li>
                                     <% if user_signed_in? %>
                                         <a href="<%= user_url(current_user) %>">
-                                            <div class="editprofile_userpic">
+                                            <div class="editprofile_userpic img-polaroid">
                                                 <%= image_tag(current_user.photo.url(:thumb)) %> 
                                             </div>
                                             <h5 class="fullname">

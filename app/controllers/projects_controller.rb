@@ -13,6 +13,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project_members = @project.members
+    @project_tickets = @project.tickets.paginate(:page => params[:page], :per_page => 10)
     respond_to do |format|
       format.html # show.html.erb
     end
@@ -81,6 +82,7 @@ class ProjectsController < ApplicationController
   private
 
   # Filter To check whether user exits or not #
+   # Filter To check whether user exits or not #
   def validate_user
     @user = current_user
     redirect_to current_user, notice: "User doesn't exists with this id." if @user.nil?

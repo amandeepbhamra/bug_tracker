@@ -1,14 +1,36 @@
 <%- model_class = Project -%>
+
 <div class="page-header">
-  <h1><%= @project.title %></h1>
+    <h3><%= @project.title %></h3>
+    <%= @project.description %>
 </div>
 
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
-  <dd><%= @project.description %></dd>
-  <dt><strong>Project Members</strong></dt>
-  <dd><%= render 'project_members', :project_members => @project_members %></dd>
+    <dt><strong>Project Members</strong></dt>
+    <dd><%= render 'project_members', :project_members => @project_members %></dd>
 </dl>
+
+<br />
+<% if !@project_tickets.blank? %>
+    <strong>All Tickets under this project:</strong>
+    <table class="table table-striped">
+        <thead>
+            <%= render 'tickets/thead_for_tickets' %>
+        </thead>
+        <tbody>
+            <% @project_tickets.each do |ticket| %>
+                <%= render 'tickets/tickets', ticket: ticket %>
+            <% end %>
+        </tbody>
+    </table>
+    <div class="pagination pagination-centered pagination-small">
+        <%= will_paginate @project_tickets %>
+    </div>
+<% else %>
+    <strong>No Tickets under this project</strong>
+<% end %>
+
+
 
 <div class="form-actions">
   <% if @project.user_id == current_user.id %>
