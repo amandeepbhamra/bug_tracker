@@ -12,7 +12,7 @@ gem "taps"
 gem 'devise'
 gem 'devise_invitable'
 gem "paperclip", "~> 3.0"
-gem 'thinking-sphinx', '2.0.10'
+#gem 'thinking-sphinx', '2.0.10'
 gem 'delayed_job_active_record'
 gem "libv8", "~> 3.11.8.13"
 gem "therubyracer"
@@ -20,6 +20,7 @@ gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) support
 gem "twitter-bootstrap-rails"
 gem 'execjs'
 gem 'will_paginate', '~> 3.0'
+gem "ransack"
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

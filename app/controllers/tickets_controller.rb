@@ -5,8 +5,12 @@ class TicketsController < ApplicationController
   before_filter :validate_ticket, :only => [:edit, :update, :destroy]
   before_filter :validate_just_ticket, :only => [:show,]
   before_filter :tickets_count_by_status, :only => [:index, :view_all_tickets, :view_new_tickets, :view_open_tickets, :view_hold_tickets, :view_resolved_tickets, :view_closed_tickets]
+  
 
   def index
+    @search = Ticket.ransack(params[:q])
+    @tickets_searched = @search.result
+    @tickets_count = @tickets_searched.count
     @user_assigned_tickets = Ticket.order("created_at DESC").paginate(:page => params[:page], :per_page => 5).find_all_by_assigned_to(current_user)
     respond_to do |format|
       format.html # index.html.erb
@@ -66,8 +70,11 @@ class TicketsController < ApplicationController
 
   # Action for search - Thinking sphinx #
   def search
-    @tickets_searched = Ticket.search(params[:search],:page => params[:page], :per_page => 10)
-    @tickets_count = Ticket.search(params[:search]).count
+    @search = Ticket.ransack(params[:q])
+    @tickets_searched = @search.result
+    @tickets_count = @tickets_searched.count
+    # @tickets_searched = Ticket.search(params[:search],:page => params[:page], :per_page => 10)
+    # @tickets_count = Ticket.search(params[:search]).count
   end
   
   # Action to get list of all new tickets #

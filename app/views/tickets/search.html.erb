@@ -2,12 +2,12 @@
 
 <%= render 'search_form' %>
 
-<h4>Search Result</h4>
+<h4>Search Results:</h4>
 
 <% if @tickets_count > 0 %>
   <table class="table table-striped">
     <h5>
-    	<%= link_to "Total Tickets found (#{@tickets_count})", search_tickets_path(:search => params[:search]) %>
+    	<%= "Total Tickets found (#{@tickets_count})" %>
     </h5>
     <thead>
       <%= render 'thead_for_tickets' %>
@@ -18,9 +18,7 @@
       <% end %>
     </tbody>
   </table>
-  <div class="pagination pagination-centered pagination-small">
-    <%= will_paginate @tickets_searched %>
-  </div>
+  
   <br />
 <% else %>
   <h5>Tickets (0)</h5>

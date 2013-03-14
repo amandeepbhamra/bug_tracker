@@ -21,10 +21,10 @@ class Ticket < ActiveRecord::Base
 
   accepts_nested_attributes_for :attachments, :allow_destroy => true
 
-  define_index do
-    indexes :title
-    indexes :description
-  end
+  # define_index do
+  #   indexes :title
+  #   indexes :description
+  # end
   
   TICKET_STATES = {1=> "New", 2 => "Open", 3 => "Hold", 4 => "Resolved", 5 => "Closed"}
 
