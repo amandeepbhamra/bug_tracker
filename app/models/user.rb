@@ -37,7 +37,8 @@ class User < ActiveRecord::Base
   
   validates :name, :presence => true , :if => lambda{|a| !a.new_record?}
   
-  has_attached_file :photo, :styles => { :medium => "300x300>", :thumb => "100x100>" }
+  has_attached_file :photo, :styles => { :medium => "100x100>", :thumb => "38x38>" }, 
+  :default_url => "/assets/users_sticker.png"
 
   def self.allowed_users(current_user)
     invitation_accepted.find_all_by_invited_by_id(current_user)

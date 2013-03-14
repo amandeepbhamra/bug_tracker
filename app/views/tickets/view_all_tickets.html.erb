@@ -1,29 +1,28 @@
 <%- model_class = Ticket -%>
 
-<h4>Search Tickets:</h4>
-
 <%= render 'search_form' %>
+
 <%= render 'links_status_tickets'%>
 
 <% if !@tickets.blank? %>
-  <table class="table table-striped">
-    <h5>All Tickets</h5>
-    <thead>
-      <%= render 'thead_for_tickets' %>
-    </thead>
-    <tbody>
-      <% @tickets.each do |ticket| %>
-        <%= render 'tickets', :ticket => ticket %>
-      <% end %>
-    </tbody>
-  </table>
-  <div class="pagination pagination-centered pagination-small">
-    <%= will_paginate @tickets %>
-  </div>
-  <br />
+    <table class="table table-striped">
+        <h5>All Tickets</h5>
+        <thead>
+            <%= render 'thead_for_tickets' %>
+        </thead>
+        <tbody>
+            <% @tickets.each do |ticket| %>
+                <%= render 'tickets', :ticket => ticket %>
+            <% end %>
+        </tbody>
+    </table>
+    <div class="pagination pagination-centered pagination-small">
+        <%= will_paginate @tickets %>
+    </div>
+    <br />
 <% else %>
-  <h5>No tickets has been created yet.</h5>
-  <br />
+    <h5>No tickets has been created yet.</h5>
+    <br />
 <% end %>
 
 <br /><br />

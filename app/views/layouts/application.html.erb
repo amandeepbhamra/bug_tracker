@@ -14,9 +14,9 @@
 		<div class="container">
 			<% if user_signed_in? %>
 				<div class="page-header">
-	    			<h3>Hi <%= link_to @user.name, @user %>,</h3>
-	  			</div>
-				<%= render 'layouts/tabs' %>
+	    			<h3>Hi <%= link_to current_user.name, current_user %>,</h3>
+	 			</div>
+	 			<%#= render 'layouts/tabs' %>
 			<% end %>
 			<% unless flash[:notice].blank? %>
 				<div class="alert alert-info">
@@ -30,7 +30,9 @@
 		      		</div>
 	      		</div>
 	      	<% end %>
+
 			<%= yield %>
+			
 		</div>
 	</body>
 </html>

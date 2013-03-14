@@ -1,4 +1,4 @@
-Lighthouseapp::Application.routes.draw do
+Bugtracker::Application.routes.draw do
 
   devise_for :users, :controllers => { :invitations => 'users/invitations' }
 

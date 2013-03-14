@@ -1,7 +1,7 @@
 
 <% if @user_ticket.blank? %>
   <table class="table table-striped">
-    <h5> All Tickets Assigned to you yet.</h5>
+    <h5> All Assigned Tickets:</h5>
     
     <thead>
       <%= render 'tickets/thead_for_tickets' %>
@@ -24,7 +24,6 @@
 <br />
 
 <div class="form-actions">
-<%= link_to 'Edit Profile', edit_user_path(@user), :class => 'btn' %>
-<%= link_to 'Create a New Project', new_project_path, :class => 'btn'  %>
-<%= link_to 'Invite Member', new_user_invitation_path, :class => 'btn'  %>
+  <%= link_to 'New Project', new_project_path, :class => 'btn btn-primary pull-right' %>
+  <%= link_to 'Invite Member', new_user_invitation_path, :class => 'btn btn-primary pull-right' %> 
 </div>
