@@ -31,9 +31,11 @@ class CommentsController < ApplicationController
     @ticket = Ticket.find_by_id(params[:ticket_id])
     redirect to @user, :notice => "Ticket not found" if @ticket.nil? 
   end
-  #To validate that user#
-  def validate_user 
+  
+  # Filter To check whether user exits or not #
+   # Filter To check whether user exits or not #
+  def validate_user
     @user = current_user
-    redirect_to current_user, notice: 'User not found.' if @user.nil?
+    redirect_to current_user, notice: "User doesn't exists with this id." if @user.nil?
   end
 end

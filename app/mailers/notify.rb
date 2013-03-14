@@ -1,5 +1,5 @@
 class Notify < ActionMailer::Base
-  default from: "support@lighthouseapp.com"
+  default from: "support@bugtracker.com"
 
   def user_profile_update_notification(user)
   	@user = user

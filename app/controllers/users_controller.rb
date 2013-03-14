@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user_tickets = @user.tickets.paginate(:page => params[:page], :per_page => 5)
+    @user_tickets = @user.tickets.paginate(:page => params[:page], :per_page => 10)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }

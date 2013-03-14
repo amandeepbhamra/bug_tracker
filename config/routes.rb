@@ -1,4 +1,4 @@
-Lighthouseapp::Application.routes.draw do
+Bugtracker::Application.routes.draw do
 
   devise_for :users, :controllers => { :invitations => 'users/invitations' }
 
@@ -24,7 +24,9 @@ Lighthouseapp::Application.routes.draw do
       get 'view_hold_tickets'
       get 'view_resolved_tickets'
       get 'view_closed_tickets'
-      get 'search'
+      post 'search', to: 'tickets#index'
+      get 'search', to: 'tickets#search'
+      
     end
     resources :comments, :only => [:new, :create]
   end

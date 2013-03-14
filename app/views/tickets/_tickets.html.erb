@@ -11,14 +11,5 @@
     <% else %>
       <td><%= "No one" %></td>
     <% end %>
-
-   <!--  <%# if ticket.attachments.blank? %>
-      <td>No Attachments</td>
-    <%# else %>
-      <%# ticket.attachments.all.each do |attachment| %>
-        <td><%#= attachment.file_file_name %><%#= link_to 'Download', attachment.file.url(:original, false), :target => "_blank" %></td>
-      <%# end %>  
-    <%# end %> -->
-   
     <td><%= event_time_format(ticket.created_at) %></td>    
 </tr>

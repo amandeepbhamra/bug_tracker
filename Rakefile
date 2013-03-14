@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Lighthouseapp::Application.load_tasks
+Bugtracker::Application.load_tasks

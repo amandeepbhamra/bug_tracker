@@ -1,4 +1,6 @@
-<%= form_tag search_tickets_path, method: :get do %>
-  <%= text_field_tag :search, params[:search] %>
-  <%= submit_tag "Search" %>
+<%= search_form_for @search, :url => search_tickets_path do |f| %>
+	<div class="input-append">
+		<%= f.text_field :title_cont, :placeholder => "Search Tickets" %>
+		<%= f.submit "Search", class: "btn" %> 
+ 	</div>
 <% end %>
