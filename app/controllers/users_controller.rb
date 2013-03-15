@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   
-  before_filter :validate_user, :only => [:home, :show, :edit, :update, :assign_project_to_user, :list_of_invited_members]
+  before_filter :validate_user, :only => [:show]
+  before_filter :validate_current_user, :except => [:show]
   
   # home page action for showing user the assigned projects #
   # def home
@@ -58,7 +59,15 @@ class UsersController < ApplicationController
   def validate_user 
     @user = User.find_by_id(params[:id])
     if @user.nil?
-      redirect_to current_user, notice: "Sorry, You aren't authorized for this action"
+      redirect_to current_user, notice: "Sorry, No user found !"
+    end
+  end
+
+  # Filter To check whether current_user exits or not #
+  def validate_current_user
+    @user = User.find_by_id(params[:id])
+    if @user != current_user
+      redirect_to current_user, notice: "Sorry, You aren't authorized for this action !"
     end
   end
 end

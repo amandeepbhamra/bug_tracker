@@ -34,8 +34,11 @@
   				<div class="span2">
       				<% if user_signed_in? %>
 						<div class="page-header">
-							<%= image_tag(@user.photo.url(:medium)) %>
-	    					<h3><%= link_to @user.name, @user %></h3>
+							<% @user ||= current_user %>
+							<div class="img-polaroid">
+								<%= image_tag(@user.photo.url(:medium)) %>
+							</div>
+							<h4 class="text-center"><%= @user.name %></h4>
 	 					</div>
 	 				<% end %>
       				<%= yield :sidebar %>

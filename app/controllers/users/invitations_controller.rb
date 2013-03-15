@@ -4,6 +4,7 @@ class Users::InvitationsController < Devise::InvitationsController
   before_filter :has_invitations_left?, :only => [:create]
   before_filter :require_no_authentication, :only => [:edit, :update]
   helper_method :after_sign_in_path_for
+  before_filter :validate_user, :only => [:new]
 
   # GET /resource/invitation/new
   def new
@@ -48,6 +49,12 @@ class Users::InvitationsController < Devise::InvitationsController
   end
 
   protected
+  # Filter To check whether user exits or not #
+  def validate_user 
+    @user = current_inviter
+
+  end
+  
   def current_inviter
     @current_inviter ||= authenticate_inviter!
   end

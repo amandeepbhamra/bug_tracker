@@ -1,62 +1,57 @@
 <%- model_class = Project -%>
+
 <% content_for :sidebar do %>
     <%= link_to 'New Project', new_project_path, :class => 'btn btn-primary btn-block' %><br />
     <%= link_to 'Invite Member', new_user_invitation_path, :class => 'btn btn-primary btn-block' %> 
 <% end %>
-    <!-- Hosted projects -->
-    <% if !@projects.blank? %>
-        <h5>Hosted Projects</h5>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th><%= model_class.human_attribute_name(:title) %></th>
-                    <th><%= model_class.human_attribute_name(:description) %></th>
-                </tr>
-            </thead>
-            <tbody>
-                <% @projects.each do |project| %>
-                    <%= render 'projects', :project => project %>
-                <% end %>
-            </tbody>
-        </table>
-        <div class="pagination pagination-centered pagination-small">
-            <%= will_paginate @projects %>
-        </div>
-    <% else %>
-        <h5>No Projects has been hosted yet.</h5>
-    <% end %>
-   
-    <!-- Assigned projects -->
-    <br /><br />
-    <% if !@assigned_projects.blank? %>
-        <h5>All Projects in which you are a member.</h5>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th><%= model_class.human_attribute_name(:title) %></th>
-                    <th><%= model_class.human_attribute_name(:description) %></th>
-                </tr>
-            </thead>
-            <tbody>
-                <% @assigned_projects.each do |project| %>
-                    <%= render 'projects', :project => project %>
-                <% end %>
-            </tbody>
-        </table>
-        <div class="pagination pagination-centered pagination-small">
-            <%= will_paginate @assigned_projects %>
-        </div>
-    <% else %>
-        <h5>You are not member on any project.</h5>
-    <% end %>
-    <br />
-    <br />
- <div class="form-actions">
- 
-</div>
 
-<% content_for :sidebar do %>
-   
+<!-- Hosted projects -->
+
+<% if !@projects.blank? %>
+    <h3>Hosted Projects</h3>
+        
+    <table class="table table-striped">
+        <%= render 'thead_for_projects' %>
+        <tbody>
+            <% @projects.each do |project| %>
+                <%= render 'projects', :project => project %>
+            <% end %>
+        </tbody>
+    </table>
+     
+    <div class="pagination pagination-centered pagination-small">
+        <%= will_paginate @projects %>
+    </div>
+    
+<% else %>
+    <h5>No Projects has been hosted yet.</h5>
 <% end %>
+   
+<!-- Assigned projects -->
+<br /><br />
+<% if !@assigned_projects.blank? %>
+    <h3>All Projects in which you are a member.</h3>
+       
+    <table class="table table-striped">
+        <%= render 'thead_for_projects' %>
+        <tbody>
+            <% @assigned_projects.each do |project| %>
+                <%= render 'projects', :project => project %>
+            <% end %>
+        </tbody>
+    </table>
+        
+    <div class="pagination pagination-centered pagination-small">
+        <%= will_paginate @assigned_projects %>
+    </div>
+    
+<% else %>
+    <h5>You are not member on any project.</h5>
+<% end %>
+    
+<br />
+<br />
+ <div class="form-actions"></div>
+
 
 

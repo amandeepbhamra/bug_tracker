@@ -28,7 +28,7 @@ class Project < ActiveRecord::Base
   end
   
   def self.project_title(project)
-    find_by_id(project).title
+    find_by_id(project).title unless project.nil?
   end
 end
 

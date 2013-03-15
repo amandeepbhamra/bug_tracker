@@ -25,7 +25,7 @@ module ApplicationHelper
   end
 
   def user_name(user)
-    User.find_by_id(user).name
+    User.user_name(user)
   end
 
 end

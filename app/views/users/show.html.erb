@@ -14,7 +14,7 @@
             </thead>
             <tbody>
                 <% @user_tickets.each do |ticket| %>
-                    <%= render 'tickets/tickets', :ticket => ticket, :project => @project %>
+                    <%= render 'tickets/tickets', :ticket => ticket %>
                 <% end %>
             </tbody>
         </table>

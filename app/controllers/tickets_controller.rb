@@ -39,8 +39,9 @@ class TicketsController < ApplicationController
     @ticket = @project.tickets.build(params[:ticket])
     respond_to do |format|
       if @ticket.save
-        Notify.ticket_creation_notification(@user, @project, @ticket).deliver
-        Notify.notify_to_whom_ticket_is_assigned(@user, @project, @ticket).deliver
+
+        Notify.ticket_creation_notification(@user, @project, @ticket).deliver 
+        Notify.notify_to_whom_ticket_is_assigned(@user, @project, @ticket).deliver unless @ticket.assigned_to.nil?
         format.html { redirect_to project_ticket_path(@project,@ticket), notice: 'Ticket was successfully created.' }
       else
         format.html { render action: "new" }
