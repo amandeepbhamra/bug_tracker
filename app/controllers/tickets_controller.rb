@@ -138,4 +138,5 @@ class TicketsController < ApplicationController
     @resolved_tickets_count = @user.tickets.find_all_by_status(4).count
     @closed_tickets_count = @user.tickets.find_all_by_status(5).count
   end
+  
 end

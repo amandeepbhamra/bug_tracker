@@ -82,7 +82,6 @@ class ProjectsController < ApplicationController
   private
 
   # Filter To check whether user exits or not #
-   # Filter To check whether user exits or not #
   def validate_user
     @user = current_user
     redirect_to current_user, notice: "User doesn't exists with this id." if @user.nil?
@@ -93,4 +92,6 @@ class ProjectsController < ApplicationController
     @project = @user.projects.find_by_id(params[:id])
     redirect_to @user, notice: 'No projects found with this id.' if @project.nil?
   end
+
+  
 end

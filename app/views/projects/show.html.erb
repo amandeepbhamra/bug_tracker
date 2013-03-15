@@ -1,5 +1,14 @@
 <%- model_class = Project -%>
 
+<% content_for :sidebar do %>
+    <%= link_to 'New Project', new_project_path, :class => 'btn btn-primary btn-block' %><br />
+    <%= link_to 'Invite Member', new_user_invitation_path, :class => 'btn btn-primary btn-block' %> 
+    <% if @project.user_id == current_user.id %>
+        <%= render 'links_if_user_is_owner_of_project', :project => @project %>
+    <% else %>
+        <%= link_to 'View Tickets', project_tickets_path(project), :class => 'btn' %>
+    <% end %>
+<% end %>
 <div class="page-header">
     <h3><%= @project.title %></h3>
     <%= @project.description %>
@@ -11,6 +20,7 @@
 </dl>
 
 <br />
+
 <% if !@project_tickets.blank? %>
     <strong>All Tickets under this project:</strong>
     <table class="table table-striped">
@@ -30,13 +40,6 @@
     <strong>No Tickets under this project</strong>
 <% end %>
 
-
-
 <div class="form-actions">
-  <% if @project.user_id == current_user.id %>
-    <%= render 'links_if_user_is_owner_of_project', :project => @project %>
-   
-  <% else %>
-    <%= link_to 'View Tickets', project_tickets_path(project), :class => 'btn' %>
-  <% end %>
+  
 </div>

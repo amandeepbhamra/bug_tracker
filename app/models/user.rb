@@ -57,4 +57,8 @@ class User < ActiveRecord::Base
   def self.user_role_array
     USER_ROLES.to_a.sort
   end
+
+  def self.user_name(user)
+    find_by_id(user).name
+  end
 end

@@ -26,6 +26,9 @@ class Project < ActiveRecord::Base
     Notify.member_added_notification_to_admin(current_user, project, @member).deliver
     Notify.notification_to_member_that_added(current_user, project, @member).deliver
   end
- 
+  
+  def self.project_title(project)
+    find_by_id(project).title
+  end
 end
 

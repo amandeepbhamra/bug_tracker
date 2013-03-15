@@ -1,29 +1,34 @@
-
-<% if @user_ticket.blank? %>
-  <table class="table table-striped">
-    <h5> All Assigned Tickets:</h5>
-    
-    <thead>
-      <%= render 'tickets/thead_for_tickets' %>
-    </thead>
-    <tbody>
-      <% @user_tickets.each do |ticket| %>
-        <%= render 'tickets/tickets', :ticket => ticket, :project => @project %>
-      <% end %>
-    </tbody>
-  </table>
-  <div class="pagination pagination-centered pagination-small">
-    <%= will_paginate @user_tickets %>
-  </div>
+<% if @user == current_user %>
+    <h4>this is user's show page and also user dasboard where users stats will be displayed.</h4>
+    <%= image_tag "coming_soon.jpg" %>
+    <% content_for :sidebar do %>
+        <%= link_to 'New Project', new_project_path, :class => 'btn btn-primary btn-block' %><br />
+        <%= link_to 'Invite Member', new_user_invitation_path, :class => 'btn btn-primary btn-block' %> 
+    <% end %>
 <% else %>
-  <h5>No tickets has been assigned to you.</h5>
-  <br />
-  
+    <% if @user_ticket.blank? %>
+        <table class="table table-striped">
+            <h5> All Assigned Tickets:</h5>
+            <thead>
+                <%= render 'tickets/thead_for_tickets' %>
+            </thead>
+            <tbody>
+                <% @user_tickets.each do |ticket| %>
+                    <%= render 'tickets/tickets', :ticket => ticket, :project => @project %>
+                <% end %>
+            </tbody>
+        </table>
+        <div class="pagination pagination-centered pagination-small">
+            <%= will_paginate @user_tickets %>
+        </div>
+    <% else %>
+        <h5>No tickets has been assigned to you.</h5>
+        <br />
+    <% end %>
 <% end %>
-
 <br />
 
 <div class="form-actions">
-  <%= link_to 'New Project', new_project_path, :class => 'btn btn-primary pull-right' %>
-  <%= link_to 'Invite Member', new_user_invitation_path, :class => 'btn btn-primary pull-right' %> 
+  
 </div>
+

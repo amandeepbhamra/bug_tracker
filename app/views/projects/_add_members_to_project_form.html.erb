@@ -1,13 +1,10 @@
 <%- model_class = Project -%>
 <div class="page-header">
   <h1><%= @project.title %></h1>
+  <%= @project.description %>
 </div>
 
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
-  <dd><%= @project.title %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
-  <dd><%= @project.description %></dd>
   <dt><strong>Project Members</strong></dt>
   <dd><%= render 'project_members', :project_members => @project.members %></dd>
 </dl>

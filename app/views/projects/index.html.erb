@@ -1,5 +1,8 @@
 <%- model_class = Project -%>
-
+<% content_for :sidebar do %>
+    <%= link_to 'New Project', new_project_path, :class => 'btn btn-primary btn-block' %><br />
+    <%= link_to 'Invite Member', new_user_invitation_path, :class => 'btn btn-primary btn-block' %> 
+<% end %>
     <!-- Hosted projects -->
     <% if !@projects.blank? %>
         <h5>Hosted Projects</h5>
@@ -19,11 +22,8 @@
         <div class="pagination pagination-centered pagination-small">
             <%= will_paginate @projects %>
         </div>
-        <%= link_to 'New Project', new_project_path, :class => 'btn btn-info' %>
     <% else %>
         <h5>No Projects has been hosted yet.</h5>
-        <br />
-        <%= link_to 'New Project', new_project_path, :class => 'btn btn-info' %>
     <% end %>
    
     <!-- Assigned projects -->
@@ -55,6 +55,8 @@
  
 </div>
 
-
+<% content_for :sidebar do %>
+   
+<% end %>
 
 

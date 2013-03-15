@@ -1,6 +1,6 @@
 <%- model_class = Ticket -%>
 <div class="page-header">
-    <h3><%= @ticket.title %> under <%= Project.find_by_id(@ticket.project_id).title %></h3>
+    <h3><%= @ticket.title %> under <%= project_title(@ticket.project_id) %></h3>
 </div>
 
 <dl class="dl-horizontal">
@@ -10,8 +10,8 @@
     <dd><%= @ticket.ticket_status %></dd>
     <dt><strong><%= model_class.human_attribute_name(:assigned_to) %>:</strong></dt>
     <dd>
-        <% if !(User.find_by_id(@ticket.assigned_to).nil?) %>
-            <%= User.find_by_id(@ticket.assigned_to).name %>
+        <% if !(user_name(@ticket.assigned_to).nil?) %>
+            <%= user_name(@ticket.assigned_to) %>
         <% else %>
             No one.
         <% end %>
