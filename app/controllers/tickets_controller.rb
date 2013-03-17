@@ -75,32 +75,32 @@ class TicketsController < ApplicationController
   
   # Action to get list of all new tickets #
   def view_all_tickets
-    @tickets = Ticket.order("created_at DESC").paginate(:page => params[:page], :per_page => 10).all
+    @tickets = @user.tickets.order("created_at DESC").paginate(:page => params[:page], :per_page => 10).all
   end
 
   # Action to get list of all new tickets #
   def view_new_tickets
-    @new_tickets = Ticket.order("created_at DESC").paginate(:page => params[:page], :per_page => 10).find_all_by_status(1)
+    @new_tickets = @user.tickets.order("created_at DESC").paginate(:page => params[:page], :per_page => 10).find_all_by_status(1)
   end
 
   # Action to get list of all open tickets #
   def view_open_tickets
-    @open_tickets = Ticket.order("created_at DESC").paginate(:page => params[:page], :per_page => 10).find_all_by_status(2)
+    @open_tickets = @user.tickets.order("created_at DESC").paginate(:page => params[:page], :per_page => 10).find_all_by_status(2)
   end
   
   # Action to get list of all hold tickets #
   def view_hold_tickets
-    @hold_tickets = Ticket.order("created_at DESC").paginate(:page => params[:page], :per_page => 10).find_all_by_status(3)
+    @hold_tickets = @user.tickets.order("created_at DESC").paginate(:page => params[:page], :per_page => 10).find_all_by_status(3)
   end
   
   # Action to get list of all resolved tickets #
   def view_resolved_tickets
-    @resolved_tickets = Ticket.order("created_at DESC").paginate(:page => params[:page], :per_page => 10).find_all_by_status(4)
+    @resolved_tickets = @user.tickets.order("created_at DESC").paginate(:page => params[:page], :per_page => 10).find_all_by_status(4)
   end
 
   # Action to get list of all closed tickets #
   def view_closed_tickets
-    @closed_tickets = Ticket.order("created_at DESC").paginate(:page => params[:page], :per_page => 10).find_all_by_status(5)
+    @closed_tickets = @user.tickets.order("created_at DESC").paginate(:page => params[:page], :per_page => 10).find_all_by_status(5)
   end
 
   private
