@@ -12,29 +12,9 @@
     </div>
   <% end %>
   <div class="control-group">
-    <%= f.label :title, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :title, :class => 'text_field' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :description, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_area :description, :class => 'text_area' %>
-    </div>
-  </div>
-  <div class="control-group">
     <%= f.label :status, :class => 'control-label' %>
     <div class="controls">
       <%= f.collection_select :status, Ticket.ticket_status_array, :first, :last, :class => 'number_field' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <div class="controls">
-      <%= f.fields_for :attachments do |builder| %>
-          <%= render 'attachment_fields', :f => builder %>
-      <% end %>
-        <%= link_to_add_fields "Add Attachments", f, :attachments %>
     </div>
   </div>
   <div class="control-group">
@@ -46,7 +26,7 @@
   </div>
   
   <div class="form-actions">
-    <%= f.submit nil, :class => 'btn btn-info' %>
-    <%= link_to "Cancel", project_tickets_path(@project), :class => 'btn' %>
+    <%= f.submit "Update this Ticket", :class => 'btn btn-info' %>
+    <%= link_to 'Back To Tickets', project_tickets_path(@ticket.project_id), :class => "btn" %>
   </div>
 <% end %>
