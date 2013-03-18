@@ -27,8 +27,10 @@ class User < ActiveRecord::Base
             :through => :projects, 
             :uniq => true
   has_many  :invitations, 
-            :class_name => 'User', 
-            :as => :invited_by            
+            :as => :invited_by,
+            :dependent => :destroy,
+            :foreign_key => "invited_by"
+                      
   
   has_and_belongs_to_many :assigned_projects, 
                           :class_name => "Project", 

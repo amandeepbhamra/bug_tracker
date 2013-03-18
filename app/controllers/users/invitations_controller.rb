@@ -5,6 +5,8 @@ class Users::InvitationsController < Devise::InvitationsController
   before_filter :require_no_authentication, :only => [:edit, :update]
   helper_method :after_sign_in_path_for
   before_filter :validate_user, :only => [:new]
+  #before_filter :check_user_exists
+  after_filter  :create_invitation_reference, :only => [:update]
 
   # GET /resource/invitation/new
   def new
@@ -14,13 +16,20 @@ class Users::InvitationsController < Devise::InvitationsController
 
   # POST /resource/invitation
   def create
-    self.resource = resource_class.invite!(resource_params, current_inviter)
-    debugger
-    if resource.errors.empty?
-      set_flash_message :notice, :send_instructions, :email => self.resource.email
-      redirect_to current_inviter
+    resource = resource_class.find_by_email(resource_params[:email])
+    if resource.nil?
+      self.resource = resource_class.invite!(resource_params, current_inviter)
+      if resource.errors.empty?
+        set_flash_message :notice, :send_instructions, :email => self.resource.email
+        redirect_to current_inviter
+      else
+        respond_with_navigational(resource) { render :new }
+      end
     else
-      respond_with_navigational(resource) { render :new }
+      resource.invited_by_id = nil
+      resource.save
+      Invitation.create(:invited_by => current_inviter.id, :user_id => resource.id)
+      redirect_to current_inviter, notice: "Notification sent"
     end
   end
 
@@ -42,6 +51,7 @@ class Users::InvitationsController < Devise::InvitationsController
       flash_message = resource.active_for_authentication? ? :updated : :updated_not_active                                                                                        
       set_flash_message :notice, flash_message
       sign_in(resource_name, resource)
+
       redirect_to current_inviter
     else
       respond_with_navigational(resource){ render :edit }
@@ -66,4 +76,17 @@ class Users::InvitationsController < Devise::InvitationsController
       respond_with_navigational(resource) { render :new }
     end
   end
+
+  def check_user_exists
+    self.resource = resource_class.find_by_id(resource.id)
+  end
+
+  # After invitation accepted invitation reference will be made#
+  def create_invitation_reference
+    Invitation.create(:invited_by => resource.invited_by_id, :user_id => resource.id)
+    resource.invited_by_id = nil
+    resource.save
+  end
+
+
 end

@@ -166,3 +166,15 @@ for attachments
     regexp = new RegExp($(this).data('id'), 'g')
     $(this).before($(this).data('fields').replace(regexp, time))
     event.preventDefault()
+
+    after update filter invitation
+    # Invitation.create(:invited_by => resource.invited_by_id, :user_id => resource.id)
+      # @user = User.find_by_id(resource.id)
+      # @user.invited_by_id = null
+      # @user.save
+
+      if user exists scenario
+      self.resource = resource_class.find_by_id(resource.id)
+      resource.invited_by_id = nil
+      resource.save
+      Invitation.create(:invited_by => current_inviter.id, :user_id => resource.id)
