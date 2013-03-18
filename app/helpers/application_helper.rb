@@ -20,4 +20,12 @@ module ApplicationHelper
     end
     link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
   end
+  def project_title(project)
+    Project.project_title(project)
+  end
+
+  def user_name(user)
+    User.user_name(user)
+  end
+
 end

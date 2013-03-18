@@ -17,7 +17,6 @@
             <div class="nav-collapse collapse">
                 <% if user_signed_in? %>
                     <ul class="nav">
-                        <li><%= link_to 'Dashboard', current_user %></li>
                         <li><%= link_to "Projects", projects_path %></li>
                         <li><%= link_to "Tickets", user_tickets_path(current_user) %></li>
                     </ul>
@@ -36,6 +35,7 @@
                                             </h5>
                                         </a>
                                         <%= link_to 'Edit Profile', edit_user_path(current_user) %>
+                                        <%= link_to 'Invite Member', new_user_invitation_path %>
                                     <% end %>
                                 </li>
                                 <li class="divider"></li>

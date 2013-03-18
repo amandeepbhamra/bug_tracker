@@ -11,34 +11,43 @@
 	<body>
 		<%= render 'layouts/header' %>
 		<div class="container">
-		<div class="container-fluid">
-  			<% if user_signed_in? %>
-				<div class="page-header">
-	    			<h3>Hi <%= link_to current_user.name, current_user %>,</h3>
-	 			</div>
-	 			<%#= render 'layouts/tabs' %>
-			<% end %>
-			
-  			<div class="row-fluid">
-  				<% unless flash[:notice].blank? %>
+			<% unless flash[:notice].blank? %>
 					<div class="alert alert-info">
 						<button type="button" class="close" data-dismiss="alert">&times;</button>
-						<div id='notice' style="<%= 'display: none; ' if flash[:notice].blank? %> text-align: center;">
-		        			<%= flash[:notice].html_safe  unless flash[:notice].blank? %>
-		      			</div><!-- notice -->
-		 
-		      			<div id='error' style="<%= 'display: none;' if flash[:error].blank? %>  text-align: center;">
-		        			<%= flash[:error].html_safe  unless flash[:error].blank? %>
-		      			</div>
-	      			</div>
+						<%= flash[:notice] %>
+  					</div>
 	      		<% end %>
+	      		<% unless flash[:error].blank? %>
+					<div class="alert alert-info">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<%= flash[:error] %>
+  					</div>
+	      		<% end %>
+	      		<% unless flash[:alert].blank? %>
+					<div class="alert alert-info">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<%= flash[:alert] %>
+  					</div>
+	      		<% end %>
+		<div class="container-fluid">
+  			<div class="row-fluid">
+  				<div class="span2">
+      				<% if user_signed_in? %>
+						<div class="page-header">
+							<% @user ||= current_user %>
+							<div class="img-polaroid">
+								<%= image_tag(@user.photo.url(:medium)) %>
+							</div>
+							<h4 class="text-center"><%= @user.name %></h4>
+	 					</div>
+	 				<% end %>
+      				<%= yield :sidebar %>
+    			</div>
     			<div class="span10">
       				<%= yield %>	
       				<!--Body content-->
     			</div>
-    			<div class="span2">
-      				<!--Sidebar content-->
-    			</div>
+    			
     			
   			</div>
 		</div>

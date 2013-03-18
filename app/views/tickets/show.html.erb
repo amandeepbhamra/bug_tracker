@@ -1,17 +1,25 @@
 <%- model_class = Ticket -%>
+<% content_for :sidebar do %>
+    <%= link_to 'New Project', new_project_path, :class => 'btn btn-primary btn-block' %><br />
+    <%= link_to 'Invite Member', new_user_invitation_path, :class => 'btn btn-primary btn-block' %> 
+    <% if @project.user_id == current_user.id %>
+        <%= link_to 'Edit Ticket', edit_project_ticket_path(@ticket.project_id, @ticket), :class => "btn btn-block" %>
+        <%= link_to 'Destroy', project_ticket_path(@ticket.project_id, @ticket), :class => "btn btn-danger btn-block", method: :delete, data: { confirm: 'Are you sure?' } %>
+    <% end %>
+<% end %>
+
 <div class="page-header">
-    <h3><%= @ticket.title %> under <%= Project.find_by_id(@ticket.project_id).title %></h3>
+    <h3><%= @ticket.title %> under <%= project_title(@ticket.project_id) %></h3>
+    <%= @ticket.description %>
 </div>
 
 <dl class="dl-horizontal">
-    <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
-    <dd><%= @ticket.description %></dd>
     <dt><strong><%= model_class.human_attribute_name(:status) %>:</strong></dt>
     <dd><%= @ticket.ticket_status %></dd>
     <dt><strong><%= model_class.human_attribute_name(:assigned_to) %>:</strong></dt>
     <dd>
-        <% if !(User.find_by_id(@ticket.assigned_to).nil?) %>
-            <%= User.find_by_id(@ticket.assigned_to).name %>
+        <% if !(user_name(@ticket.assigned_to).nil?) %>
+            <%= user_name(@ticket.assigned_to) %>
         <% else %>
             No one.
         <% end %>
@@ -45,10 +53,9 @@
 
 <% if !@comments.blank? %>
     <% @comments.each do |comment| %>
-        <h4><%= comment.content %> <b>by:</b> <%= comment.commentor %></h4><br />
-        <% if comment.attachments.blank? %>
-            No Attachment<br />
-        <% else %>
+        <div class ="well">
+        <%= comment.content %> <br /><small><b>by:</b> <%= comment.commentor %></small><br />
+        <% unless comment.attachments.blank? %>
             <strong>Document Attached</strong><br />
             <% comment.attachments.each do |attachment| %>
                 <div class="row-fluid">
@@ -62,6 +69,7 @@
                 </div>
             <% end %>
         <% end %>
+        </div>
     <% end %>
 <% else %>
     <h5>No comments</h5>
@@ -69,19 +77,14 @@
 
 <br />
 
-<h6>New Comment </h6>
-
-<%= render 'comments/form', :@comment => Comment.new %>
-
+<dl class="dl-horizontal">
+    <dt><strong>New Comment:</strong></dt>
+    <dd><%= render 'comments/form', :@comment => Comment.new %></dd>
+</dl>
+    
 <br />
 
-<div class="form-actions">
-    <% if @project.user_id == current_user.id %>
-        <%= link_to 'Edit Ticket', edit_project_ticket_path(@ticket.project_id, @ticket), :class => "btn" %>
-        <%= link_to 'Destroy', project_ticket_path(@ticket.project_id, @ticket), :class => "btn btn-danger", method: :delete, data: { confirm: 'Are you sure?' } %>
-    <% end %>
-    <%= link_to 'Back To Tickets', project_tickets_path(@ticket.project_id), :class => "btn" %>
-</div>
+<%= render 'form_update' %>
 
 
 

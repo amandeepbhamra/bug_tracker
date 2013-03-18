@@ -1,4 +1,8 @@
-<%= form_for [@project, @ticket], :html => { :multipart => true, :class => 'form-horizontal' } do |f| %>
+<%- model_class = Ticket -%>
+<div class="page-header">
+  <h1>New Ticket</h1>
+</div>
+<%= form_for @ticket, :html => { :multipart => true, :class => 'form-horizontal' }, :url => new_ticket_by_mentioning_project_path , method: :post do |f| %>
   <% if @ticket.errors.any? %>
     <div class="alert alert-error">
       <div id="error_explanation">
@@ -24,6 +28,13 @@
     </div>
   </div>
   <div class="control-group">
+    <%= f.label :project_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.collection_select :project_id, @user.projects, :id, :title, 
+          :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
     <%= f.label :status, :class => 'control-label' %>
     <div class="controls">
       <%= f.collection_select :status, Ticket.ticket_status_array, :first, :last, :class => 'number_field' %>
@@ -37,16 +48,9 @@
         <%= link_to_add_fields "Add Attachments", f, :attachments %>
     </div>
   </div>
-  <div class="control-group">
-    <%= f.label :assigned_to, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.collection_select :assigned_to, @project.members, :id, :name, 
-    :include_blank => true, :class => 'number_field' %>
-    </div>
-  </div>
-  
+
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-info' %>
-    <%= link_to "Cancel", project_tickets_path(@project), :class => 'btn' %>
+    
   </div>
 <% end %>

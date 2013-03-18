@@ -1,14 +1,15 @@
 class UsersController < ApplicationController
   
-  before_filter :validate_user, :only => [:home, :show, :edit, :update, :assign_project_to_user, :list_of_invited_members]
+  before_filter :validate_user, :only => [:show]
+  before_filter :validate_current_user, :except => [:show]
   
   # home page action for showing user the assigned projects #
-  def home
-    @user_tickets = @user.tickets.paginate(:page => params[:page], :per_page => 5)
-  end
+  # def home
+     #@user_tickets = @user.tickets.paginate(:page => params[:page], :per_page => 5)
+  # end
 
   def show
-    @user_tickets = @user.tickets.paginate(:page => params[:page], :per_page => 10)
+    @user_tickets = Ticket.order("created_at DESC").paginate(:page => params[:page], :per_page => 10).find_all_by_assigned_to(@user)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
@@ -56,9 +57,17 @@ class UsersController < ApplicationController
 
   # Filter To check whether user exits or not #
   def validate_user 
-    @user = current_user
-    if @user != User.find_by_id(params[:id])
-      redirect_to current_user, notice: "Sorry, You aren't authorized for this action"
+    @user = User.find_by_id(params[:id])
+    if @user.nil?
+      redirect_to current_user, notice: "Sorry, No user found !"
+    end
+  end
+
+  # Filter To check whether current_user exits or not #
+  def validate_current_user
+    @user = User.find_by_id(params[:id])
+    if @user != current_user
+      redirect_to current_user, notice: "Sorry, You aren't authorized for this action !"
     end
   end
 end

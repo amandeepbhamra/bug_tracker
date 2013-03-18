@@ -12,7 +12,7 @@ Bugtracker::Application.routes.draw do
       post 'add_member_project'
       put 'add_member_project'
     end
-    resources :tickets 
+    resources :tickets
     resources :roles, :except => [:index, :show, :destroy]
   end
 
@@ -39,7 +39,7 @@ Bugtracker::Application.routes.draw do
     resources :attachments, :only => []
   end
 
-  match 'home' => 'users#home', :as => :home
+  #match 'home' => 'users#home', :as => :home
 
 
   root :to => 'users#home'

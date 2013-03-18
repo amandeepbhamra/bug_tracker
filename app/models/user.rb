@@ -26,6 +26,9 @@ class User < ActiveRecord::Base
   has_many  :roles, 
             :through => :projects, 
             :uniq => true
+  has_many  :invitations, 
+            :class_name => 'User', 
+            :as => :invited_by            
   
   has_and_belongs_to_many :assigned_projects, 
                           :class_name => "Project", 
@@ -35,9 +38,14 @@ class User < ActiveRecord::Base
   
   accepts_nested_attributes_for :roles                        
   
-  validates :name, :presence => true , :if => lambda{|a| !a.new_record?}
+  validates :name,  :presence => true , 
+                    :if => lambda{|a| !a.new_record?}
+  validates_attachment_content_type :photo,
+                                    :content_type => ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
+                                    :message => "Different error message",
+                                    :if => lambda{|a| !a.new_record?}
   
-  has_attached_file :photo, :styles => { :medium => "100x100>", :thumb => "38x38>" }, 
+  has_attached_file :photo, :styles => { :medium => "154x154>", :thumb => "38x38>" }, 
   :default_url => "/assets/users_sticker.png"
 
   def self.allowed_users(current_user)
@@ -57,4 +65,10 @@ class User < ActiveRecord::Base
   def self.user_role_array
     USER_ROLES.to_a.sort
   end
+
+  def self.user_name(user)
+    find_by_id(user).name unless user.nil?
+  end
+
+  
 end

@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   
-  before_filter :validate_user
+  before_filter :validate_current_user
   before_filter :validate_project, :only => [:show, :project_members, :add_member_project,:edit, :update, :destroy]
  
   def index
@@ -82,8 +82,7 @@ class ProjectsController < ApplicationController
   private
 
   # Filter To check whether user exits or not #
-   # Filter To check whether user exits or not #
-  def validate_user
+  def validate_current_user
     @user = current_user
     redirect_to current_user, notice: "User doesn't exists with this id." if @user.nil?
   end
@@ -93,4 +92,6 @@ class ProjectsController < ApplicationController
     @project = @user.projects.find_by_id(params[:id])
     redirect_to @user, notice: 'No projects found with this id.' if @project.nil?
   end
+
+  
 end
