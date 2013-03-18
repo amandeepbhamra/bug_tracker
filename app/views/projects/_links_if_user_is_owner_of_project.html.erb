@@ -3,8 +3,6 @@
 <%= link_to 'Destroy', project_path(project), 
     :class => 'btn btn-danger btn-block', method: :delete, data: { confirm: 'Are you sure?' } %>
     
-<%= link_to 'Back to Projects', projects_path, :class => 'btn btn-block' %>
-  
 <%= link_to 'Create a Ticket ', new_project_ticket_path(project), 
     :class => 'btn btn-info btn-block' %>
     
@@ -12,3 +10,5 @@
     
 <%= link_to 'Add / Remove Members', project_members_project_path(project),
     :class => 'btn btn-info btn-block' %>
+
+<%= link_to 'Back to Projects', projects_path, :class => 'btn btn-block' %>

@@ -1,5 +1,9 @@
 <%- model_class = Ticket -%>
 
+<% content_for :sidebar do %>
+	<%#= link_to 'New Ticket', new_ticket_by_mentioning_project_tickets_path %>
+<% end %>
+
 <div class="row-fluid">
   	<div class="span4">
   		<%= render 'links_status_tickets' %>

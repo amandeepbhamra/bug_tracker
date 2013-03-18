@@ -103,6 +103,7 @@ class TicketsController < ApplicationController
     @closed_tickets = @user.tickets.order("created_at DESC").paginate(:page => params[:page], :per_page => 10).find_all_by_status(5)
   end
 
+  
   private
 
   # Filter To check whether user exits or not #

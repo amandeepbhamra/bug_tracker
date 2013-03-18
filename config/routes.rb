@@ -12,7 +12,7 @@ Bugtracker::Application.routes.draw do
       post 'add_member_project'
       put 'add_member_project'
     end
-    resources :tickets 
+    resources :tickets
     resources :roles, :except => [:index, :show, :destroy]
   end
 

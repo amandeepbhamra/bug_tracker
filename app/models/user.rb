@@ -26,6 +26,9 @@ class User < ActiveRecord::Base
   has_many  :roles, 
             :through => :projects, 
             :uniq => true
+  has_many  :invitations, 
+            :class_name => 'User', 
+            :as => :invited_by            
   
   has_and_belongs_to_many :assigned_projects, 
                           :class_name => "Project", 
@@ -66,4 +69,6 @@ class User < ActiveRecord::Base
   def self.user_name(user)
     find_by_id(user).name unless user.nil?
   end
+
+  
 end
