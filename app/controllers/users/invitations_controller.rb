@@ -15,7 +15,7 @@ class Users::InvitationsController < Devise::InvitationsController
   # POST /resource/invitation
   def create
     self.resource = resource_class.invite!(resource_params, current_inviter)
-
+    debugger
     if resource.errors.empty?
       set_flash_message :notice, :send_instructions, :email => self.resource.email
       redirect_to current_inviter
