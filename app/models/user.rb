@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
             :as => :invited_by,
             :dependent => :destroy,
             :foreign_key => "invited_by"
-                      
+                       
   
   has_and_belongs_to_many :assigned_projects, 
                           :class_name => "Project", 

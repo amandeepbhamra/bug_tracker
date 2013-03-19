@@ -5,7 +5,7 @@ class Users::InvitationsController < Devise::InvitationsController
   before_filter :require_no_authentication, :only => [:edit, :update]
   helper_method :after_sign_in_path_for
   before_filter :validate_user, :only => [:new]
-  #before_filter :check_user_exists
+  
   after_filter  :create_invitation_reference, :only => [:update]
 
   # GET /resource/invitation/new
@@ -75,10 +75,6 @@ class Users::InvitationsController < Devise::InvitationsController
       set_flash_message :alert, :no_invitations_remaining
       respond_with_navigational(resource) { render :new }
     end
-  end
-
-  def check_user_exists
-    self.resource = resource_class.find_by_id(resource.id)
   end
 
   # After invitation accepted invitation reference will be made#
