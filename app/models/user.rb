@@ -50,10 +50,7 @@ class User < ActiveRecord::Base
   has_attached_file :photo, :styles => { :medium => "154x154>", :thumb => "38x38>" }, 
   :default_url => "/assets/users_sticker.png"
 
-  def self.allowed_users(current_user)
-    invitation_accepted.find_all_by_invited_by_id(current_user)
-  end
-  
+    
   def self.not_allowed_users(current_user)
     invitation_not_accepted.find_all_by_invited_by_id(current_user)
   end
@@ -72,5 +69,12 @@ class User < ActiveRecord::Base
     find_by_id(user).name unless user.nil?
   end
 
+  def self.user_id(user)
+    find_by_id(user).id unless user.nil?
+  end
+
+  def self.user(user)
+    find_by_id(user) unless user.nil?
+  end
   
 end

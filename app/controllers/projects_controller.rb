@@ -61,7 +61,7 @@ class ProjectsController < ApplicationController
 
   # For validating users to be addable as member in Project #
   def project_members
-    @allowed_users = User.allowed_users(current_user)
+    @invited_users = Invitation.invited_users(current_user.id)
   end
 
   # For Adding user as member in project #

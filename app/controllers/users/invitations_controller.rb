@@ -28,7 +28,7 @@ class Users::InvitationsController < Devise::InvitationsController
     else
       resource.invited_by_id = nil
       resource.save
-      Invitation.create(:invited_by => current_inviter.id, :user_id => resource.id)
+      Invitation.create(:invited_by_id => current_inviter.id, :user_id => resource.id)
       redirect_to current_inviter, notice: "Notification sent"
     end
   end
@@ -79,7 +79,7 @@ class Users::InvitationsController < Devise::InvitationsController
 
   # After invitation accepted invitation reference will be made#
   def create_invitation_reference
-    Invitation.create(:invited_by => resource.invited_by_id, :user_id => resource.id)
+    Invitation.create(:invited_by_id => resource.invited_by_id, :user_id => resource.id)
     resource.invited_by_id = nil
     resource.save
   end

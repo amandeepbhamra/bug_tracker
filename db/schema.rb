@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130307072734) do
+ActiveRecord::Schema.define(:version => 20130319052746) do
 
   create_table "attachments", :force => true do |t|
     t.integer  "attachable_id"
@@ -47,6 +47,11 @@ ActiveRecord::Schema.define(:version => 20130307072734) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "invitations", :force => true do |t|
+    t.integer "invited_by_id", :null => false
+    t.integer "user_id",       :null => false
+  end
 
   create_table "projects", :force => true do |t|
     t.string   "title",       :null => false

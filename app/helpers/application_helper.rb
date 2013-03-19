@@ -28,4 +28,12 @@ module ApplicationHelper
     User.user_name(user)
   end
 
+  def user_id(user)
+    User.user_id(user)
+  end
+
+  def user(user)
+    User.user(user)
+  end
+
 end

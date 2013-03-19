@@ -11,15 +11,18 @@
 
 <div class="form-actions">
 <% if @project.user_id == current_user.id %>
-  <% if !@allowed_users.blank? %>
+  <% if !@invited_users.blank? %>
     <%= form_for ([@user, @project]), :url => add_member_project_project_path do |f| %>
       <div class="field">
-        <% @allowed_users.each do |user| %>
-          <%= check_box_tag "project[user_ids][]", user.id, @project.members.include?(user) %>
-          <%= user.name %><br />
+        <% @invited_users.each do |user| %>
+          <%= check_box_tag "project[user_ids][]", user.user_id, @project.members.include?(user(user.user_id)) %>
+          <%= user_name(user.user_id) %><br />
         <% end %>
+        <br /> <br />
+      <small>NOTE: As you are the owner of the project you can't remove yourself from the project</small>
       </div>
       <br /> <br />
+
       <div class="actions">
         <%= f.submit 'Add members' %>
       </div>
@@ -29,6 +32,6 @@
   <% end %>
   <%= link_to "Invite New Member", new_user_invitation_path, :class => "btn btn-info" %>
 <% end %>
-
+<%= link_to 'Back to project', project_path(@project), :class => "btn" %>
 </div>
 
