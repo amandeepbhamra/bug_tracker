@@ -7,9 +7,9 @@ class TicketsController < ApplicationController
   before_filter :search, :only => [:index, :view_all_tickets, :view_new_tickets, :view_open_tickets, :view_hold_tickets, :view_resolved_tickets, :view_closed_tickets]
 
   def index
-    @project_tickets = @project.tickets.where("status = ? And assigned_to = ?" , 2, current_user).order("created_at DESC").paginate(:page => params[:page], :per_page => 10)
-    if defined? params[:filter]
-      case params[:filter]
+    @project_tickets = @project.tickets.where("status = ? AND assigned_to = ?" , 2, current_user).order("created_at DESC").paginate(:page => params[:page], :per_page => 10)
+    if defined? params[:status]
+      case params[:status]
         when 'assigned'
           @project_tickets = @project.tickets.where("assigned_to = ?" , current_user).order("created_at DESC").paginate(:page => params[:page], :per_page => 10)
         when 'all' 
@@ -26,6 +26,7 @@ class TicketsController < ApplicationController
           @project_tickets = @project.tickets.where("status = ?" , 5).order("created_at DESC").paginate(:page => params[:page], :per_page => 10)
       end
     end
+    
     respond_to do |format|
       format.html # index.html.erb
     end

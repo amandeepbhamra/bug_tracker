@@ -36,4 +36,7 @@ module ApplicationHelper
     User.user(user)
   end
 
+  def total_open_tickets(project,user)
+    Project.open_tickets_count(project,user)
+  end
 end

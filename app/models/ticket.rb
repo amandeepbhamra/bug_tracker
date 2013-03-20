@@ -31,5 +31,8 @@ class Ticket < ActiveRecord::Base
   	TICKET_STATES.to_a.sort
   end
 
+  def self.open_tickets_count(user)
+    where("status = ? And assigned_to = ?" , 2, user).count
+  end
   
 end

@@ -30,5 +30,9 @@ class Project < ActiveRecord::Base
   def self.project_title(project)
     find_by_id(project).title unless project.nil?
   end
+
+  def self.open_tickets_count(project,user)
+    project.tickets.where("status = ? And assigned_to = ?" , 2, user).count
+  end
 end
 

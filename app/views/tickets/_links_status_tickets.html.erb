@@ -5,25 +5,25 @@
   </button>
   <ul class="dropdown-menu">
     <li>
-      <%= link_to "Assigned tickets", project_tickets_path(project, :filter => 'assigned') %>
+      <%= link_to "Assigned tickets", project_tickets_path(project, :status => 'assigned') %>
     </li>
 	  <li>
-      <%= link_to "All Tickets", project_tickets_path(project, :filter => 'all') %>
+      <%= link_to "All Tickets", project_tickets_path(project, :status => 'all') %>
     </li>
 	  <li>
-      <%= link_to "New Tickets", project_tickets_path(project, :filter => 'new') %>
+      <%= link_to "New Tickets", project_tickets_path(project, :status => 'new') %>
     </li>
 	  <li>
-      <%= link_to "Open Tickets", project_tickets_path(project, :filter => 'open') %>
+      <%= link_to "Open Tickets", project_tickets_path(project, :status => 'open') %>
     </li>
 	  <li>
-      <%= link_to "Hold Tickets", project_tickets_path(project, :filter => 'hold') %>
+      <%= link_to "Hold Tickets", project_tickets_path(project, :status => 'hold') %>
     </li>
 	  <li>
-      <%= link_to "Resolved Tickets", project_tickets_path(project, :filter => 'resolved') %>
+      <%= link_to "Resolved Tickets", project_tickets_path(project, :status => 'resolved') %>
     </li>
 	  <li>
-      <%= link_to "Closed Tickets", project_tickets_path(project, :filter => 'closed') %>
+      <%= link_to "Closed Tickets", project_tickets_path(project, :status => 'closed') %>
     </li>
   </ul>
 </div>

@@ -1,7 +1,10 @@
 <%- model_class = Ticket -%>
 
 <% content_for :sidebar do %>
-	<%#= link_to 'New Ticket', new_ticket_by_mentioning_project_tickets_path %>
+	<h6 class="text-center">
+	You have <%= total_open_tickets(@project,current_user) %> 
+	<%= link_to 'Open Tickets', project_tickets_path(@project) %>
+	</h6>
 <% end %>
 
 <div class="row-fluid">
@@ -14,4 +17,5 @@
 </div>
 
 <%= render 'project_tickets' %>
+
 

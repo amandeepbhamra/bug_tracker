@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   # end
 
   def show
+    
     @user_tickets = Ticket.order("created_at DESC").paginate(:page => params[:page], :per_page => 10).find_all_by_assigned_to(@user)
     respond_to do |format|
       format.html # show.html.erb
