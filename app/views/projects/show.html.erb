@@ -1,19 +1,19 @@
 <%- model_class = Project -%>
 
 <% content_for :sidebar do %>
-    <%= link_to 'New Project', new_project_path, :class => 'btn btn-primary btn-block' %><br />
     <%= link_to 'Invite Member', new_user_invitation_path, :class => 'btn btn-primary btn-block' %> 
-    <% if @project.user_id == current_user.id %>
-        <%= render 'links_if_user_is_owner_of_project', :project => @project %>
-    <% else %>
-        <%= link_to 'View Tickets', project_tickets_path(project), :class => 'btn' %>
-    <% end %>
+    <%= link_to 'View Tickets', project_tickets_path(@project), :class => 'btn btn-block' %>
+    
 <% end %>
-<div class="page-header">
-    <h3><%= @project.title %></h3>
-    <%= @project.description %>
-</div>
 
+<div class="page-header">
+    <h3>
+        <%= @project.title %>
+        <%= link_to "New Ticket", new_project_ticket_path(@project), :class => 'btn btn-primary pull-right' %>
+
+    </h3>
+</div>
+<%= render 'links_if_user_is_owner_of_project', :project => @project %>
 <dl class="dl-horizontal">
     <dt><strong>Project Members</strong></dt>
     <dd><%= render 'project_members', :project_members => @project_members %></dd>
@@ -21,25 +21,22 @@
 
 <br />
 
-<% if !@project_tickets.blank? %>
-    <strong>All Tickets under this project:</strong>
+<% if !@project_open_tickets.blank? %>
+    <strong>Open tickets for you.</strong>
     <table class="table table-striped">
         <thead>
             <%= render 'tickets/thead_for_tickets' %>
         </thead>
         <tbody>
-            <% @project_tickets.each do |ticket| %>
+            <% @project_open_tickets.each do |ticket| %>
                 <%= render 'tickets/tickets', ticket: ticket %>
             <% end %>
         </tbody>
     </table>
     <div class="pagination pagination-centered pagination-small">
-        <%= will_paginate @project_tickets %>
+        <%= will_paginate @project_open_tickets %>
     </div>
 <% else %>
-    <strong>No Tickets under this project</strong>
+    <strong>No Tickets Open Tickets under this project for you.</strong>
 <% end %>
 
-<div class="form-actions">
-  
-</div>

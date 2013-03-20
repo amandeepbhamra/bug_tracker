@@ -11,11 +11,11 @@ class ApplicationController < ActionController::Base
 
   #--------Redirect to root path after sign out---------#
   def after_sign_out_path_for(resource_or_scope)
-    root_path
+    new_user_session_path
   end
 
   #--------Redirect to home path after invitation accepted----------#
-  # def after_accept_path_for(resource)
-  #   home_path
-  # end
+ def after_sign_up_path_for(resource)
+    redirect_to new_user_session_path, notice: "You have to confirm your account before continuing."
+  end
 end

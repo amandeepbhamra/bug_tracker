@@ -16,8 +16,8 @@ class Users::InvitationsController < Devise::InvitationsController
 
   # POST /resource/invitation
   def create
-    resource = resource_class.find_by_email(resource_params[:email])
-    if resource.nil?
+    @user = User.find_by_email(resource_params[:email])
+    if @user.nil?
       self.resource = resource_class.invite!(resource_params, current_inviter)
       if resource.errors.empty?
         set_flash_message :notice, :send_instructions, :email => self.resource.email
@@ -26,10 +26,15 @@ class Users::InvitationsController < Devise::InvitationsController
         respond_with_navigational(resource) { render :new }
       end
     else
-      resource.invited_by_id = nil
-      resource.save
-      Invitation.create(:invited_by_id => current_inviter.id, :user_id => resource.id)
-      redirect_to current_inviter, notice: "Notification sent"
+      @already_invited = Invitation.where(:invited_by_id => current_inviter.id, :user_id => @user.id)
+      if @already_invited.nil?
+        @user.invited_by_id = nil
+        @user.save
+        Invitation.create(:invited_by_id => current_inviter.id, :user_id => @user.id)
+        redirect_to current_inviter, notice: "User Added"
+      else
+        redirect_to current_inviter, notice: "User already invited by you"
+      end
     end
   end
 

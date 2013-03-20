@@ -17,7 +17,7 @@ class Ticket < ActiveRecord::Base
   belongs_to :project
   belongs_to :user
   
-  validates :title, :description, :status, :presence => true 
+  validates :title, :status, :presence => true 
 
   accepts_nested_attributes_for :attachments, :allow_destroy => true
   

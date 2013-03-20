@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project_members = @project.members
-    @project_tickets = @project.tickets.paginate(:page => params[:page], :per_page => 10)
+    @project_open_tickets = @project.tickets.where("status = ? And assigned_to = ?" , 2, current_user).paginate(:page => params[:page], :per_page => 10)
     respond_to do |format|
       format.html # show.html.erb
     end

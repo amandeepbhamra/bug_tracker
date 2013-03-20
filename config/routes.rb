@@ -3,31 +3,30 @@ Bugtracker::Application.routes.draw do
   devise_for :users, :controllers => { :invitations => 'users/invitations' }
 
   resources :users, :except => [:index, :destroy] do 
-    resources :tickets, :only => [:index]
+    resources :projects do 
+      member do
+        get 'project_members'
+        post 'add_member_project'
+        put 'add_member_project'
+      end
+    end
   end
 
   resources :projects do 
-    member do
-      get 'project_members'
-      post 'add_member_project'
-      put 'add_member_project'
-    end
     resources :tickets
-    resources :roles, :except => [:index, :show, :destroy]
   end
 
   resources :tickets, :only => [:show] do
-    collection do
-      get 'view_all_tickets'
-      get 'view_new_tickets'
-      get 'view_open_tickets'
-      get 'view_hold_tickets'
-      get 'view_resolved_tickets'
-      get 'view_closed_tickets'
-      post 'search', to: 'tickets#index'
-      get 'search', to: 'tickets#search'
-      
-    end
+    # collection do
+    #   get 'view_all_tickets'
+    #   get 'view_new_tickets'
+    #   get 'view_open_tickets'
+    #   get 'view_hold_tickets'
+    #   get 'view_resolved_tickets'
+    #   get 'view_closed_tickets'
+    #   post 'search', to: 'tickets#index'
+    #   get 'search', to: 'tickets#search'
+    # end
     resources :comments, :only => [:new, :create]
   end
 

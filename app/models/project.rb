@@ -18,7 +18,7 @@ class Project < ActiveRecord::Base
 
   accepts_nested_attributes_for :roles
   
-  validates :title, :description, :presence => true 
+  validates :title, :presence => true 
 
   def self.add_members_to_project(current_user,user,project)
   	@member = User.find_by_id(user)
