@@ -1,15 +1,29 @@
 <div class="btn-group">
-  <button class="btn">Show Me</button>
+  <%= link_to 'Show Me', project_tickets_path(project), :class => 'btn' %>
   <button class="btn dropdown-toggle" data-toggle="dropdown">
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu">
-    <li><%= link_to "Assigned tickets", user_tickets_path(current_user) %></li>
-	<li><%= link_to "All Tickets (#{@all_tickets_count})", user_tickets_path(current_user, :sort_by => 'all') %></li>
-	<li><%= link_to "New Tickets (#{@new_tickets_count})", view_new_tickets_tickets_path %></li>
-	<li><%= link_to "Open Tickets (#{@open_tickets_count})", view_open_tickets_tickets_path %></li>
-	<li><%= link_to "Hold Tickets  (#{@hold_tickets_count})", view_hold_tickets_tickets_path %></li>
-	<li><%= link_to "Resolved Tickets  (#{@resolved_tickets_count})", view_resolved_tickets_tickets_path %></li>
-	<li><%= link_to "Closed Tickets  (#{@closed_tickets_count})", view_closed_tickets_tickets_path %></li>
+    <li>
+      <%= link_to "Assigned tickets", project_tickets_path(project, :filter => 'assigned') %>
+    </li>
+	  <li>
+      <%= link_to "All Tickets", project_tickets_path(project, :filter => 'all') %>
+    </li>
+	  <li>
+      <%= link_to "New Tickets", project_tickets_path(project, :filter => 'new') %>
+    </li>
+	  <li>
+      <%= link_to "Open Tickets", project_tickets_path(project, :filter => 'open') %>
+    </li>
+	  <li>
+      <%= link_to "Hold Tickets", project_tickets_path(project, :filter => 'hold') %>
+    </li>
+	  <li>
+      <%= link_to "Resolved Tickets", project_tickets_path(project, :filter => 'resolved') %>
+    </li>
+	  <li>
+      <%= link_to "Closed Tickets", project_tickets_path(project, :filter => 'closed') %>
+    </li>
   </ul>
 </div>

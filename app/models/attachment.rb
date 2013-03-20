@@ -7,7 +7,7 @@ class Attachment < ActiveRecord::Base
   has_attached_file :file, :styles => { :medium => "300x300>", :thumb => "100x100>" }
 
   def self.validate_document_image(file)
-    if (file.content_type =~ %r{^(image|(x-)?application)/(x-png|pjpeg|jpeg|jpg|png|gif)$})
+    if (file.file_content_type =~ %r{^(image|(x-)?application)/(x-png|pjpeg|jpeg|jpg|png|gif)$})
       true  
     end
   end

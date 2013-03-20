@@ -17,16 +17,10 @@ Bugtracker::Application.routes.draw do
   end
 
   resources :tickets, :only => [:show] do
-    # collection do
-    #   get 'view_all_tickets'
-    #   get 'view_new_tickets'
-    #   get 'view_open_tickets'
-    #   get 'view_hold_tickets'
-    #   get 'view_resolved_tickets'
-    #   get 'view_closed_tickets'
-    #   post 'search', to: 'tickets#index'
-    #   get 'search', to: 'tickets#search'
-    # end
+    collection do
+      post 'search', to: 'tickets#index'
+      get 'search', to: 'tickets#search'
+    end
     resources :comments, :only => [:new, :create]
   end
 
@@ -39,7 +33,6 @@ Bugtracker::Application.routes.draw do
   end
 
   #match 'home' => 'users#home', :as => :home
-
 
   root :to => 'users#home'
   # The priority is based upon order of creation:

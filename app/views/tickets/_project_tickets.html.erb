@@ -1,0 +1,22 @@
+<div class="page-header">
+  <h4>Displaying tickets.</h4>
+</div>
+
+<% if !@project_tickets.blank? %>
+  <table class="table table-striped">
+    <thead>
+      <%= render 'thead_for_tickets' %>
+    </thead>
+    <tbody>
+        <% @project_tickets.each do |ticket| %>
+          <%= render 'tickets', :ticket => ticket, :project => @project %>
+        <% end %>
+    </tbody>
+  </table>
+  <div class="pagination pagination-centered pagination-small">
+    <%= will_paginate @project_tickets %>
+  </div>
+<% else %>
+<h5>There is no ticket.</h5>
+<% end %>
+

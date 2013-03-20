@@ -36,9 +36,13 @@
                         <div class="span4">
                             <%= attachment.file_file_name %>
                         </div>
+                        <% if Attachment.validate_document_image(attachment) %>
+                            <%= image_tag attachment.file.url(:thumb) %>
+                        <% end %>                        
                         <div class="span4">
                             <%= link_to 'Preview', attachment.file.url(:original, false),:target => "_blank" %>
                         </div>
+
                     </strong>
                     <br />
                 </div>
@@ -62,6 +66,9 @@
                     <div class="span4">
                         <%= attachment.file_file_name %>
                     </div>
+                    <% if Attachment.validate_document_image(attachment) %>
+                        <%= image_tag attachment.file.url(:thumb) %>
+                    <% end %>
                     <div class="span4">
                         <%= link_to 'Preview', attachment.file.url(:original, false),:target => "_blank" %>
                     </div>

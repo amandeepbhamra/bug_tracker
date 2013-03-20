@@ -1,0 +1,6 @@
+Hey, <%= User.find_by_id(@assigned_to).name %>
+<br />
+A comment on your ticket <%= @ticket.title %> under project <%= Project.find_by_id(@project).title %> has been made by <%= @comment.commentor %>
+<br />
+Comment:<br />
+<%= @comment.content %>

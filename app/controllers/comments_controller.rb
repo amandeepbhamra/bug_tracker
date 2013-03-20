@@ -17,7 +17,8 @@ class CommentsController < ApplicationController
     @comment = @ticket.comments.build(params[:comment])
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to project_ticket_path(@ticket.project.id,@ticket), notice: 'Comment was successfully created.' }
+        Notify.notify_to_whom_ticket_is_assigned_about_comment(@ticket.assigned_to, @ticket.project.id, @ticket, @comment).deliver unless @ticket.assigned_to.nil?
+        format.html { redirect_to project_ticket_path(@ticket.project.id, @ticket), notice: 'Comment was successfully created.' }
       else
         format.html { render action: "new" }
       end
