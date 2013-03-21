@@ -1,8 +1,8 @@
 class ProjectsController < ApplicationController
   
   before_filter :validate_current_user
-  before_filter :validate_project, :only => [:show, :project_members, :add_member_project,:edit, :update, :destroy]
- 
+  before_filter :validate_project, :only => [:project_members, :add_member_project,:edit, :update, :destroy]
+  before_filter :validate_just_project, :only => [:show]
   def index
     @projects = @user.projects.paginate(:page => params[:page], :per_page => 5)
     @assigned_projects = @user.assigned_projects.paginate(:page => params[:page], :per_page => 5)
@@ -92,6 +92,9 @@ class ProjectsController < ApplicationController
     @project = @user.projects.find_by_id(params[:id])
     redirect_to @user, notice: 'No projects found with this id.' if @project.nil?
   end
-
+  def validate_just_project 
+    @project = Project.find_by_id(params[:id])
+    redirect_to @user, notice: 'No projects found with this id.' if @project.nil?
+  end
   
 end

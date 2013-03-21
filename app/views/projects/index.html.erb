@@ -1,8 +1,7 @@
 <%- model_class = Project -%>
 
 <% content_for :sidebar do %>
-    <%= link_to 'New Project', new_project_path, :class => 'btn btn-primary btn-block' %><br />
-    <%= link_to 'Invite Member', new_user_invitation_path, :class => 'btn btn-primary btn-block' %> 
+    <%= link_to 'New Project', new_user_project_path(@user), :class => 'btn btn-primary btn-block' %><br />
 <% end %>
 
 <!-- Hosted projects -->
@@ -37,7 +36,7 @@
         <%= render 'thead_for_projects' %>
         <tbody>
             <% @assigned_projects.each do |project| %>
-                <%= render 'projects_for_member', :project => project %>
+                <%= render 'projects', :project => project %>
             <% end %>
         </tbody>
     </table>

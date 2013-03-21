@@ -23,7 +23,7 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
-                                <% if !current_user.projects.blank? %>
+                                <% unless current_user.projects.blank? %>
                                     <% current_user.projects.each do |project| %>
                                         <li>
                                             <%= link_to project.title, project_tickets_path(project) %>
@@ -48,7 +48,7 @@
                                             </h5>
                                         </a>
                                         <%= link_to 'Edit Profile', edit_user_path(current_user) %>
-                                        <%= link_to 'Change Password', edit_user_password_path %>
+                                        <%= link_to 'Change Password', edit_user_registration_path %>
                                         <%= link_to 'Invite Member', new_user_invitation_path %>
                                     <% end %>
                                 </li>

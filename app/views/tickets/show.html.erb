@@ -1,17 +1,14 @@
 <%- model_class = Ticket -%>
 <% content_for :sidebar do %>
-    <%= link_to 'New Project', new_project_path, :class => 'btn btn-primary btn-block' %><br />
-    <%= link_to 'Invite Member', new_user_invitation_path, :class => 'btn btn-primary btn-block' %> 
-    <% if @project.user_id == current_user.id %>
-        <%= link_to 'Edit Ticket', edit_project_ticket_path(@ticket.project_id, @ticket), :class => "btn btn-block" %>
-        <%= link_to 'Destroy', project_ticket_path(@ticket.project_id, @ticket), :class => "btn btn-danger btn-block", method: :delete, data: { confirm: 'Are you sure?' } %>
-    <% end %>
+     
 <% end %>
 
 <div class="page-header">
     <h3><%= @ticket.title %> under <%= project_title(@ticket.project_id) %></h3>
     <%= @ticket.description %>
 </div>
+
+<%= render 'ticket_options_links', :ticket => @ticket %>
 
 <dl class="dl-horizontal">
     <dt><strong><%= model_class.human_attribute_name(:status) %>:</strong></dt>
@@ -58,24 +55,25 @@
 <% if !@comments.blank? %>
     <% @comments.each do |comment| %>
         <div class ="well">
-        <%= comment.content %> <br /><small><b>by:</b> <%= comment.commentor %></small><br />
-        <% unless comment.attachments.blank? %>
-            <strong>Document Attached</strong><br />
-            <% comment.attachments.each do |attachment| %>
-                <div class="row-fluid">
-                    <div class="span4">
-                        <%= attachment.file_file_name %>
+            <%= comment.content %> <br />
+            <small><b>by:</b> <%= comment.commentor %></small><br />
+            <% unless comment.attachments.blank? %>
+                <strong>Document Attached</strong><br />
+                <% comment.attachments.each do |attachment| %>
+                    <div class="row-fluid">
+                        <div class="span4">
+                            <%= attachment.file_file_name %>
+                        </div>
+                        <% if Attachment.validate_document_image(attachment) %>
+                            <%= image_tag attachment.file.url(:thumb) %>
+                        <% end %>
+                        <div class="span4">
+                            <%= link_to 'Preview', attachment.file.url(:original, false),:target => "_blank" %>
+                        </div>
+                        <br />
                     </div>
-                    <% if Attachment.validate_document_image(attachment) %>
-                        <%= image_tag attachment.file.url(:thumb) %>
-                    <% end %>
-                    <div class="span4">
-                        <%= link_to 'Preview', attachment.file.url(:original, false),:target => "_blank" %>
-                    </div>
-                    <br />
-                </div>
+                <% end %>
             <% end %>
-        <% end %>
         </div>
     <% end %>
 <% else %>
@@ -92,6 +90,7 @@
 <br />
 
 <%= render 'form_update' %>
+
 
 
 

@@ -1,10 +1,11 @@
 <% if @user == current_user %>
+    <% content_for :sidebar do %>
+        <%= link_to 'New Project',  new_user_project_path(current_user), :class => 'btn btn-primary btn-block' %><br />
+    <% end %>
+
     <h4>this is user's show page and also user dasboard where users stats will be displayed.</h4>
     <%= image_tag "coming_soon.jpg" %>
-    <% content_for :sidebar do %>
-        <%= link_to 'New Project', new_project_path, :class => 'btn btn-primary btn-block' %><br />
-        <%= link_to 'Invite Member', new_user_invitation_path, :class => 'btn btn-primary btn-block' %> 
-    <% end %>
+    
 <% else %>
     <% if @user_ticket.blank? %>
         <table class="table table-striped">
@@ -27,8 +28,4 @@
     <% end %>
 <% end %>
 <br />
-
-<div class="form-actions">
-  
-</div>
 

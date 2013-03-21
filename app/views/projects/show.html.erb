@@ -1,7 +1,11 @@
 <%- model_class = Project -%>
 
 <% content_for :sidebar do %>
-    <%= link_to 'Invite Member', new_user_invitation_path, :class => 'btn btn-primary btn-block' %> 
+    <h6 class="text-center">
+    You have <%= total_open_tickets(@project,current_user) %> 
+    <%= link_to 'Open Tickets', project_tickets_path(@project) %>
+    </h6>
+    
     <%= link_to 'View Tickets', project_tickets_path(@project), :class => 'btn btn-block' %>
     
 <% end %>
@@ -10,10 +14,11 @@
     <h3>
         <%= @project.title %>
         <%= link_to "New Ticket", new_project_ticket_path(@project), :class => 'btn btn-primary pull-right' %>
-
     </h3>
 </div>
-<%= render 'links_if_user_is_owner_of_project', :project => @project %>
+<% if @project.user_id == current_user.id %>
+    <%= render 'project_options_links_if_owner', :project => @project %>
+<% end %>
 <dl class="dl-horizontal">
     <dt><strong>Project Members</strong></dt>
     <dd><%= render 'project_members', :project_members => @project_members %></dd>
