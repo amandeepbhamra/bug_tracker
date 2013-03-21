@@ -28,18 +28,12 @@
 	  				<div class="span2">
 	      				<% if user_signed_in? %>
 							<div class="page-header">
-								
-
-								<%# if @user.nil? %>
-
 								<div class="img-polaroid">
 									<%= image_tag(@user.photo.url(:medium)) %>
-
 								</div>
 								<h4 class="text-center">
 									<%= @user.name %>
 								</h4>
-								
 		 					</div>
 		 				<% end %>
 	      				<%= yield :sidebar %>

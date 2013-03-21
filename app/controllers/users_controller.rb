@@ -3,13 +3,7 @@ class UsersController < ApplicationController
   before_filter :validate_user, :only => [:show]
   before_filter :validate_current_user, :except => [:show]
   
-  # home page action for showing user the assigned projects #
-  # def home
-     #@user_tickets = @user.tickets.paginate(:page => params[:page], :per_page => 5)
-  # end
-
   def show
-    
     @user_tickets = Ticket.order("created_at DESC").paginate(:page => params[:page], :per_page => 10).find_all_by_assigned_to(@user)
     respond_to do |format|
       format.html # show.html.erb
