@@ -12,7 +12,7 @@
 <div class="form-actions">
 <% if @project.user_id == current_user.id %>
   <% if !@invited_users.blank? %>
-    <%= form_for ([@user, @project]), :url => add_member_project_project_path do |f| %>
+    <%= form_for ([@user, @project]), :url => add_member_project_user_project_path do |f| %>
       <div class="field">
         <% @invited_users.each do |user| %>
           <%= check_box_tag "project[user_ids][]", user.user_id, @project.members.include?(user(user.user_id)) %>
@@ -24,7 +24,7 @@
       <br /> <br />
 
       <div class="actions">
-        <%= f.submit 'Add members' %>
+        <%= f.submit 'Done' %>
       </div>
     <% end %>
   <% else %>

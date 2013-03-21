@@ -16,6 +16,6 @@ class ApplicationController < ActionController::Base
 
   #--------Redirect to home path after invitation accepted----------#
  def after_sign_up_path_for(resource)
-    redirect_to new_user_session_path, notice: "You have to confirm your account before continuing."
+    new_user_session_path
   end
 end

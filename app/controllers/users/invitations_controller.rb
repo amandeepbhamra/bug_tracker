@@ -10,8 +10,10 @@ class Users::InvitationsController < Devise::InvitationsController
 
   # GET /resource/invitation/new
   def new
-    build_resource
-    render :new
+    # debugger
+    @new_user = User.new
+    # build_resource
+    # render :new
   end
 
   # POST /resource/invitation
@@ -88,6 +90,4 @@ class Users::InvitationsController < Devise::InvitationsController
     resource.invited_by_id = nil
     resource.save
   end
-
-
 end

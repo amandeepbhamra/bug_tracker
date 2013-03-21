@@ -67,7 +67,7 @@ class UsersController < ApplicationController
   # Filter To check whether current_user exits or not #
   def validate_current_user
     @user = User.find_by_id(params[:id])
-    if @user != current_user
+    if @user != current_user or @user.nil?
       redirect_to current_user, notice: "Sorry, You aren't authorized for this action !"
     end
   end

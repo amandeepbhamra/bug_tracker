@@ -178,3 +178,25 @@ for attachments
       resource.invited_by_id = nil
       resource.save
       Invitation.create(:invited_by => current_inviter.id, :user_id => resource.id)
+
+
+      flash notices
+
+      <% unless flash[:notice].blank? %>
+          <div class="alert alert-info">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <%= flash[:notice] %>
+            </div>
+            <% end %>
+            <% unless flash[:error].blank? %>
+          <div class="alert alert-info">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <%= flash[:error] %>
+            </div>
+            <% end %>
+            <% unless flash[:alert].blank? %>
+          <div class="alert alert-info">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <%= flash[:alert] %>
+            </div>
+            <% end %>
