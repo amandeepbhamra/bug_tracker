@@ -34,7 +34,6 @@ class CommentsController < ApplicationController
   end
   
   # Filter To check whether user exits or not #
-   # Filter To check whether user exits or not #
   def validate_user
     @user = current_user
     redirect_to current_user, notice: "User doesn't exists with this id." if @user.nil?

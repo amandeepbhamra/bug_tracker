@@ -78,10 +78,10 @@ class Users::InvitationsController < Devise::InvitationsController
   end
 
   protected
+  
   # Filter To check whether user exits or not #
   def validate_user 
     @user = current_inviter
-
   end
   
   def current_inviter

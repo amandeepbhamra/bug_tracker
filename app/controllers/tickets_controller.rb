@@ -98,22 +98,21 @@ class TicketsController < ApplicationController
     redirect_to current_user, notice: "User doesn't exists with this id." if @user.nil?
   end
 
-  # Filter To check whether project exits or not #
+  # Filter To check whether just project exits or not #
   def validate_project
     @project = Project.find_by_id(params[:project_id])
     redirect_to current_user, notice: "Invalid Project" if @project.nil?
   end
 
-  # Filter to get ticket #
+  # Filter to get ticket associated with project #
   def validate_ticket
     @ticket = @project.tickets.find_by_id(params[:id])
     redirect_to current_user, notice: "Invalid Ticket" if @ticket.nil?
   end
 
-  # Filter to get ticket #
+  # Filter to get just ticket #
   def validate_just_ticket
     @ticket = Ticket.find_by_id(params[:id])
     redirect_to current_user, notice: "Invalid Ticket" if @ticket.nil?
   end
-
 end

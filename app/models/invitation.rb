@@ -5,6 +5,7 @@ class Invitation < ActiveRecord::Base
 
   validates_uniqueness_of :invited_by_id, :scope => :user_id
   
+  # For getting invited users by current_user #
   def self.invited_users(invited_by_id)
     find_all_by_invited_by_id(invited_by_id)
   end

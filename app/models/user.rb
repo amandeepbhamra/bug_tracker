@@ -23,9 +23,6 @@ class User < ActiveRecord::Base
   has_many  :tickets, 
             :through => :projects, 
             :order => 'created_at DESC'
-  has_many  :roles, 
-            :through => :projects, 
-            :uniq => true
   has_many  :invitations, 
             :as => :invited_by,
             :dependent => :destroy,
@@ -37,8 +34,6 @@ class User < ActiveRecord::Base
                           :uniq => true, 
                           :join_table => "projects_users", 
                           :order => 'created_at DESC'
-  
-  accepts_nested_attributes_for :roles                        
   
   validates :name,  :presence => true , 
                     :if => lambda{|a| !a.new_record?}
@@ -55,24 +50,17 @@ class User < ActiveRecord::Base
     invitation_not_accepted.find_all_by_invited_by_id(current_user)
   end
   
-  USER_ROLES = { 1=> "Manager", 2 => "Member" }
-
-  def user_role
-    USER_ROLES[user_role]
-  end
-  
-  def self.user_role_array
-    USER_ROLES.to_a.sort
-  end
-
+  # For getting only user's name #
   def self.user_name(user)
     find_by_id(user).name unless user.nil?
   end
 
+  # For getting only user's id #
   def self.user_id(user)
     find_by_id(user).id unless user.nil?
   end
 
+  # For getting user #
   def self.user(user)
     find_by_id(user) unless user.nil?
   end
