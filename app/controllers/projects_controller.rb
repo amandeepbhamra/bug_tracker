@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   
-  before_filter :validate_current_user
+  before_filter :validate_current_user, [:new, :create]
   before_filter :validate_project, :only => [:project_members, :add_member_project,:edit, :update, :destroy]
   before_filter :validate_just_project, :only => [:show]
   def index

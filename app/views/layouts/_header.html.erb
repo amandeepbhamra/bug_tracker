@@ -22,15 +22,15 @@
                             <button class="btn dropdown-toggle" data-toggle="dropdown">
                                 <span class="caret"></span>
                             </button>
-                            <ul class="dropdown-menu">
-                                <% unless current_user.projects.blank? %>
-                                    <% current_user.projects.each do |project| %>
+                            <% unless current_user.projects.blank? %>
+                                <ul class="dropdown-menu">
+                                    <% current_user.projects.all.each do |project| %>
                                         <li>
                                             <%= link_to project.title, project_tickets_path(project) %>
                                         </li>
                                     <% end %>
-                                <% end %>
-                            </ul>
+                                </ul>
+                            <% end %>
                         </div>
                     </ul>
                     <ul class="nav pull-right">
