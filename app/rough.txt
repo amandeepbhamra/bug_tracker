@@ -200,3 +200,15 @@ for attachments
             <%= flash[:alert] %>
             </div>
             <% end %>
+
+            create action invitations controller
+            if defined? params[:project]
+          @project = Project.find_by_id(params[:project])
+          @user_assigned_project = @user.assigned_projects.where("project_id = ?", @project.id)
+          if @user_assigned_project.nil?
+            Project.add_members_to_project(current_inviter, @user.id, @project)
+            @project.update_attributes(params[:members])
+          else
+            redirect_to user_projects_path(current_inviter), notice: "User already added as a member in the project"    
+          end
+        end

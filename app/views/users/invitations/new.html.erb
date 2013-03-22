@@ -1,6 +1,6 @@
 <h2><%= t "devise.invitations.new.header" %></h2>
 
-<%= form_for @new_user, :as => @new_user, :url => invitation_path(@new_user), :html => {:method => :post} do |f| %>
+<%= form_for @new_user, :as => @new_user, :url => invitation_path(@new_user, :project => params[:project]), :html => {:method => :post} do |f| %>
   <%= devise_error_messages! %>
 
 <% @new_user.class.invite_key_fields.each do |field| -%>
@@ -9,5 +9,9 @@
 		<%= f.text_field field %></p>
 	
 <% end -%>
+<%# @user.projects.each do |project| %>
+	<%#= check_box_tag "invite[project_ids][]", project.id %>
+	<%#= project.title %><br />
+<%# end %>
   <p><%= f.submit t("devise.invitations.new.submit_button") %></p>
 <% end %><br />

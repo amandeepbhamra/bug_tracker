@@ -6,12 +6,14 @@ class Users::InvitationsController < Devise::InvitationsController
   helper_method :after_sign_in_path_for
   before_filter :validate_user, :only => [:new]
   
-  after_filter  :create_invitation_reference, :only => [:update]
+  #after_filter  :create_invitation_reference, :only => [:update]
+  after_filter  :add_invited_for_project_id, :only => [:create]
 
   # GET /resource/invitation/new
   def new
     # debugger
     @new_user = User.new
+
     # build_resource
     # render :new
   end
@@ -20,9 +22,13 @@ class Users::InvitationsController < Devise::InvitationsController
   def create
     @user = User.find_by_email(resource_params[:email])
     if @user.nil?
-      self.resource = resource_class.invite!(resource_params, current_inviter)
+      @project = params[:project]
+      self.resource = resource_class.invite!({:email => resource_params[:email], :invited_for_project_id => params[:project]},current_inviter)
+      
+      
       if resource.errors.empty?
         set_flash_message :notice, :send_instructions, :email => self.resource.email
+
         redirect_to current_inviter
       else
         respond_with_navigational(resource) { render :new }
@@ -33,7 +39,7 @@ class Users::InvitationsController < Devise::InvitationsController
         @user.invited_by_id = nil
         @user.save
         Invitation.create(:invited_by_id => current_inviter.id, :user_id => @user.id)
-        redirect_to current_inviter, notice: "User Added"
+        
       else
         redirect_to current_inviter, notice: "User already invited by you"
       end
@@ -89,5 +95,10 @@ class Users::InvitationsController < Devise::InvitationsController
     Invitation.create(:invited_by_id => resource.invited_by_id, :user_id => resource.id)
     resource.invited_by_id = nil
     resource.save
+  end
+
+  def add_invited_for_project_id
+    @user.invited_for_project_id = @project
+    @user.save
   end
 end

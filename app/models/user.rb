@@ -14,7 +14,8 @@ class User < ActiveRecord::Base
                   :email, 
                   :password, 
                   :remember_me, 
-                  :photo
+                  :photo,
+                  :invited_for_project_id
   
   has_many  :projects, 
             :dependent => :destroy, 

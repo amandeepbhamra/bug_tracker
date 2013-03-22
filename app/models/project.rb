@@ -23,7 +23,6 @@ class Project < ActiveRecord::Base
   def self.add_members_to_project(current_user,user,project)
   	@member = User.find_by_id(user)
     project.members << [current_user] <<(@member)
-    Notify.member_added_notification_to_admin(current_user, project, @member).deliver
     Notify.notification_to_member_that_added(current_user, project, @member).deliver
   end
   

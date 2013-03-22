@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130319052746) do
+ActiveRecord::Schema.define(:version => 20130321172958) do
 
   create_table "attachments", :force => true do |t|
     t.integer  "attachable_id"
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(:version => 20130319052746) do
     t.integer  "invitation_limit"
     t.integer  "invited_by_id"
     t.string   "invited_by_type"
+    t.integer  "invited_for_project_id"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

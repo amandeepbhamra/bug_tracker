@@ -6,13 +6,6 @@ class Notify < ActionMailer::Base
   	mail(:to => user.email, :subject => "Your changes have been saved.")
   end
 
-  def member_added_notification_to_admin(admin, project, user)
-  	@admin = admin
-  	@user = user
-  	@project = project
-  	mail(:to => @admin.email, :subject => "A member with email (#{@user.email}) has been added to project (#{@project.title}).")
-  end
-
   def notification_to_member_that_added(admin, project, user)
   	@admin = admin
   	@user = user

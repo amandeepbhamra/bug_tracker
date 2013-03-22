@@ -4,13 +4,23 @@
     	<span class="caret"></span>
   	</button>
   	<ul class="dropdown-menu">
-    	<li><%= link_to 'Edit', edit_user_project_path(project) %></li>
+    	<li>
+        <%= link_to 'Edit', edit_user_project_path(project) %>
+      </li>
 
-		<li><%= link_to 'Destroy',  user_project_path(project), method: :delete, data: { confirm: 'Are you sure?' } %></li>
+		  <li>
+        <%= link_to 'Destroy',  user_project_path(project), method: :delete, data: { confirm: 'Are you sure?' } %>
+      </li>
    
-		<li><%= link_to 'View Tickets', project_tickets_path(project) %></li>
+		  <li>
+        <%= link_to 'View Tickets', project_tickets_path(project) %>
+      </li>
     
-		<li><%= link_to 'Add / Remove Members', project_members_user_project_path(current_user,project) %></li>
+		  <li>
+        <%= link_to 'Add / Remove Members', project_members_user_project_path(current_user,project) %>
+      </li>
+      <li>
+        <%= link_to 'Invite Member for this project', new_user_invitation_path(:project => project) %>
     </ul>
  </div>
 
