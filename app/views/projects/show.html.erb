@@ -5,7 +5,9 @@
     You have <%= total_open_tickets(@project,current_user) %> 
     <%= link_to 'Open Tickets', project_tickets_path(@project) %>
     </h6>
-    
+    <h6 class="text-center">
+        <%= @project.title %> has total <%= @project.tickets_count %> tickets
+    </h6>
     <%= link_to 'View Tickets', project_tickets_path(@project), :class => 'btn btn-block' %>
     
 <% end %>
@@ -15,6 +17,9 @@
         <%= @project.title %>
         <%= link_to "New Ticket", new_project_ticket_path(@project), :class => 'btn btn-primary pull-right' %>
     </h3>
+</div>
+<div class="pull-right">
+    
 </div>
 <% if @project.user_id == current_user.id %>
     <%= render 'project_options_links_if_owner', :project => @project %>

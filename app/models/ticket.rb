@@ -14,7 +14,7 @@ class Ticket < ActiveRecord::Base
             :dependent => :destroy,
             :order => 'created_at DESC'
 
-  belongs_to :project
+  belongs_to :project, :counter_cache => true
   belongs_to :user
   
   validates :title, :status, :presence => true 
