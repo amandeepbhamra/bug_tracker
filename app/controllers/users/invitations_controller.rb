@@ -6,8 +6,8 @@ class Users::InvitationsController < Devise::InvitationsController
   helper_method :after_sign_in_path_for
   before_filter :validate_user, :only => [:new]
   
-  #after_filter  :create_invitation_reference, :only => [:update]
-  after_filter  :add_invited_for_project_id, :only => [:create]
+  after_filter  :create_invitation_reference, :only => [:update]
+
 
   # GET /resource/invitation/new
   def new
@@ -24,24 +24,29 @@ class Users::InvitationsController < Devise::InvitationsController
     if @user.nil?
       @project = params[:project]
       self.resource = resource_class.invite!({:email => resource_params[:email], :invited_for_project_id => params[:project]},current_inviter)
-      
-      
       if resource.errors.empty?
         set_flash_message :notice, :send_instructions, :email => self.resource.email
-
         redirect_to current_inviter
       else
         respond_with_navigational(resource) { render :new }
       end
     else
       @already_invited = Invitation.where(:invited_by_id => current_inviter.id, :user_id => @user.id)
-      if @already_invited.nil?
-        @user.invited_by_id = nil
-        @user.save
-        Invitation.create(:invited_by_id => current_inviter.id, :user_id => @user.id)
-        
+      @assigned_project = @user.assigned_projects.where("project_id = ?", params[:project])
+      if  @already_invited.blank? and @assigned_project.blank?
+          Invitation.create(:invited_by_id => current_inviter.id, :user_id => @user.id)
+          @project = Project.find_by_id(params[:project])
+          resource.assigned_projects = [@project]
+          @user = User.find_by_id(current_inviter.id)
+          @user.invited_by_id = nil
+          @user.save
+          Notify.notification_to_member_that_added(@user, @project, resource).deliver
       else
-        redirect_to current_inviter, notice: "User already invited by you"
+        @project = Project.find_by_id(params[:project])
+        resource.assigned_projects = [@project]
+        @user = User.find_by_id(current_inviter.id)
+        Notify.notification_to_member_that_added(@user, @project, resource).deliver
+        redirect_to current_inviter, notice: "User already invited by you, But now is added in the project"
       end
     end
   end
@@ -93,12 +98,12 @@ class Users::InvitationsController < Devise::InvitationsController
   # After invitation accepted invitation reference will be made#
   def create_invitation_reference
     Invitation.create(:invited_by_id => resource.invited_by_id, :user_id => resource.id)
+    @project = Project.find_by_id(resource.invited_for_project_id)
+    resource.assigned_projects = [@project]
+    @user = User.find_by_id(resource.invited_by_id)
+    Notify.notification_to_member_that_added(@user, @project, resource).deliver
     resource.invited_by_id = nil
+    resource.invited_for_project_id = nil
     resource.save
-  end
-
-  def add_invited_for_project_id
-    @user.invited_for_project_id = @project
-    @user.save
   end
 end
