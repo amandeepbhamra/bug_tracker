@@ -33,6 +33,7 @@ class Users::InvitationsController < Devise::InvitationsController
     else
       @already_invited = Invitation.where(:invited_by_id => current_inviter.id, :user_id => @user.id)
       @assigned_project = @user.assigned_projects.where("project_id = ?", params[:project])
+      @user_invited = User.find_by_email(resource_params[:email])
       if  @already_invited.blank? and @assigned_project.blank?
           Invitation.create(:invited_by_id => current_inviter.id, :user_id => @user.id)
           @project = Project.find_by_id(params[:project])
@@ -40,13 +41,13 @@ class Users::InvitationsController < Devise::InvitationsController
           @user = User.find_by_id(current_inviter.id)
           @user.invited_by_id = nil
           @user.save
-          Notify.notification_to_member_that_added(resource, @project, @user ).deliver
+          Notify.notification_to_member_that_added(@user, @project, @user_invited ).deliver
           redirect_to current_inviter, notice: "User is added in the project"
       else
         @project = Project.find_by_id(params[:project])
         resource.assigned_projects = [@project]
         @user = User.find_by_id(current_inviter.id)
-        Notify.notification_to_member_that_added(resource, @project, @user ).deliver
+        Notify.notification_to_member_that_added(@user, @project, @user_invited ).deliver
         redirect_to current_inviter, notice: "User already invited by you, But now is added in the project"
       end
     end
