@@ -50,16 +50,6 @@ class User < ActiveRecord::Base
     invitation_not_accepted.find_all_by_invited_by_id(current_user)
   end
   
-  # For getting only user's name #
-  def self.user_name(user)
-    find_by_id(user).name unless user.nil?
-  end
-
-  # For getting only user's id #
-  def self.user_id(user)
-    find_by_id(user).id unless user.nil?
-  end
-
   # For getting user #
   def self.user(user)
     find_by_id(user) unless user.nil?

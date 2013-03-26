@@ -26,18 +26,8 @@ module ApplicationHelper
   end
 
   # For just getting project title #
-  def project_title(project)
-    Project.project_title(project)
-  end
-
-  # For just getting user's name #
-  def user_name(user)
-    User.user_name(user)
-  end
-
-  # For just getting user's id #
-  def user_id(user)
-    User.user_id(user)
+  def project(project)
+    Project.project(project)
   end
 
   # For just getting user #

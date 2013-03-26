@@ -24,8 +24,8 @@ class Project < ActiveRecord::Base
   end
   
   # For getting just the title of the project #
-  def self.project_title(project)
-    find_by_id(project).title unless project.nil?
+  def self.project(project)
+    find_by_id(project) unless project.nil?
   end
 
   # For getting open tickets count with respect to a user #

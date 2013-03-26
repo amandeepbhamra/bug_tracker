@@ -6,9 +6,9 @@
     </td>
     <td><%= ticket.description %></td>
     <td><%= ticket.ticket_status %></td>
-    <td><%= project_title(ticket.project_id) %></td>
-    <% if !(user_name(ticket.assigned_to).nil?) %>
-      <td><%= user_name(ticket.assigned_to) %></td>
+    <td><%= project(ticket.project_id).title %></td>
+    <% if !(user(ticket.assigned_to).nil?) %>
+      <td><%= user(ticket.assigned_to).name %></td>
     <% else %>
       <td><%= "No one" %></td>
     <% end %>
