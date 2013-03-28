@@ -11,11 +11,11 @@ class ApplicationController < ActionController::Base
 
   #--------Redirect to root path after sign out---------#
   def after_sign_out_path_for(resource_or_scope)
-    new_user_session_path
+    root_path
   end
 
   #--------Redirect to home path after invitation accepted----------#
  def after_sign_up_path_for(resource)
-    new_user_session_path
+    root_path
   end
 end

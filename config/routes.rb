@@ -33,9 +33,9 @@ Bugtracker::Application.routes.draw do
     resources :attachments, :only => []
   end
 
-  #match 'home' => 'users#home', :as => :home
+  match 'home' => 'users#home', :as => :home
 
-  root :to => 'users#show'
+  root :to => 'users#home'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

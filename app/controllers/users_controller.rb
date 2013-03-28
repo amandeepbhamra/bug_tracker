@@ -1,7 +1,11 @@
 class UsersController < ApplicationController
   
   before_filter :validate_user, :only => [:show]
-  before_filter :validate_current_user, :except => [:show]
+  before_filter :validate_current_user, :except => [:show, :home]
+  skip_before_filter :authenticate_user!, :only => [:home]
+
+  def home
+  end
   
   def show
     @user_tickets = Ticket.order("created_at DESC").paginate(:page => params[:page], :per_page => 10).find_all_by_assigned_to(@user)
