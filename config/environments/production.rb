@@ -14,14 +14,7 @@ Bugtracker::Application.configure do
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
   ActionMailer::Base.delivery_method = :smtp
-  ActionMailer::Base.smtp_settings = {
-    :address => "smtp.gmail.com",
-    :port => 25,
-    :domain => "gmail.com",
-    :user_name => "rails.amandeep@gmail.com",
-    :password => "asdf@1234",
-    :authentication => :plain,
-  }
+
 
   config.serve_static_assets = false
 
